@@ -86,6 +86,7 @@ class _LoginState extends State<Login> {
                       ],
                     ),
                   ),
+                  suffixIcon: FaIcon(Icons.remove_red_eye),
                   labelText: "Password",
                   enabledBorder: OutlineInputBorder(
         
