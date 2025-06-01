@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:news_app/screens/home.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -107,17 +108,22 @@ class _LoginState extends State<Login> {
             
             SizedBox(height: screenHeight* 0.07,),
             
-           Container(
-             height: screenHeight * 0.066,
-             width: screenWidth * 0.7,
-             decoration: BoxDecoration(
-               borderRadius: BorderRadius.circular(10),
-               color: Colors.blueGrey.shade300
+           InkWell(
+             onTap: (){
+               Navigator.push(context, MaterialPageRoute(builder: (context)=> Home()));
+             },
+             child: Container(
+               height: screenHeight * 0.066,
+               width: screenWidth * 0.7,
+               decoration: BoxDecoration(
+                 borderRadius: BorderRadius.circular(10),
+                 color: Colors.blueGrey.shade300
+               ),
+               child:  Center(child: Text("Login", style: TextStyle(
+                 fontSize: 25,
+                 fontWeight: FontWeight.w600
+               ),)),
              ),
-             child:  Center(child: Text("Login", style: TextStyle(
-               fontSize: 25,
-               fontWeight: FontWeight.w600
-             ),)),
            ),
             SizedBox(height: screenHeight*0.01,),
 
