@@ -23,7 +23,7 @@ class _LoginState extends State<Login> {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.only(top: screenHeight * 0.2),
+              padding: EdgeInsets.only(top: screenHeight * 0.14),
               child: Center(child: Icon(Icons.newspaper_outlined, size: 130, color: Colors.blueGrey,), ),
             ),
             Text("Online News", style: TextStyle(
@@ -92,6 +92,16 @@ class _LoginState extends State<Login> {
                   focusedBorder: OutlineInputBorder( borderSide: BorderSide(color: Colors.blueGrey, width: 2)),
                 ),
               ),
+            ),
+
+            Padding(
+              padding:  EdgeInsets.only(left: screenWidth * 0.4, top: screenHeight * 0.01),
+              child: Text("Forgot Password?", style: TextStyle(
+                fontSize: 17,
+                fontWeight: FontWeight.w500,
+                fontStyle: FontStyle.italic,
+                color: Colors.black87
+              ),),
             ),
 
             
