@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -33,6 +35,27 @@ class _LoginState extends State<Login> {
               padding:  EdgeInsets.only(top: screenHeight * 0.1, left: screenWidth*0.04, right: screenWidth *0.04),
               child: TextField(
                 decoration: InputDecoration(
+                  prefixIcon: Padding(
+                    padding:  EdgeInsets.only(top: screenHeight * 0.013, left: screenWidth * 0.02 ),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            FaIcon(Icons.email_rounded, size: 27,),
+                            SizedBox(
+                              height:screenHeight * 0.04,
+                              child: VerticalDivider(
+                                color: Colors.black54,
+                                thickness: 1.5,
+                                width: 15,
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                   labelText: "Email Address",
                   enabledBorder: OutlineInputBorder(
         
@@ -45,6 +68,23 @@ class _LoginState extends State<Login> {
               padding:  EdgeInsets.only(top: screenHeight * 0.02, left: screenWidth*0.04, right: screenWidth *0.04),
               child: TextField(
                 decoration: InputDecoration(
+                  prefixIcon: Padding(
+                    padding:  EdgeInsets.only(top: screenHeight * 0.001, left: screenWidth* 0.02),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        FaIcon(Icons.lock, size: 29,),
+                        SizedBox(
+                          height: screenHeight * 0.04,
+                          child: VerticalDivider(
+                            color: Colors.black54,
+                            thickness: 1.7,
+                            width: 15,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                   labelText: "Password",
                   enabledBorder: OutlineInputBorder(
         
@@ -53,6 +93,7 @@ class _LoginState extends State<Login> {
                 ),
               ),
             ),
+
             
             SizedBox(height: screenHeight* 0.07,),
             
