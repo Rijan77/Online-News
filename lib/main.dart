@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/presentation/views/login.dart';
-import 'package:news_app/presentation/views/registration.dart';
 
 
 

@@ -81,13 +81,13 @@ class _LoginState extends State<Login> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Not Register Yet?", style: TextStyle(
+                const Text("Not Register Yet?", style: TextStyle(
                     color: Colors.black54,
                     fontWeight: FontWeight.w600
                 ),),
                 TextButton(onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> Registration()));
-                }, child: Text("Sign Up", style: TextStyle(
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> const Registration()));
+                }, child: const Text("Sign Up", style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold
                 ),))

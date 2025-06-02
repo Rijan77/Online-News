@@ -1,5 +1,4 @@
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/presentation/views/login.dart';
 import 'package:news_app/presentation/widgets/button_widget.dart';
@@ -32,7 +31,7 @@ class _RegistrationState extends State<Registration> {
             TextFieldWidget(
               textLabel: "FullName",
               editingController: TextEditingController(),
-              firstIcon: Icon(Icons.person),),
+              firstIcon: const Icon(Icons.person),),
 
             SizedBox(height: screenHeight*0.02,),
 
@@ -40,34 +39,34 @@ class _RegistrationState extends State<Registration> {
             TextFieldWidget(
                 textLabel: "Email Address",
                 editingController: TextEditingController(),
-                firstIcon: Icon(Icons.email_rounded))
+                firstIcon: const Icon(Icons.email_rounded))
             ,
             SizedBox(height: screenHeight*0.02,),
 
             TextFieldWidget(
               textLabel: "Password",
                 editingController: TextEditingController(),
-                firstIcon: Icon(Icons.lock)),
+                firstIcon: const Icon(Icons.lock)),
 
             SizedBox(height: screenHeight*0.02,),
 
             TextFieldWidget(
               textLabel: "Confirm Password",
                 editingController: TextEditingController(),
-                firstIcon: Icon(Icons.lock_reset_sharp, size: 30,),),
+                firstIcon: const Icon(Icons.lock_reset_sharp, size: 30,),),
 
             SizedBox(height: screenHeight*0.06,),
 
-            ButtonWidget(buttonText: "Sign Up", styleText: TextStyle(
+            const ButtonWidget(buttonText: "Sign Up", styleText: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.w600
 
             )),
             SizedBox(height: screenHeight*0.01,),
-            Text("Or"),
+            const Text("Or"),
             SizedBox(height: screenHeight*0.01,),
 
-            ButtonWidget(
+            const ButtonWidget(
                 imagePath: "Assets/googlelogo.png",
                 buttonText: "Continue with Google", styleText: TextStyle(
               fontSize: 17,
@@ -79,13 +78,13 @@ class _RegistrationState extends State<Registration> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Already Have Account?", style: TextStyle(
+                const Text("Already Have Account?", style: TextStyle(
                   color: Colors.black54,
                   fontWeight: FontWeight.w600
                 ),),
                 TextButton(onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> Login()));
-                }, child: Text("Login", style: TextStyle(
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> const Login()));
+                }, child: const Text("Login", style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold
                 ),))
