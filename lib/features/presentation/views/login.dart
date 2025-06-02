@@ -1,8 +1,10 @@
 
 import 'package:flutter/material.dart';
-import 'package:news_app/presentation/views/registration.dart';
-import 'package:news_app/presentation/widgets/button_widget.dart';
-import 'package:news_app/presentation/widgets/text_field_widget.dart';
+import 'package:news_app/core/common/widgets/button_widget.dart';
+import 'package:news_app/core/common/widgets/text_field_widget.dart';
+import 'package:news_app/features/data/auth/signin_google.dart';
+import 'package:news_app/features/presentation/views/registration.dart';
+
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -10,14 +12,13 @@ class Login extends StatefulWidget {
   @override
   State<Login> createState() => _LoginState();
 }
-
 class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
    final screenHeight = MediaQuery.of(context).size.height;
    final screenWidth = MediaQuery.of(context).size.width;
 
-    return Scaffold(
+   return Scaffold(
       
       body:  SingleChildScrollView(
         child: Column(
@@ -70,12 +71,17 @@ class _LoginState extends State<Login> {
 
             SizedBox(height: screenHeight*0.01,),
 
-            const ButtonWidget(buttonText: "Continue with Google", styleText: TextStyle(
-              fontSize: 17,
-              fontWeight: FontWeight.bold
-            ),
-              imagePath: ("Assets/googlelogo.png"),
+            InkWell(
+              onTap: (){
+                GoogleSignIn().loginWithGoogle(context);
+              },
+              child: const ButtonWidget(buttonText: "Continue with Google", styleText: TextStyle(
+                fontSize: 17,
+                fontWeight: FontWeight.bold
+              ),
+                imagePath: ("Assets/googlelogo.png"),
 
+              ),
             ),
             SizedBox(height: screenHeight * 0.03,),
             Row(
@@ -86,7 +92,7 @@ class _LoginState extends State<Login> {
                     fontWeight: FontWeight.w600
                 ),),
                 TextButton(onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> const Registration()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>  const Registration()));
                 }, child: const Text("Sign Up", style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold
@@ -101,4 +107,6 @@ class _LoginState extends State<Login> {
 
     );
   }
+
+
 }
