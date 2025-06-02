@@ -59,7 +59,7 @@ class _RegistrationState extends State<Registration> {
             SizedBox(height: screenHeight*0.06,),
 
             ButtonWidget(buttonText: "Sign Up", styleText: TextStyle(
-              fontSize: 20,
+              fontSize: 22,
               fontWeight: FontWeight.w600
 
             )),

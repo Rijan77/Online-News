@@ -35,7 +35,9 @@ class TextFieldWidget extends StatelessWidget {
           suffixIcon: lastIcon,
           labelText: textLabel,
           enabledBorder: const OutlineInputBorder(),
-          focusedBorder: OutlineInputBorder()
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.blueGrey, width: 2)
+          )
         ),
       ),
     );

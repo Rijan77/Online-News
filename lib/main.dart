@@ -21,6 +21,6 @@ class MyApp extends StatelessWidget {
       // home: BlocProvider(
       //   create: (_)=> CounterCubit(),
       //   child:
-      home: Registration());
+      home: Login());
   }
 }
