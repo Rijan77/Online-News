@@ -1,4 +1,3 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -13,7 +12,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text("Online News", style: TextStyle(
+        title: const Center(child: Text("Online News", style: TextStyle(
           fontWeight: FontWeight.w700
 
         ),)),
@@ -22,7 +21,7 @@ class _HomeState extends State<Home> {
       body: ListView.builder(
         itemCount: 50,
           itemBuilder: (BuildContext context, int index){
-            return ListTile(
+            return const ListTile(
               leading: Icon(Icons.newspaper),
               title: Icon(Icons.tv),
             );

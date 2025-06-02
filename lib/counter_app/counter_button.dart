@@ -42,7 +42,7 @@ class _CounterButtonState extends State<CounterButton> {
                 ),
               );
             }
-                , child: Text("Increase")),
+                , child: const Text("Increase")),
           ],
         ),
       ),

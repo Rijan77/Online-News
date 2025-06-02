@@ -1,6 +1,4 @@
-import 'dart:math';
 
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:news_app/screens/home.dart';
@@ -25,9 +23,9 @@ class _LoginState extends State<Login> {
           children: [
             Padding(
               padding: EdgeInsets.only(top: screenHeight * 0.14),
-              child: Center(child: Icon(Icons.newspaper_outlined, size: 130, color: Colors.blueGrey,), ),
+              child: const Center(child: Icon(Icons.newspaper_outlined, size: 130, color: Colors.blueGrey,), ),
             ),
-            Text("Online News", style: TextStyle(
+            const Text("Online News", style: TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.w600
             ),),
@@ -43,10 +41,10 @@ class _LoginState extends State<Login> {
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            FaIcon(Icons.email_rounded, size: 27,),
+                            const FaIcon(Icons.email_rounded, size: 27,),
                             SizedBox(
                               height:screenHeight * 0.04,
-                              child: VerticalDivider(
+                              child: const VerticalDivider(
                                 color: Colors.black54,
                                 thickness: 1.5,
                                 width: 15,
@@ -58,10 +56,10 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   labelText: "Email Address",
-                  enabledBorder: OutlineInputBorder(
+                  enabledBorder: const OutlineInputBorder(
         
                   ),
-                  focusedBorder: OutlineInputBorder( borderSide: BorderSide(color: Colors.blueGrey, width: 2)),
+                  focusedBorder: const OutlineInputBorder( borderSide: BorderSide(color: Colors.blueGrey, width: 2)),
                 ),
               ),
             ),
@@ -74,10 +72,10 @@ class _LoginState extends State<Login> {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        FaIcon(Icons.lock, size: 29,),
+                        const FaIcon(Icons.lock, size: 29,),
                         SizedBox(
                           height: screenHeight * 0.04,
-                          child: VerticalDivider(
+                          child: const VerticalDivider(
                             color: Colors.black54,
                             thickness: 1.7,
                             width: 15,
@@ -86,19 +84,19 @@ class _LoginState extends State<Login> {
                       ],
                     ),
                   ),
-                  suffixIcon: FaIcon(Icons.remove_red_eye),
+                  suffixIcon: const FaIcon(Icons.remove_red_eye),
                   labelText: "Password",
-                  enabledBorder: OutlineInputBorder(
+                  enabledBorder: const OutlineInputBorder(
         
                   ),
-                  focusedBorder: OutlineInputBorder( borderSide: BorderSide(color: Colors.blueGrey, width: 2)),
+                  focusedBorder: const OutlineInputBorder( borderSide: BorderSide(color: Colors.blueGrey, width: 2)),
                 ),
               ),
             ),
 
             Padding(
               padding:  EdgeInsets.only(left: screenWidth * 0.4, top: screenHeight * 0.01),
-              child: Text("Forgot Password?", style: TextStyle(
+              child: const Text("Forgot Password?", style: TextStyle(
                 fontSize: 17,
                 fontWeight: FontWeight.w500,
                 fontStyle: FontStyle.italic,
@@ -111,7 +109,7 @@ class _LoginState extends State<Login> {
             
            InkWell(
              onTap: (){
-               Navigator.push(context, MaterialPageRoute(builder: (context)=> Home()));
+               Navigator.push(context, MaterialPageRoute(builder: (context)=> const Home()));
              },
              child: Container(
                height: screenHeight * 0.066,
@@ -120,7 +118,7 @@ class _LoginState extends State<Login> {
                  borderRadius: BorderRadius.circular(10),
                  color: Colors.blueGrey.shade300
                ),
-               child:  Center(child: Text("Login", style: TextStyle(
+               child:  const Center(child: Text("Login", style: TextStyle(
                  fontSize: 25,
                  fontWeight: FontWeight.w600
                ),)),
@@ -128,7 +126,7 @@ class _LoginState extends State<Login> {
            ),
             SizedBox(height: screenHeight*0.01,),
 
-            Text("OR", style: TextStyle(
+            const Text("OR", style: TextStyle(
               color: Colors.black54,
               fontWeight: FontWeight.w600
             ),),
@@ -148,7 +146,7 @@ class _LoginState extends State<Login> {
                     padding: const EdgeInsets.all(8.0),
                     child: Image.asset("Assets/googlelogo.png", width: 30,)
                   ),
-                  Text("Continue with Google", style: TextStyle(
+                  const Text("Continue with Google", style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.bold
                   ),),
