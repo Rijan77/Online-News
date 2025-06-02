@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/presentation/views/login.dart';
+import 'package:news_app/presentation/views/registration.dart';
 
 
 
@@ -20,6 +21,6 @@ class MyApp extends StatelessWidget {
       // home: BlocProvider(
       //   create: (_)=> CounterCubit(),
       //   child:
-      home: Login());
+      home: Registration());
   }
 }

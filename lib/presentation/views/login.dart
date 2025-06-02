@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:news_app/presentation/views/registration.dart';
 import 'package:news_app/presentation/widgets/button_widget.dart';
 import 'package:news_app/presentation/widgets/text_field_widget.dart';
 
@@ -33,11 +34,13 @@ class _LoginState extends State<Login> {
             SizedBox(height: screenHeight * 0.1,),
             TextFieldWidget(
               firstIcon: const Icon(Icons.email_rounded),
+                textLabel: "Email Address",
 
                 editingController: TextEditingController()),
             SizedBox(height: screenHeight * 0.04,),
             TextFieldWidget(
               firstIcon: const Icon(Icons.lock),
+                textLabel: "Password",
                 lastIcon: const Icon(Icons.remove_red_eye_rounded),
                 editingController: TextEditingController()),
             Padding(
@@ -73,6 +76,23 @@ class _LoginState extends State<Login> {
             ),
               imagePath: ("Assets/googlelogo.png"),
 
+            ),
+            SizedBox(height: screenHeight * 0.03,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Not Register Yet?", style: TextStyle(
+                    color: Colors.black54,
+                    fontWeight: FontWeight.w600
+                ),),
+                TextButton(onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> Registration()));
+                }, child: Text("Sign Up", style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold
+                ),))
+
+              ],
             )
 
           ],

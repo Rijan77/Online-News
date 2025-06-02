@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 class TextFieldWidget extends StatelessWidget {
-  const TextFieldWidget({super.key, required this.editingController, required this.firstIcon, this.lastIcon});
+  const TextFieldWidget({super.key, required this.editingController, required this.firstIcon, this.lastIcon, required this.textLabel});
   final TextEditingController editingController;
   final Icon firstIcon;
   final Icon? lastIcon;
+
+  final String textLabel;
 
 
   @override
@@ -31,7 +33,9 @@ class TextFieldWidget extends StatelessWidget {
             ],
           ),
           suffixIcon: lastIcon,
+          labelText: textLabel,
           enabledBorder: const OutlineInputBorder(),
+          focusedBorder: OutlineInputBorder()
         ),
       ),
     );
