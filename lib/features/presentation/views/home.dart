@@ -8,13 +8,22 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  // Example favorite status for each item (you can replace with real model logic)
-  List<bool> favoriteStatus = List<bool>.generate(10, (index) => false);
+  // A list of ValueNotifiers for each news item's favorite status
+  final List<ValueNotifier<bool>> favoriteStatusList =
+  List.generate(10, (_) => ValueNotifier<bool>(false));
+
+  @override
+  void dispose() {
+    // Dispose all ValueNotifiers to avoid memory leaks
+    for (var notifier in favoriteStatusList) {
+      notifier.dispose();
+    }
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
       appBar: AppBar(
@@ -38,7 +47,7 @@ class _HomeState extends State<Home> {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(20),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2)),
               ],
             ),
@@ -62,15 +71,11 @@ class _HomeState extends State<Home> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Title
                       const Text(
                         "Breaking News Headline",
                         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                       ),
-
                       const SizedBox(height: 8),
-
-                      // Published Date & Favorite Icon
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -78,17 +83,23 @@ class _HomeState extends State<Home> {
                             "   2025-06-03",
                             style: TextStyle(color: Colors.grey[600], fontSize: 14),
                           ),
-                          IconButton(
-                            icon: Icon(
-                              favoriteStatus[index] ? Icons.favorite : Icons.favorite_border,
-                              color: favoriteStatus[index] ? Colors.red : Colors.grey,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                favoriteStatus[index] = !favoriteStatus[index];
-                              });
+                          // Favorite Button using ValueListenableBuilder
+                          ValueListenableBuilder<bool>(
+                            valueListenable: favoriteStatusList[index],
+                            builder: (context, isFavorite, _) {
+                              return IconButton(
+                                icon: Icon(
+                                  isFavorite
+                                      ? Icons.favorite
+                                      : Icons.favorite_border,
+                                  color: isFavorite ? Colors.red : Colors.grey,
+                                ),
+                                onPressed: () {
+                                  favoriteStatusList[index].value = !isFavorite;
+                                },
+                              );
                             },
-                          )
+                          ),
                         ],
                       ),
                     ],
