@@ -40,6 +40,7 @@ dependencies:
   firebase_auth: ^5.5.4
   firebase_core:
   google_sign_in:
+  bottom_navbar_with_indicator:
 
 dev_dependencies:
   flutter_test:

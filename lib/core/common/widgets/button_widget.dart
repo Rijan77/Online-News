@@ -1,50 +1,60 @@
 import 'package:flutter/material.dart';
 
-class ButtonWidget extends StatefulWidget {
-  const ButtonWidget({super.key, required this.buttonText, required this.styleText, this.imagePath, this.navigate});
+class ButtonWidget extends StatelessWidget {
+  const ButtonWidget({
+    super.key,
+    required this.buttonText,
+    required this.styleText,
+    this.imagePath,
+    required this.onTap,
+    required this.isLoading,
+  });
 
-  final String buttonText;
-  final TextStyle styleText;
-  final String? imagePath;
-  final Navigator? navigate;
-
-  @override
-  State<ButtonWidget> createState() => _ButtonWidgetState();
-}
-
-class _ButtonWidgetState extends State<ButtonWidget> {
-  get childText => null;
-
-  get navigate => null;
-
+  final String buttonText;       // What the button should say
+  final TextStyle styleText;     // Custom text style
+  final String? imagePath;       // Optional image inside the button
+  final bool isLoading;          // Are we loading? show spinner
+  final VoidCallback onTap;      // What happens when user taps the button
 
   @override
   Widget build(BuildContext context) {
-   final screenHeight = MediaQuery.of(context).size.height;
-   final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
 
     return InkWell(
-      onTap: navigate,
+      onTap: isLoading ? null : onTap, // disable when loading
       child: Container(
         height: screenHeight * 0.066,
         width: screenWidth * 0.7,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.blueGrey.shade300
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.blueGrey.shade300,
         ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min, // Wrap content only
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-
-            if (widget.imagePath != null) ...[
-              Image.asset(widget.imagePath!, height: screenHeight * 0.04,),
-              const SizedBox(width: 8),
-          ],
-            Text(widget.buttonText, style: widget.styleText
+        child: Center(
+          child: isLoading
+              ? const SizedBox(
+            height: 24,
+            width: 24,
+            child: CircularProgressIndicator(
+              strokeWidth: 2.5,
+              color: Colors.white,
             ),
-        ])
-
+          )
+              : Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (imagePath != null) ...[
+                Image.asset(
+                  imagePath!,
+                  height: screenHeight * 0.04,
+                ),
+                const SizedBox(width: 8),
+              ],
+              Text(buttonText, style: styleText),
+            ],
+          ),
+        ),
       ),
     );
   }

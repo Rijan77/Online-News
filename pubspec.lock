@@ -33,6 +33,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  bottom_navbar_with_indicator:
+    dependency: "direct main"
+    description:
+      name: bottom_navbar_with_indicator
+      sha256: "23c5189c72db8652a8eee3adb630e594b7f66e1cb303802829a21cb35c68bc52"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.9"
   characters:
     dependency: transitive
     description:

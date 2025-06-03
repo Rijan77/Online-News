@@ -58,21 +58,30 @@ class _RegistrationState extends State<Registration> {
 
             SizedBox(height: screenHeight*0.06,),
 
-            const ButtonWidget(buttonText: "Sign Up", styleText: TextStyle(
+             ButtonWidget(buttonText: "Sign Up", styleText: const TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.w600
 
-            )),
+            ),
+               isLoading: true,
+               onTap: (){},
+
+             ),
             SizedBox(height: screenHeight*0.01,),
             const Text("Or"),
             SizedBox(height: screenHeight*0.01,),
 
-            const ButtonWidget(
+             ButtonWidget(
                 imagePath: "Assets/googlelogo.png",
-                buttonText: "Continue with Google", styleText: TextStyle(
+                buttonText: "Continue with Google", styleText: const TextStyle(
               fontSize: 17,
               fontWeight: FontWeight.w600
-            )),
+            ),
+
+              isLoading: true,
+              onTap: (){},
+
+            ),
 
             // SizedBox(height: screenHeight*0.02,),
 

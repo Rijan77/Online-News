@@ -57,10 +57,16 @@ class _LoginState extends State<Login> {
             
             SizedBox(height: screenHeight* 0.07,),
 
-           const ButtonWidget(buttonText: "Login", styleText: TextStyle(
+            ButtonWidget(buttonText: "Login", styleText: const TextStyle(
              fontSize: 25,
                fontWeight: FontWeight.w600,
-           ),),
+           ),
+
+             isLoading: false,
+             onTap: (){
+              isLoading: true;
+             },
+           ),
 
             SizedBox(height: screenHeight*0.01,),
 
@@ -75,11 +81,20 @@ class _LoginState extends State<Login> {
               onTap: (){
                 GoogleSignIn().loginWithGoogle(context);
               },
-              child: const ButtonWidget(buttonText: "Continue with Google", styleText: TextStyle(
+              child: ButtonWidget(buttonText: "Continue with Google", styleText: const TextStyle(
                 fontSize: 17,
                 fontWeight: FontWeight.bold
               ),
                 imagePath: ("Assets/googlelogo.png"),
+
+                isLoading: false,
+                onTap: (){
+                setState(() {
+                  isLoading: true;
+                });
+                },
+
+
 
               ),
             ),

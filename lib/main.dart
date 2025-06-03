@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-import 'features/presentation/views/login.dart';
+import 'features/presentation/views/home.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,6 +19,6 @@ class MyApp extends StatelessWidget {
       // home: BlocProvider(
       //   create: (_)=> CounterCubit(),
       //   child:
-      home: Login());
+      home: Home());
   }
 }
