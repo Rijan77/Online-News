@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: BlocProvider(
         create: (_) => LoginCubit(), // Or replace with your LoginCubit
-        child: Login(), // Make sure Home is a valid widget
+        child: const Login(), // Make sure Home is a valid widget
       ),
     );
   }
