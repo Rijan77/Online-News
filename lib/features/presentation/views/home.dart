@@ -8,6 +8,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  // Example favorite status for each item (you can replace with real model logic)
+  List<bool> favoriteStatus = List<bool>.generate(10, (index) => false);
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -31,41 +34,67 @@ class _HomeState extends State<Home> {
         itemCount: 10,
         itemBuilder: (BuildContext context, int index) {
           return Container(
-            width: screenWidth * 0.9,
-            height: screenHeight * 0.25,
             margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
             decoration: BoxDecoration(
+              color: Colors.white,
               borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2)),
+              ],
             ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Stack(
-                children: [
-                  Image.asset(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // News Image
+                ClipRRect(
+                  borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+                  child: Image.asset(
                     "Assets/news.webp",
                     fit: BoxFit.cover,
                     width: double.infinity,
-                    height: double.infinity,
+                    height: screenHeight * 0.25,
                   ),
-                  Positioned(
-                    bottom: 16,
-                    left: 16,
-                    child: Container(
-                      color: Colors.black54,
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                      child: const Text(
-                        "Online News",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
+                ),
+
+                // News Details (Title, Date, Favorite)
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Title
+                      const Text(
+                        "Breaking News Headline",
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                       ),
-                    ),
+
+                      const SizedBox(height: 8),
+
+                      // Published Date & Favorite Icon
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "   2025-06-03",
+                            style: TextStyle(color: Colors.grey[600], fontSize: 14),
+                          ),
+                          IconButton(
+                            icon: Icon(
+                              favoriteStatus[index] ? Icons.favorite : Icons.favorite_border,
+                              color: favoriteStatus[index] ? Colors.red : Colors.grey,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                favoriteStatus[index] = !favoriteStatus[index];
+                              });
+                            },
+                          )
+                        ],
+                      ),
+                    ],
                   ),
-                  const Text("Date")
-                ],
-              ),
+                ),
+              ],
             ),
           );
         },

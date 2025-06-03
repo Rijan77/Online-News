@@ -5,11 +5,11 @@ class ApiService {
   static String apiKey = "pub_eb489e3551f5456ca88d91408414c61c&q=Hot%20news";
   static String apiUrl = "https://newsdata.io/api/1/latest?apikey=$apiKey&q=Hot%20news";
 
-  static Future<List> fetchFlights() async {
+  static Future<List> fetchNews() async {
     try {
       final response = await http.get(Uri.parse(apiUrl));
 
-      print("API Status Code: ${response.statusCode}");
+      print("API Status Code: ${response. statusCode}");
       print("API Raw Response: ${response.body}");
 
       if (response.statusCode == 200) {
