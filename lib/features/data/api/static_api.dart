@@ -2,8 +2,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ApiService {
-  static String apiKey = "5c7a4aa3aa3fc784cdeb16f5e046313e";
-  static String apiUrl = "http://api.aviationstack.com/v1/flights?access_key=$apiKey&search=NepalAirlines";
+  static String apiKey = "pub_eb489e3551f5456ca88d91408414c61c&q=Hot%20news";
+  static String apiUrl = "https://newsdata.io/api/1/latest?apikey=$apiKey&q=Hot%20news";
 
   static Future<List> fetchFlights() async {
     try {
