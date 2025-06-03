@@ -63,7 +63,7 @@ class _RegistrationState extends State<Registration> {
               fontWeight: FontWeight.w600
 
             ),
-               isLoading: true,
+               isLoading: false,
                onTap: (){},
 
              ),
@@ -78,7 +78,7 @@ class _RegistrationState extends State<Registration> {
               fontWeight: FontWeight.w600
             ),
 
-              isLoading: true,
+              isLoading: false,
               onTap: (){},
 
             ),
