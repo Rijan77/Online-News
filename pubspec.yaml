@@ -42,6 +42,7 @@ dependencies:
   google_sign_in:
   bottom_navbar_with_indicator:
 
+  http: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -12,20 +12,20 @@ class Model {
     if (json['results'] != null) {
       results = <Results>[];
       json['results'].forEach((v) {
-        results!.add(new Results.fromJson(v));
+        results!.add(Results.fromJson(v));
       });
     }
     nextPage = json['nextPage'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['totalResults'] = this.totalResults;
-    if (this.results != null) {
-      data['results'] = this.results!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['totalResults'] = totalResults;
+    if (results != null) {
+      data['results'] = results!.map((v) => v.toJson()).toList();
     }
-    data['nextPage'] = this.nextPage;
+    data['nextPage'] = nextPage;
     return data;
   }
 }
@@ -41,7 +41,7 @@ class Results {
   String? pubDate;
   String? pubDateTZ;
   String? imageUrl;
-  Null? videoUrl;
+  Null videoUrl;
   String? sourceId;
   String? sourceName;
   int? sourcePriority;
@@ -113,32 +113,32 @@ class Results {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['article_id'] = this.articleId;
-    data['title'] = this.title;
-    data['link'] = this.link;
-    data['keywords'] = this.keywords;
-    data['creator'] = this.creator;
-    data['description'] = this.description;
-    data['content'] = this.content;
-    data['pubDate'] = this.pubDate;
-    data['pubDateTZ'] = this.pubDateTZ;
-    data['image_url'] = this.imageUrl;
-    data['video_url'] = this.videoUrl;
-    data['source_id'] = this.sourceId;
-    data['source_name'] = this.sourceName;
-    data['source_priority'] = this.sourcePriority;
-    data['source_url'] = this.sourceUrl;
-    data['source_icon'] = this.sourceIcon;
-    data['language'] = this.language;
-    data['country'] = this.country;
-    data['category'] = this.category;
-    data['sentiment'] = this.sentiment;
-    data['sentiment_stats'] = this.sentimentStats;
-    data['ai_tag'] = this.aiTag;
-    data['ai_region'] = this.aiRegion;
-    data['ai_org'] = this.aiOrg;
-    data['duplicate'] = this.duplicate;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['article_id'] = articleId;
+    data['title'] = title;
+    data['link'] = link;
+    data['keywords'] = keywords;
+    data['creator'] = creator;
+    data['description'] = description;
+    data['content'] = content;
+    data['pubDate'] = pubDate;
+    data['pubDateTZ'] = pubDateTZ;
+    data['image_url'] = imageUrl;
+    data['video_url'] = videoUrl;
+    data['source_id'] = sourceId;
+    data['source_name'] = sourceName;
+    data['source_priority'] = sourcePriority;
+    data['source_url'] = sourceUrl;
+    data['source_icon'] = sourceIcon;
+    data['language'] = language;
+    data['country'] = country;
+    data['category'] = category;
+    data['sentiment'] = sentiment;
+    data['sentiment_stats'] = sentimentStats;
+    data['ai_tag'] = aiTag;
+    data['ai_region'] = aiRegion;
+    data['ai_org'] = aiOrg;
+    data['duplicate'] = duplicate;
     return data;
   }
 }

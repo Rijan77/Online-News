@@ -47,11 +47,11 @@ class _HomeState extends State<Home> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.newspaper, size: 40, color: Colors.blue),
+                  const Icon(Icons.newspaper, size: 40, color: Colors.blue),
                   const SizedBox(height: 10),
                   Text(
                     "News ${index + 1}",
-                    style: TextStyle(fontWeight: FontWeight.w600),
+                    style: const TextStyle(fontWeight: FontWeight.w600),
                   ),
                 ],
               ),
