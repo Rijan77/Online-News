@@ -35,7 +35,7 @@ class _HomeState extends State<Home> {
         actions: const [
           Padding(
             padding: EdgeInsets.only(right: 16.0),
-            child: Icon(Icons.favorite, size: 30),
+            child: Icon(Icons.favorite, size: 35, color: Colors.redAccent,),
           )
         ],
       ),
