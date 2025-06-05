@@ -1,8 +1,8 @@
 
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/features/data/api/static_api.dart';
 
+import '../../data/api/static_api.dart';
 import 'fetch_state.dart';
 
 

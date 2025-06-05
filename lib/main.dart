@@ -1,7 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'features/presentation/bloc/login_cubit.dart';
+import 'package:news_app/features/data/api/static_api.dart';
+import 'features/presentation/bloc/fetch_cubit.dart';
 import 'features/presentation/views/home.dart';
 // Make sure this exists or remove
 
@@ -18,8 +19,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: BlocProvider(
-        create: (_) => LoginCubit(), // Or replace with your LoginCubit
+      home:
+      BlocProvider(
+        create: (_) => FetchNewsCubit(NewsApi()), // Or replace with your LoginCubit
         child:  const Home(), // Make sure Home is a valid widget
       ),
     );

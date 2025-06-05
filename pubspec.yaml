@@ -43,6 +43,7 @@ dependencies:
   bottom_navbar_with_indicator:
   http: any
   dio:
+  cached_network_image:
 dev_dependencies:
   flutter_test:
     sdk: flutter

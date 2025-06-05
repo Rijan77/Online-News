@@ -1,4 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../bloc/fetch_cubit.dart';
+import '../bloc/fetch_state.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -8,17 +14,24 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  // A list of ValueNotifiers for each news item's favorite status
-  final List<ValueNotifier<bool>> favoriteStatusList =
-  List.generate(10, (_) => ValueNotifier<bool>(false));
+  final List<ValueNotifier<bool>> favoriteStatusList = [];
 
   @override
   void dispose() {
-    // Dispose all ValueNotifiers to avoid memory leaks
     for (var notifier in favoriteStatusList) {
       notifier.dispose();
     }
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timestamp) {
+      final cubit = context.read<FetchNewsCubit>();
+      cubit.fetchNews();
+
+    });
   }
 
   @override
@@ -35,79 +48,112 @@ class _HomeState extends State<Home> {
         actions: const [
           Padding(
             padding: EdgeInsets.only(right: 16.0),
-            child: Icon(Icons.favorite, size: 35, color: Colors.redAccent,),
+            child: Icon(Icons.favorite, size: 35, color: Colors.redAccent),
           )
         ],
       ),
-      body: ListView.builder(
-        itemCount: 10,
-        itemBuilder: (BuildContext context, int index) {
-          return Container(
-            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: const [
-                BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2)),
-              ],
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // News Image
-                ClipRRect(
-                  borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-                  child: Image.asset(
-                    "Assets/news.webp",
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                    height: screenHeight * 0.25,
-                  ),
-                ),
+      body: BlocBuilder<FetchNewsCubit, FetchNews>(
+        builder: (context, state) {
+          if (state is InitialFetchNews || state is LoadingFetchNews) {
+            return const Center(
+              child: CircularProgressIndicator(color: Colors.blueGrey),
+            );
+          } else if (state is ErrorFetchNews) {
+            return Center(
+              child: Text(state.message),
+            );
+          } else if (state is SuccessFetchNews) {
+            final news = state.newModel;
 
-                // News Details (Title, Date, Favorite)
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
+            log("Length of API${news.length}");
+
+            // Initialize favorite status list if empty
+            if (favoriteStatusList.isEmpty) {
+              favoriteStatusList.addAll(
+                List.generate(news.length, (_) => ValueNotifier<bool>(false)),
+              );
+            }
+
+
+            return ListView.builder(
+              itemCount:  news.length,
+              itemBuilder: (BuildContext context, int index) {
+                final item = news[index];
+                return Container(
+                  margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: const [
+                      BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2)),
+                    ],
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        "Breaking News Headline",
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 8),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "   2025-06-03",
-                            style: TextStyle(color: Colors.grey[600], fontSize: 14),
+
+                      // // News Image
+                      if (item.imageUrl != null)
+
+                        ClipRRect(
+                          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+                          child: Image.network(
+                            item.imageUrl!,
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            height: screenHeight * 0.25,
+                            errorBuilder: (context, error, stackTrace) => Container(
+                              height: screenHeight * 0.25,
+                              color: Colors.grey[200],
+                              child: const Icon(Icons.broken_image),
+                            ),
                           ),
-                          // Favorite Button using ValueListenableBuilder
-                          ValueListenableBuilder<bool>(
-                            valueListenable: favoriteStatusList[index],
-                            builder: (context, isFavorite, _) {
-                              return IconButton(
-                                icon: Icon(
-                                  isFavorite
-                                      ? Icons.favorite
-                                      : Icons.favorite_border,
-                                  color: isFavorite ? Colors.red : Colors.grey,
+                        ),
+                      // News Details (Title, Date, Favorite)
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              item.title ?? "No title available",
+                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(height: 8),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  item.pubDate ?? "Date not available",
+                                  style: TextStyle(color: Colors.grey[600], fontSize: 14),
                                 ),
-                                onPressed: () {
-                                  favoriteStatusList[index].value = !isFavorite;
-                                },
-                              );
-                            },
-                          ),
-                        ],
+                                // Favorite Button
+                                ValueListenableBuilder<bool>(
+                                  valueListenable: favoriteStatusList[index],
+                                  builder: (context, isFavorite, _) {
+                                    return IconButton(
+                                      icon: Icon(
+                                        isFavorite ? Icons.favorite : Icons.favorite_border,
+                                        color: isFavorite ? Colors.red : Colors.grey,
+                                      ),
+                                      onPressed: () {
+                                        favoriteStatusList[index].value = !isFavorite;
+                                      },
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
-                ),
-              ],
-            ),
-          );
+                );
+              },
+            );
+          }
+          return const SizedBox.shrink();
         },
       ),
     );
