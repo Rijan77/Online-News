@@ -38,7 +38,7 @@ import 'model_api.dart';
 //   }
 // }
 
-class ApiService{
+class NewsApi{
   Future<List<NewsData>> getAll() async{
     String apiKey = "pub_eb489e3551f5456ca88d91408414c61c&q=Hot%20news";
     String apiUrl = "https://newsdata.io/api/1/latest?apikey=$apiKey&q=Hot%20news";

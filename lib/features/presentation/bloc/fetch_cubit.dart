@@ -8,16 +8,22 @@ import 'fetch_state.dart';
 
 class FetchNewsCubit extends Cubit<FetchNews> {
 
-  final ApiService _apiService;
+  final NewsApi _newsApi;
 
-  FetchNewsCubit(this._apiService): super(InitialFetchNews());
+  FetchNewsCubit(this._newsApi): super(InitialFetchNews());
 
   Future<void> fetchNews() async{
     emit(LoadingFetchNews());
 
-    final service = await _apiService.getAll();
-    emit(SuccessFetchNews());
-  }
+    try{
+      final newsService = await _newsApi.getAll();
+      emit(SuccessFetchNews(newsService));
+    }
+    catch(e){
+      emit(ErrorFetchNews(e.toString()));
+    }
 
+
+  }
 
 }
