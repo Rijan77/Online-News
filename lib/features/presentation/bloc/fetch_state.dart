@@ -1,11 +1,13 @@
 
 abstract class FetchNews{}
 
-class InitialState extends FetchNews{}
+class InitialFetchNews extends FetchNews{}
 
-class FetchLoading extends FetchNews{}
+class LoadingFetchNews extends FetchNews{
 
-class FetchSuccess extends FetchNews{}
+}
 
-class FetchError extends FetchNews{}
+class SuccessFetchNews extends FetchNews{}
+
+class ErrorFetchNews extends FetchNews{}
 
