@@ -1,8 +1,11 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'fetch_cubit.dart';
+abstract class FetchNews{}
 
-class FetchDataCubit extends Cubit<FetchData>{
-  FetchDataCubit(super.initialState);
+class InitialState extends FetchNews{}
 
-}
+class FetchLoading extends FetchNews{}
+
+class FetchSuccess extends FetchNews{}
+
+class FetchError extends FetchNews{}
+
