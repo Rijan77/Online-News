@@ -41,7 +41,6 @@ class Results {
   String? pubDate;
   String? pubDateTZ;
   String? imageUrl;
-  Null videoUrl;
   String? sourceId;
   String? sourceName;
   int? sourcePriority;
@@ -68,7 +67,6 @@ class Results {
         this.pubDate,
         this.pubDateTZ,
         this.imageUrl,
-        this.videoUrl,
         this.sourceId,
         this.sourceName,
         this.sourcePriority,
@@ -95,7 +93,6 @@ class Results {
     pubDate = json['pubDate'];
     pubDateTZ = json['pubDateTZ'];
     imageUrl = json['image_url'];
-    videoUrl = json['video_url'];
     sourceId = json['source_id'];
     sourceName = json['source_name'];
     sourcePriority = json['source_priority'];
@@ -124,7 +121,6 @@ class Results {
     data['pubDate'] = pubDate;
     data['pubDateTZ'] = pubDateTZ;
     data['image_url'] = imageUrl;
-    data['video_url'] = videoUrl;
     data['source_id'] = sourceId;
     data['source_name'] = sourceName;
     data['source_priority'] = sourcePriority;
