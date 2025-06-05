@@ -6,7 +6,11 @@ import 'fetch_state.dart';
 
 
 class FetchNewsCubit extends Cubit<FetchNews> {
-  FetchNewsCubit(super.initialState);
+  FetchNewsCubit(): super(InitialFetchNews());
+
+  Future<void> fetchNews() async{
+    emit(LoadingFetchNews());
+  }
 
 
 }

@@ -1,7 +1,7 @@
 class Model {
   String? status;
   int? totalResults;
-  List<Results>? results;
+  List<NewsData>? results;
   String? nextPage;
 
   Model({this.status, this.totalResults, this.results, this.nextPage});
@@ -10,9 +10,9 @@ class Model {
     status = json['status'];
     totalResults = json['totalResults'];
     if (json['results'] != null) {
-      results = <Results>[];
+      results = <NewsData>[];
       json['results'].forEach((v) {
-        results!.add(Results.fromJson(v));
+        results!.add(NewsData.fromJson(v));
       });
     }
     nextPage = json['nextPage'];
@@ -30,7 +30,7 @@ class Model {
   }
 }
 
-class Results {
+class NewsData {
   String? articleId;
   String? title;
   String? link;
@@ -56,7 +56,7 @@ class Results {
   String? aiOrg;
   bool? duplicate;
 
-  Results(
+  NewsData(
       {this.articleId,
         this.title,
         this.link,
@@ -82,7 +82,7 @@ class Results {
         this.aiOrg,
         this.duplicate});
 
-  Results.fromJson(Map<String, dynamic> json) {
+  NewsData.fromJson(Map<String, dynamic> json) {
     articleId = json['article_id'];
     title = json['title'];
     link = json['link'];
