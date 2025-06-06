@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 
@@ -49,14 +50,18 @@ class NewsApi{
       final jsonData = json.decode(response.body);
       final List article = jsonData['results'];
 
+      log("Article $article");
+
      final result=  article.map((e){
         return NewsData(
           articleId: e["articleId"],
           title: e["title"],
-          imageUrl: e["imageUrl"],
+          imageUrl: e["image_url"],
           pubDate: e["pubDate"]
         );
       }).toList();
+ 
+
      return result;
     } else{
       throw "Somethings wants wrong ${response.statusCode}";

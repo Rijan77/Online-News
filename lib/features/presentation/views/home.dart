@@ -79,6 +79,8 @@ class _HomeState extends State<Home> {
               itemCount:  news.length,
               itemBuilder: (BuildContext context, int index) {
                 final item = news[index];
+
+                // log("Total Items ${item.toJson()}");
                 return Container(
                   margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
                   decoration: BoxDecoration(
@@ -93,11 +95,14 @@ class _HomeState extends State<Home> {
                     children: [
 
                       // // News Image
-                      if (item.imageUrl != null)
+                     
 
                         ClipRRect(
                           borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-                          child: Image.network(
+
+                          child:
+                          item.imageUrl != null
+                              ? Image.network(
                             item.imageUrl!,
                             fit: BoxFit.cover,
                             width: double.infinity,
@@ -105,9 +110,15 @@ class _HomeState extends State<Home> {
                             errorBuilder: (context, error, stackTrace) => Container(
                               height: screenHeight * 0.25,
                               color: Colors.grey[200],
-                              child: const Icon(Icons.broken_image),
+                              child: const Icon(Icons.broken_image, size: 50),
                             ),
-                          ),
+                          )
+                              : Container(
+                            height: screenHeight * 0.25,
+                            color: Colors.grey[200],
+                            child: const Center(child: Text("No Image Available")),
+                          )
+
                         ),
                       // News Details (Title, Date, Favorite)
                       Padding(
