@@ -60,8 +60,6 @@ class NewsApi{
           pubDate: e["pubDate"]
         );
       }).toList();
- 
-
      return result;
     } else{
       throw "Somethings wants wrong ${response.statusCode}";
