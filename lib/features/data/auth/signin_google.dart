@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/common/widgets/custom_dialog.dart';
-import '../../presentation/views/home.dart';
 import 'google_auth.dart';
 
 class GoogleSignIn {

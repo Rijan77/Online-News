@@ -29,10 +29,10 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         initialRoute: '/',
         routes: {
-          '/': (contex) => Login(),
-          '/second': (context)=> Registration(),
-          '/third': (context)=>Home(),
-          '/fourth': (context)=>FavoritesPage(),
+          '/': (contex) => const Login(),
+          '/second': (context)=> const Registration(),
+          '/third': (context)=>const Home(),
+          '/fourth': (context)=>const FavoritesPage(),
           // '/fifth': (context)=>
 
         },

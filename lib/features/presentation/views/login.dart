@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/core/common/widgets/button_widget.dart';
 import 'package:news_app/core/common/widgets/text_field_widget.dart';
 import 'package:news_app/features/data/auth/signin_google.dart';
-import 'package:news_app/features/presentation/views/registration.dart';
 import 'package:news_app/features/presentation/bloc/login_cubit.dart';
 import 'package:news_app/features/presentation/bloc/login_state.dart';
 
