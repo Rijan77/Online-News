@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:news_app/core/common/widgets/button_widget.dart';
 import 'package:news_app/core/common/widgets/text_field_widget.dart';
 
+import '../../data/auth/signin_google.dart';
 import 'login.dart';
 
 class Registration extends StatefulWidget {
@@ -79,7 +80,9 @@ class _RegistrationState extends State<Registration> {
             ),
 
               isLoading: false,
-              onTap: (){},
+              onTap: (){
+                GoogleSignIn().loginWithGoogle(context);
+              },
 
             ),
 
@@ -109,3 +112,4 @@ class _RegistrationState extends State<Registration> {
     );
   }
 }
+
