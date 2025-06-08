@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../data/api/model_api.dart';
 
 class FavoritesPage extends StatelessWidget {
   const FavoritesPage({super.key});
@@ -12,7 +11,7 @@ class FavoritesPage extends StatelessWidget {
     return Scaffold(
 
       appBar: AppBar(
-          title: Center(child: const Text("Favorites News", style: TextStyle(fontWeight: FontWeight.w700),)),
+          title: const Center(child: Text("Favorites News", style: TextStyle(fontWeight: FontWeight.w700),)),
         backgroundColor: Colors.blueGrey.shade200,
       ),
 
