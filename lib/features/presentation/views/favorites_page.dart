@@ -7,7 +7,10 @@ class FavoritesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text("Favorites News")),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 45),
+          child: Text("Favorites News",style: TextStyle(fontWeight: FontWeight.w700),),
+        ),
         backgroundColor: Colors.blueGrey.shade200,
       ),
       // body: StreamBuilder<QuerySnapshot>(
