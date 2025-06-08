@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/features/data/api/static_api.dart';
 import 'features/presentation/bloc/fetch_cubit.dart';
 import 'features/presentation/views/home.dart';
+import 'features/presentation/views/login.dart';
 // Make sure this exists or remove
 
 Future<void> main() async {
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
       home:
       BlocProvider(
         create: (_) => FetchNewsCubit(NewsApi()), // Or replace with your LoginCubit
-        child:  const Home(), // Make sure Home is a valid widget
+        child:  const Login(), // Make sure Home is a valid widget
       ),
     );
   }
