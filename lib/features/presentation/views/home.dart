@@ -87,12 +87,12 @@ class _HomeState extends State<Home> {
 
             log("Length of API${news.length}");
 
-            // Initialize favorite status list if empty
-            if (favoriteStatusList.isEmpty) {
-              favoriteStatusList.addAll(
-                List.generate(news.length, (_) => ValueNotifier<bool>(false)),
-              );
-            }
+            // // Initialize favorite status list if empty
+            // if (favoriteStatusList.isEmpty) {
+            //   favoriteStatusList.addAll(
+            //     List.generate(news.length, (_) => ValueNotifier<bool>(false)),
+            //   );
+            // }
 
 
             return RefreshIndicator(

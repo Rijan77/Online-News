@@ -43,7 +43,6 @@ dependencies:
   google_sign_in:
   bottom_navbar_with_indicator:
   http: any
-  dio:
   cached_network_image:
   timeago: ^3.6.0
 dev_dependencies:
