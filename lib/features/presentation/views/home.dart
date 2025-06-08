@@ -1,9 +1,12 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/features/presentation/views/login.dart';
+import 'package:news_app/features/presentation/views/favorites_page.dart';
 
+import '../../data/api/model_api.dart';
 import '../bloc/fetch_cubit.dart';
 import '../bloc/fetch_state.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -57,10 +60,15 @@ class _HomeState extends State<Home> {
             style: TextStyle(fontWeight: FontWeight.w700),
           ),
         ),
-        actions: const [
+        actions: [
           Padding(
-            padding: EdgeInsets.only(right: 16.0),
-            child: Icon(Icons.favorite, size: 35, color: Colors.redAccent),
+            padding: const EdgeInsets.only(right: 16.0),
+            child: IconButton(onPressed: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const FavoritesPage()),
+              );
+            }, icon: const Icon(Icons.favorite, size: 35,))
           )
         ],
       ),
@@ -173,7 +181,7 @@ class _HomeState extends State<Home> {
                                           isFavorite ? Icons.favorite : Icons.favorite_border,
                                           color: isFavorite ? Colors.red : Colors.grey,
                                         ),
-                                        onPressed: () {
+                                        onPressed: () async {
                                           favoriteStatusList[index].value = !isFavorite;
                                         },
                                       );
