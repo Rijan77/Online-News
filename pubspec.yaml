@@ -44,6 +44,7 @@ dependencies:
   http: any
   dio:
   cached_network_image:
+  timeago: ^3.6.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

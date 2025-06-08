@@ -5,6 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/fetch_cubit.dart';
 import '../bloc/fetch_state.dart';
+import 'package:timeago/timeago.dart' as timeago;
+
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -33,6 +35,8 @@ class _HomeState extends State<Home> {
 
     });
   }
+
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
 
   @override
   Widget build(BuildContext context) {
@@ -75,93 +79,108 @@ class _HomeState extends State<Home> {
             }
 
 
-            return ListView.builder(
-              itemCount:  news.length,
-              itemBuilder: (BuildContext context, int index) {
-                final item = news[index];
+            return RefreshIndicator(
+              key: _refreshIndicatorKey,
+              color: Colors.white,
+              backgroundColor: Colors.blueGrey,
+              strokeWidth: 3.0,
+              onRefresh: ()async {
+                 // return Future<void>.delayed(Duration(seconds: 3));
+                await context.read<FetchNewsCubit>().fetchNews();
+              },
+              child: ListView.builder(
+                itemCount:  news.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final item = news[index];
 
-                // log("Total Items ${item.toJson()}");
-                return Container(
-                  margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: const [
-                      BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2)),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                  // log("Total Items ${item.toJson()}");
+                  return Container(
+                    margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: const [
+                        BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2)),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
 
-                      // // News Image
-                     
+                        // // News Image
 
-                        ClipRRect(
-                          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
 
-                          child:
-                          item.imageUrl != null
-                              ? Image.network(
-                            item.imageUrl!,
-                            fit: BoxFit.cover,
-                            width: double.infinity,
-                            height: screenHeight * 0.25,
-                            errorBuilder: (context, error, stackTrace) => Container(
+                          ClipRRect(
+                            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+
+                            child:
+                            item.imageUrl != null
+                                ? Image.network(
+                              item.imageUrl!,
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                              height: screenHeight * 0.25,
+                              errorBuilder: (context, error, stackTrace) => Container(
+                                height: screenHeight * 0.25,
+                                color: Colors.grey[200],
+                                child: const Icon(Icons.broken_image, size: 50),
+                              ),
+                            )
+                                : Container(
                               height: screenHeight * 0.25,
                               color: Colors.grey[200],
-                              child: const Icon(Icons.broken_image, size: 50),
-                            ),
-                          )
-                              : Container(
-                            height: screenHeight * 0.25,
-                            color: Colors.grey[200],
-                            child: const Center(child: Text("No Image Available")),
-                          )
+                              child: const Center(child: Text("No Image Available")),
+                            )
 
+                          ),
+                        // News Details (Title, Date, Favorite)
+                        Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                item.title ?? "No title available",
+                                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(height: 8),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    // item.pubDate ?? "Date not available",
+                                    // style: TextStyle(color: Colors.grey[600], fontSize: 14),
+
+                                    item.pubDate != null
+                                        ? timeago.format(DateTime.parse(item.pubDate!), allowFromNow: true)
+                                    : "Date not available",
+                                      style: TextStyle(color: Colors.blueGrey, fontSize: 15)
+                                    ),
+                                  // Favorite Button
+                                  ValueListenableBuilder<bool>(
+                                    valueListenable: favoriteStatusList[index],
+                                    builder: (context, isFavorite, _) {
+                                      return IconButton(
+                                        icon: Icon(
+                                          isFavorite ? Icons.favorite : Icons.favorite_border,
+                                          color: isFavorite ? Colors.red : Colors.grey,
+                                        ),
+                                        onPressed: () {
+                                          favoriteStatusList[index].value = !isFavorite;
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                      // News Details (Title, Date, Favorite)
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              item.title ?? "No title available",
-                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(height: 8),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  item.pubDate ?? "Date not available",
-                                  style: TextStyle(color: Colors.grey[600], fontSize: 14),
-                                ),
-                                // Favorite Button
-                                ValueListenableBuilder<bool>(
-                                  valueListenable: favoriteStatusList[index],
-                                  builder: (context, isFavorite, _) {
-                                    return IconButton(
-                                      icon: Icon(
-                                        isFavorite ? Icons.favorite : Icons.favorite_border,
-                                        color: isFavorite ? Colors.red : Colors.grey,
-                                      ),
-                                      onPressed: () {
-                                        favoriteStatusList[index].value = !isFavorite;
-                                      },
-                                    );
-                                  },
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
+                      ],
+                    ),
+                  );
+                },
+              ),
             );
           }
           return const SizedBox.shrink();
