@@ -23,7 +23,6 @@ class GoogleSignIn {
             print("User: ${user.user?.displayName}, Email: ${user.user?.email}");
             Navigator.pushReplacement(
               context,
-
               MaterialPageRoute(builder: (context) => const Home()),
             );
 

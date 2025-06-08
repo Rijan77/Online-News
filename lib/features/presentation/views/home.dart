@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/features/presentation/views/login.dart';
 
 import '../bloc/fetch_cubit.dart';
 import '../bloc/fetch_state.dart';
@@ -44,11 +45,18 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Online News",
-          style: TextStyle(fontWeight: FontWeight.w700),
+        backgroundColor: Colors.blueGrey.shade200,
+        leading: InkWell(
+          onTap: (){
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Login()));
+          },
+            child: Icon(Icons.arrow_back, size: 30,)),
+        title: Center(
+          child: const Text(
+            "Online News",
+            style: TextStyle(fontWeight: FontWeight.w700),
+          ),
         ),
-        centerTitle: true,
         actions: const [
           Padding(
             padding: EdgeInsets.only(right: 16.0),

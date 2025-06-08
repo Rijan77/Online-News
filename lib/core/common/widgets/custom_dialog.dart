@@ -32,7 +32,7 @@ import 'package:flutter/material.dart';
           ),
           title: Row(
             children: [
-              const Icon(Icons.check_circle, color: Colors.green, size: 28),
+              const Icon(Icons.check_circle, color: Colors.blueGrey, size: 28),
               const SizedBox(width: 8),
               Text(title, style:const TextStyle(
                 fontSize: 20,
