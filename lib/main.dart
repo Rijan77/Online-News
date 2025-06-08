@@ -20,12 +20,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home:
-      BlocProvider(
-        create: (_) => LoginCubit(), // Or replace with your LoginCubit
-        child:  Login(), // Make sure Home is a valid widget
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => LoginCubit()),
+        BlocProvider(create: (_) => FetchNewsCubit(NewsApi())),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Login(), // or Home(), based on auth state
       ),
     );
   }
