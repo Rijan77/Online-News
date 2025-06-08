@@ -7,11 +7,8 @@ import 'package:news_app/features/presentation/views/login.dart';
 import 'package:news_app/features/presentation/views/favorites_page.dart';
 
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/safe_area_values.dart';
-import 'package:top_snackbar_flutter/tap_bounce_container.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
-import '../../../core/common/widgets/custom_dialog.dart';
 import '../../data/api/model_api.dart';
 import '../bloc/fetch_cubit.dart';
 import '../bloc/fetch_state.dart';
@@ -214,7 +211,7 @@ class _HomeState extends State<Home> {
 
                                             showTopSnackBar(
                                               Overlay.of(context),
-                                              CustomSnackBar.info(
+                                              const CustomSnackBar.info(
                                                 message: "News Added to Favorite",
                                                 backgroundColor: Colors.blueGrey,
 

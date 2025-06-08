@@ -5,7 +5,6 @@ import 'package:news_app/features/data/api/static_api.dart';
 import 'package:news_app/features/presentation/views/home.dart';
 import 'features/presentation/bloc/fetch_cubit.dart';
 import 'features/presentation/bloc/login_cubit.dart';
-import 'features/presentation/views/login.dart';
 // Make sure this exists or remove
 
 Future<void> main() async {
