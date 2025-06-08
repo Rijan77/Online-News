@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/features/data/api/static_api.dart';
+import 'package:news_app/features/presentation/views/home.dart';
 import 'features/presentation/bloc/fetch_cubit.dart';
 import 'features/presentation/bloc/login_cubit.dart';
 import 'features/presentation/views/login.dart';
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Login(), // or Home(), based on auth state
+        home: Home(), // or Home(), based on auth state
       ),
     );
   }

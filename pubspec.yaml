@@ -45,6 +45,7 @@ dependencies:
   http: any
   cached_network_image:
   timeago: ^3.6.0
+  top_snackbar_flutter:
 dev_dependencies:
   flutter_test:
     sdk: flutter

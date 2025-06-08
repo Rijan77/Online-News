@@ -1,13 +1,41 @@
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/features/presentation/views/login.dart';
 import 'package:news_app/features/presentation/views/favorites_page.dart';
 
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/safe_area_values.dart';
+import 'package:top_snackbar_flutter/tap_bounce_container.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
+
+import '../../../core/common/widgets/custom_dialog.dart';
+import '../../data/api/model_api.dart';
 import '../bloc/fetch_cubit.dart';
 import '../bloc/fetch_state.dart';
 import 'package:timeago/timeago.dart' as timeago;
+
+Future<void> toggleFavorite(NewsData news, bool isCurrentlyFavorite) async {
+  final favoriteRef = FirebaseFirestore.instance.collection('favorites');
+
+  try {
+    if (isCurrentlyFavorite) {
+      // Remove from favorites
+      await favoriteRef.doc(news.articleId).delete();
+    } else {
+      // Add to favorites
+      if (news.articleId != null) {
+        await favoriteRef.doc(news.articleId).set(news.toJson());
+      }
+    }
+  } catch (e) {
+    log("Error toggling favorite: $e");
+    rethrow;
+  }
+}
+
 
 
 class Home extends StatefulWidget {
@@ -85,12 +113,13 @@ class _HomeState extends State<Home> {
 
             log("Length of API${news.length}");
 
-            // // Initialize favorite status list if empty
-            // if (favoriteStatusList.isEmpty) {
-            //   favoriteStatusList.addAll(
-            //     List.generate(news.length, (_) => ValueNotifier<bool>(false)),
-            //   );
-            // }
+            // Initialize favorite status list if empty
+            if (favoriteStatusList.isEmpty) {
+              // favoriteStatusList.clear();
+              favoriteStatusList.addAll(
+                List.generate(news.length, (_) => ValueNotifier<bool>(false)),
+              );
+            }
 
 
             return RefreshIndicator(
@@ -181,6 +210,18 @@ class _HomeState extends State<Home> {
                                         ),
                                         onPressed: () async {
                                           favoriteStatusList[index].value = !isFavorite;
+
+
+                                            showTopSnackBar(
+                                              Overlay.of(context),
+                                              CustomSnackBar.info(
+                                                message: "News Added to Favorite",
+                                                backgroundColor: Colors.blueGrey,
+
+                                              ),
+                                            );
+
+
                                         },
                                       );
                                     },
