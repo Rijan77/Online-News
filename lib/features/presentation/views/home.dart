@@ -48,11 +48,11 @@ class _HomeState extends State<Home> {
         backgroundColor: Colors.blueGrey.shade200,
         leading: InkWell(
           onTap: (){
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Login()));
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const Login()));
           },
-            child: Icon(Icons.arrow_back, size: 30,)),
-        title: Center(
-          child: const Text(
+            child: const Icon(Icons.arrow_back, size: 30,)),
+        title: const Center(
+          child: Text(
             "Online News",
             style: TextStyle(fontWeight: FontWeight.w700),
           ),
@@ -162,7 +162,7 @@ class _HomeState extends State<Home> {
                                     item.pubDate != null
                                         ? timeago.format(DateTime.parse(item.pubDate!), allowFromNow: true)
                                     : "Date not available",
-                                      style: TextStyle(color: Colors.blueGrey, fontSize: 15)
+                                      style: const TextStyle(color: Colors.blueGrey, fontSize: 15)
                                     ),
                                   // Favorite Button
                                   ValueListenableBuilder<bool>(

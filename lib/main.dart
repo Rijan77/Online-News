@@ -4,8 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/features/data/api/static_api.dart';
 import 'features/presentation/bloc/fetch_cubit.dart';
 import 'features/presentation/bloc/login_cubit.dart';
-import 'features/presentation/bloc/login_state.dart';
-import 'features/presentation/views/home.dart';
 import 'features/presentation/views/login.dart';
 // Make sure this exists or remove
 
@@ -25,7 +23,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => LoginCubit()),
         BlocProvider(create: (_) => FetchNewsCubit(NewsApi())),
       ],
-      child: MaterialApp(
+      child: const MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Login(), // or Home(), based on auth state
       ),
