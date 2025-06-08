@@ -21,6 +21,8 @@ Future<void> toggleFavorite(NewsData news, bool isCurrentlyFavorite) async {
     if (isCurrentlyFavorite) {
       // Remove from favorites
       await favoriteRef.doc(news.articleId).delete();
+
+
     } else {
       // Add to favorites
       if (news.articleId != null) {
@@ -205,18 +207,41 @@ class _HomeState extends State<Home> {
                                           isFavorite ? Icons.favorite : Icons.favorite_border,
                                           color: isFavorite ? Colors.red : Colors.grey,
                                         ),
+
+
                                         onPressed: () async {
                                           favoriteStatusList[index].value = !isFavorite;
 
-
+                                          if(!isFavorite){
                                             showTopSnackBar(
                                               Overlay.of(context),
                                               const CustomSnackBar.info(
-                                                message: "News Added to Favorite",
+                                                message: "Added to Favorite",
                                                 backgroundColor: Colors.blueGrey,
 
                                               ),
                                             );
+                                          }else{
+                                            showTopSnackBar(
+                                              Overlay.of(context),
+                                              const CustomSnackBar.info(
+                                                message: "Remove from Favorite",
+                                                backgroundColor: Colors.redAccent,
+
+                                              ),
+                                            );
+                                          }
+
+
+
+                                            // showTopSnackBar(
+                                            //   Overlay.of(context),
+                                            //   const CustomSnackBar.info(
+                                            //     message: "News Added to Favorite",
+                                            //     backgroundColor: Colors.blueGrey,
+                                            //
+                                            //   ),
+                                            // );
 
 
                                         },
