@@ -21,10 +21,11 @@ class GoogleSignIn {
 
           onConfirm: () {
             print("User: ${user.user?.displayName}, Email: ${user.user?.email}");
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const Home()),
-            );
+            // Navigator.pushReplacement(
+            //   context,
+            //   MaterialPageRoute(builder: (context) => const Home()),
+
+            Navigator.pushNamed(context, "/third");
 
           },
         );

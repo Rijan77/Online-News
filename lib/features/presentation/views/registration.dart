@@ -93,7 +93,8 @@ class _RegistrationState extends State<Registration> {
                   fontWeight: FontWeight.w600
                 ),),
                 TextButton(onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> const Login()));
+                  Navigator.pop(context);
+                  // Navigator.push(context, MaterialPageRoute(builder: (context)=> const Login()));
                 }, child: const Text("Login", style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold

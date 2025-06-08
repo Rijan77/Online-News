@@ -76,7 +76,7 @@ class _HomeState extends State<Home> {
         backgroundColor: Colors.blueGrey.shade200,
         leading: InkWell(
           onTap: (){
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const Login()));
+            Navigator.pop(context);
           },
             child: const Icon(Icons.arrow_back, size: 30,)),
         title: const Center(
@@ -89,10 +89,13 @@ class _HomeState extends State<Home> {
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
             child: IconButton(onPressed: (){
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const FavoritesPage()),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (_) => const FavoritesPage()),
+              // );
+
+              Navigator.pushNamed(context, '/fourth');
+
             }, icon: const Icon(Icons.favorite, size: 35,))
           )
         ],

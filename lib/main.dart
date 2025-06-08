@@ -2,7 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/features/data/api/static_api.dart';
+import 'package:news_app/features/presentation/views/favorites_page.dart';
 import 'package:news_app/features/presentation/views/home.dart';
+import 'package:news_app/features/presentation/views/login.dart';
+import 'package:news_app/features/presentation/views/registration.dart';
 import 'features/presentation/bloc/fetch_cubit.dart';
 import 'features/presentation/bloc/login_cubit.dart';
 // Make sure this exists or remove
@@ -23,9 +26,18 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => LoginCubit()),
         BlocProvider(create: (_) => FetchNewsCubit(NewsApi())),
       ],
-      child: const MaterialApp(
+      child: MaterialApp(
+        initialRoute: '/',
+        routes: {
+          '/': (contex) => Login(),
+          '/second': (context)=> Registration(),
+          '/third': (context)=>Home(),
+          '/fourth': (context)=>FavoritesPage(),
+          // '/fifth': (context)=>
+
+        },
         debugShowCheckedModeBanner: false,
-        home: Home(), // or Home(), based on auth state
+        // home: const Home(), // or Home(), based on auth state
       ),
     );
   }
