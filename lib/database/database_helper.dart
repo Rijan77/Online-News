@@ -30,7 +30,7 @@ class DatabaseHelper{
 
   }
 
-  Future<int> insertUser(UserFavorite userFavorite) async {
+  Future<int> insertFavorite(UserFavorite userFavorite) async {
     Database db = await instance.db;
     return await db.insert('user_favorite', userFavorite.toMap());
   }
@@ -40,7 +40,7 @@ class DatabaseHelper{
     return await db.query('user_favorite');
   }
 
-  Future<int> deleteUser(int id) async {
+  Future<int> deleteFavorite(int id) async {
     Database db = await instance.db;
     return await db.delete('user_favorite', where: 'id = ?', whereArgs: [id]);
   }
