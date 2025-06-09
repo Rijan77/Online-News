@@ -12,7 +12,6 @@ import '../bloc/fetch_cubit.dart';
 import '../bloc/fetch_state.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-import 'favorites_page.dart';
 
 Future<void> toggleFavorite(NewsData news, bool isCurrentlyFavorite, BuildContext context) async {
   final currentUser = FirebaseAuth.instance.currentUser;
@@ -46,9 +45,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final List<ValueNotifier<bool>> favoriteStatusList = [];
   User? _currentUser;
-
-  final DatabaseHelper _dbHelper = DatabaseHelper.instance;
-
 
   @override
   void initState() {
@@ -231,24 +227,19 @@ class _HomeState extends State<Home> {
                                         ),
                                         onPressed: () async {
                                           try {
-                                            await toggleFavorite(
-                                                item, isFavorite, context);
-                                            if (
-                                            favoriteStatusList[index].value =
-                                            !isFavorite) {
-                                              showTopSnackBar(
-                                                Overlay.of(context),
-                                                CustomSnackBar.info(
-                                                  message: "Added to favorites",
-                                                  backgroundColor: isFavorite
-                                                      ? Colors.redAccent
-                                                      : Colors.blueGrey,
-                                                ),
-                                              );
-                                            } else {
+                                            await toggleFavorite(item, isFavorite, context);
+                                            favoriteStatusList[index].value = !isFavorite;
 
-
-                                            }
+                                            showTopSnackBar(
+                                              Overlay.of(context),
+                                              CustomSnackBar.info(
+                                                message: isFavorite
+                                                    ? "Removed from favorites"
+                                                    : "Added to favorites",
+                                                backgroundColor:
+                                                isFavorite ? Colors.redAccent : Colors.blueGrey,
+                                              ),
+                                            );
                                           } catch (e) {
                                             showTopSnackBar(
                                               Overlay.of(context),

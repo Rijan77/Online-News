@@ -35,17 +35,12 @@ class _FavoritesPageState extends State<FavoritesPage> {
     if (mounted) setState(() {});
   }
 
-  Future<void> removeFavorite(NewsData item) async {
+  Future<void>  removeFavorite(NewsData item)  async {
     if (_currentUser?.email == null) return;
 
     try {
       await _dbHelper.deleteFavorite(item.articleId!, _currentUser!.email!);
       if (mounted) {
-
-        // ScaffoldMessenger.of(context).showSnackBar(
-        //   const SnackBar(content: Text('Removed from favorites')),
-        // );
-        // _loadFavorites();
 
         showTopSnackBar(
           Overlay.of(context),
@@ -181,7 +176,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                       style: const TextStyle(color: Colors.blueGrey, fontSize: 15),
                     ),
                     IconButton(
-                      icon: const Icon(Icons.favorite, color: Colors.red),
+                      icon: const Icon(Icons.favorite_sharp , color: Colors.red),
                       onPressed: () => removeFavorite(item),
                     ),
                   ],
