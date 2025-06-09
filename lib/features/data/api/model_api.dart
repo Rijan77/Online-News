@@ -1,140 +1,84 @@
 class NewsModel {
-  String? status;
-  int? totalResults;
-  List<NewsData>? results;
-  String? nextPage;
+  final String? status;
+  final int? totalResults;
+  final List<NewsData> results;
+  final String? nextPage;
 
-  NewsModel({this.status, this.totalResults, this.results, this.nextPage});
+  NewsModel({
+    this.status,
+    this.totalResults,
+    required this.results,
+    this.nextPage,
+  });
 
-  NewsModel.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    totalResults = json['totalResults'];
-    if (json['results'] != null) {
-      results = <NewsData>[];
-      json['results'].forEach((v) {
-        results!.add(NewsData.fromJson(v));
-      });
-    }
-    nextPage = json['nextPage'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['totalResults'] = totalResults;
-    if (results != null) {
-      data['results'] = results!.map((v) => v.toJson()).toList();
-    }
-    data['nextPage'] = nextPage;
-    return data;
+  factory NewsModel.fromJson(Map<String, dynamic> json) {
+    return NewsModel(
+      status: json['status'],
+      totalResults: json['totalResults'],
+      results: (json['results'] as List)
+          .map((item) => NewsData.fromJson(item))
+          .toList(),
+      nextPage: json['nextPage'],
+    );
   }
 }
 
 class NewsData {
-  String? articleId;
-  String? title;
-  String? link;
-  List<String>? keywords;
-  List<String>? creator;
-  String? description;
-  String? content;
-  String? pubDate;
-  String? pubDateTZ;
-  String? imageUrl;
-  String? sourceId;
-  String? sourceName;
-  int? sourcePriority;
-  String? sourceUrl;
-  String? sourceIcon;
-  String? language;
-  List<String>? country;
-  List<String>? category;
-  String? sentiment;
-  String? sentimentStats;
-  String? aiTag;
-  String? aiRegion;
-  String? aiOrg;
-  bool? duplicate;
+  final String? articleId;
+  final String? title;
+  final String? link;
+  final List<String>? keywords;
+  final List<String>? creator;
+  final String? description;
+  final String? content;
+  final String? pubDate;
+  final String? imageUrl;
+  final String? sourceName;
 
-  NewsData(
-      {this.articleId,
-        this.title,
-        this.link,
-        this.keywords,
-        this.creator,
-        this.description,
-        this.content,
-        this.pubDate,
-        this.pubDateTZ,
-        this.imageUrl,
-        this.sourceId,
-        this.sourceName,
-        this.sourcePriority,
-        this.sourceUrl,
-        this.sourceIcon,
-        this.language,
-        this.country,
-        this.category,
-        this.sentiment,
-        this.sentimentStats,
-        this.aiTag,
-        this.aiRegion,
-        this.aiOrg,
-        this.duplicate});
+  NewsData({
+    this.articleId,
+    this.title,
+    this.link,
+    this.keywords,
+    this.creator,
+    this.description,
+    this.content,
+    this.pubDate,
+    this.imageUrl,
+    this.sourceName,
+  });
 
-  NewsData.fromJson(Map<String, dynamic> json) {
-    articleId = json['article_id'];
-    title = json['title'];
-    link = json['link'];
-    keywords = json['keywords'].cast<String>();
-    creator = json['creator'].cast<String>();
-    description = json['description'];
-    content = json['content'];
-    pubDate = json['pubDate'];
-    pubDateTZ = json['pubDateTZ'];
-    imageUrl = json['image_url'];
-    sourceId = json['source_id'];
-    sourceName = json['source_name'];
-    sourcePriority = json['source_priority'];
-    sourceUrl = json['source_url'];
-    sourceIcon = json['source_icon'];
-    language = json['language'];
-    country = json['country'].cast<String>();
-    category = json['category'].cast<String>();
-    sentiment = json['sentiment'];
-    sentimentStats = json['sentiment_stats'];
-    aiTag = json['ai_tag'];
-    aiRegion = json['ai_region'];
-    aiOrg = json['ai_org'];
-    duplicate = json['duplicate'];
+  factory NewsData.fromJson(Map<String, dynamic> json) {
+    return NewsData(
+      articleId: json['article_id'],
+      title: json['title'],
+      link: json['link'],
+      keywords: json['keywords'] != null
+          ? List<String>.from(json['keywords'])
+          : null,
+      creator: json['creator'] != null
+          ? List<String>.from(json['creator'])
+          : null,
+      description: json['description'],
+      content: json['content'],
+      pubDate: json['pubDate'],
+      imageUrl: json['image_url'],
+      sourceName: json['source_name'],
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['article_id'] = articleId;
-    data['title'] = title;
-    data['link'] = link;
-    data['keywords'] = keywords;
-    data['creator'] = creator;
-    data['description'] = description;
-    data['content'] = content;
-    data['pubDate'] = pubDate;
-    data['pubDateTZ'] = pubDateTZ;
-    data['image_url'] = imageUrl;
-    data['source_id'] = sourceId;
-    data['source_name'] = sourceName;
-    data['source_priority'] = sourcePriority;
-    data['source_url'] = sourceUrl;
-    data['source_icon'] = sourceIcon;
-    data['language'] = language;
-    data['country'] = country;
-    data['category'] = category;
-    data['sentiment'] = sentiment;
-    data['sentiment_stats'] = sentimentStats;
-    data['ai_tag'] = aiTag;
-    data['ai_region'] = aiRegion;
-    data['ai_org'] = aiOrg;
-    data['duplicate'] = duplicate;
-    return data;
+    return {
+      'article_id': articleId,
+      'title': title,
+      'link': link,
+      'keywords': keywords,
+      'creator': creator,
+      'description': description,
+      'content': content,
+      'pubDate': pubDate,
+      'image_url': imageUrl,
+      'source_name': sourceName,
+    };
   }
 }

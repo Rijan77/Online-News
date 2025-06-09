@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         initialRoute: '/',
         routes: {
-          '/': (contex) => const Login(),
+          '/': (contex) => const Home(),
           '/second': (context)=> const Registration(),
           '/third': (context)=>const Home(),
           '/fourth': (context)=>const FavoritesPage(),

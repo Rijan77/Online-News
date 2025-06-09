@@ -1,7 +1,74 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:timeago/timeago.dart' as timeago;
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
-class FavoritesPage extends StatelessWidget {
-  const FavoritesPage({super.key});
+import '../../../database/database_helper.dart';
+import '../../data/api/model_api.dart';
+
+class FavoritesPage extends StatefulWidget {
+  const FavoritesPage( {super.key});
+
+  @override
+  State<FavoritesPage> createState() => _FavoritesPageState();
+}
+
+class _FavoritesPageState extends State<FavoritesPage> {
+  final DatabaseHelper _dbHelper = DatabaseHelper.instance;
+  late Future<List<NewsData>> _favoritesFuture;
+  User? _currentUser;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentUser = FirebaseAuth.instance.currentUser;
+    _loadFavorites();
+  }
+
+  void _loadFavorites() {
+    if (_currentUser?.email != null) {
+      _favoritesFuture = _dbHelper.getFavorites(_currentUser!.email!);
+    } else {
+      _favoritesFuture = Future.value([]);
+    }
+    if (mounted) setState(() {});
+  }
+
+  Future<void> removeFavorite(NewsData item) async {
+    if (_currentUser?.email == null) return;
+
+    try {
+      await _dbHelper.deleteFavorite(item.articleId!, _currentUser!.email!);
+      if (mounted) {
+
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   const SnackBar(content: Text('Removed from favorites')),
+        // );
+        // _loadFavorites();
+
+        showTopSnackBar(
+          Overlay.of(context),
+          CustomSnackBar.info(
+            message: "Removed from favorites",
+            backgroundColor: Colors.redAccent
+
+          ),
+        );_loadFavorites();
+
+      }
+    } catch (e) {
+      if (mounted) {
+        showTopSnackBar(
+            Overlay.of(context),
+            CustomSnackBar.info(
+            message: "Unable to Removed from favorites",
+            backgroundColor: Colors.redAccent
+            )
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -9,65 +76,129 @@ class FavoritesPage extends StatelessWidget {
       appBar: AppBar(
         title: const Padding(
           padding: EdgeInsets.only(left: 45),
-          child: Text("Favorites News",style: TextStyle(fontWeight: FontWeight.w700),),
+          child: Text(
+            "Favorites News",
+            style: TextStyle(fontWeight: FontWeight.w700),
+          ),
         ),
         backgroundColor: Colors.blueGrey.shade200,
       ),
-      // body: StreamBuilder<QuerySnapshot>(
-      //   stream: FirebaseFirestore.instance.collection('favorites').snapshots(),
-      //   builder: (context, snapshot) {
-      //     if (snapshot.hasError) {
-      //       return Center(child: Text('Error: ${snapshot.error}'));
-      //     }
-      //
-      //     if (snapshot.connectionState == ConnectionState.waiting) {
-      //       return const Center(child: CircularProgressIndicator());
-      //     }
-      //
-      //     if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-      //       return const Center(child: Text('No favorites yet'));
-      //     }
-      //
-      //     final favorites = snapshot.data!.docs.map((doc) {
-      //       return NewsData.fromJson(doc.data() as Map<String, dynamic>);
-      //     }).toList();
-      //
-      //     return ListView.builder(
-      //       itemCount: favorites.length,
-      //       itemBuilder: (context, index) {
-      //         final news = favorites[index];
-      //         return ListTile(
-      //           leading: news.imageUrl != null
-      //               ? Image.network(news.imageUrl!,
-      //                   width: 60, height: 60, fit: BoxFit.cover)
-      //               : const Icon(Icons.article),
-      //           title: Text(news.title ?? 'No Title'),
-      //           subtitle: Text(
-      //             news.pubDate != null
-      //                 ? timeago.format(DateTime.parse(news.pubDate!))
-      //                 : "Date not available",
-      //           ),
-      //           trailing: IconButton(
-      //             icon: const Icon(Icons.favorite, color: Colors.red),
-      //             onPressed: () async {
-      //               try {
-      //                 await FirebaseFirestore.instance
-      //                     .collection('favorites')
-      //                     .doc(news.articleId)
-      //                     .delete();
-      //               } catch (e) {
-      //                 ScaffoldMessenger.of(context).showSnackBar(
-      //                   SnackBar(
-      //                       content: Text('Failed to remove favorite: $e')),
-      //                 );
-      //               }
-      //             },
-      //           ),
-      //         );
-      //       },
-      //     );
-      //   },
-      // ),
+      body: _buildContent(),
+    );
+  }
+
+  Widget _buildContent() {
+    if (_currentUser == null) {
+      return const Center(child: Text('Please login to view favorites'));
+    }
+
+    return FutureBuilder<List<NewsData>>(
+      future: _favoritesFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        if (snapshot.hasError) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text('Failed to load favorites'),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: _loadFavorites,
+                  child: const Text('Retry'),
+                ),
+              ],
+            ),
+          );
+        }
+
+        final favorites = snapshot.data ?? [];
+        if (favorites.isEmpty) {
+          return const Center(child: Text('No favorites yet'));
+        }
+
+        return RefreshIndicator(
+          onRefresh: () {
+            _loadFavorites();
+            return _favoritesFuture;
+          },
+          child: ListView.builder(
+            itemCount: favorites.length,
+            itemBuilder: (context, index) => _buildFavoriteItem(favorites[index]),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildFavoriteItem(NewsData item) {
+    final screenHeight = MediaQuery.of(context).size.height;
+
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: const [
+          BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2)),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+            child: item.imageUrl != null
+                ? Image.network(
+              item.imageUrl!,
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: screenHeight * 0.25,
+              errorBuilder: (_, __, ___) => _buildPlaceholderImage(screenHeight),
+            )
+                : _buildPlaceholderImage(screenHeight),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  item.title ?? "No title available",
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      item.pubDate != null
+                          ? timeago.format(DateTime.parse(item.pubDate!), allowFromNow: true)
+                          : "Date not available",
+                      style: const TextStyle(color: Colors.blueGrey, fontSize: 15),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.favorite, color: Colors.red),
+                      onPressed: () => removeFavorite(item),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPlaceholderImage(double height) {
+    return Container(
+      height: height * 0.25,
+      color: Colors.grey[200],
+      child: const Center(child: Icon(Icons.broken_image, size: 50)),
     );
   }
 }

@@ -1,24 +1,19 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../data/api/model_api.dart';
 
-abstract class FetchNews{}
+abstract class FetchNews {}
 
-class InitialFetchNews extends FetchNews{}
+class InitialFetchNews extends FetchNews {}
 
-class LoadingFetchNews extends FetchNews{
+class LoadingFetchNews extends FetchNews {}
 
-}
-
-class SuccessFetchNews extends FetchNews{
-
+class SuccessFetchNews extends FetchNews {
   final List<NewsData> newModel;
   SuccessFetchNews(this.newModel);
 }
 
-class ErrorFetchNews extends FetchNews{
-
+class ErrorFetchNews extends FetchNews {
   final String message;
   ErrorFetchNews(this.message);
-
 }
-
