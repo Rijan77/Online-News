@@ -24,7 +24,7 @@ class DatabaseHelper{
     await db.execute('''CREATE TABLE user_favorite(
     id INTEGER PRIMARY KEY,
     email TEXT,
-    isFavorite NUMERIC
+    isFavorite INTEGER
     )'''
     );
 
