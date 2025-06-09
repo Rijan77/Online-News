@@ -49,8 +49,6 @@ class _HomeState extends State<Home> {
 
   final DatabaseHelper _dbHelper = DatabaseHelper.instance;
 
-  FavoritesPage favoritesPage = new FavoritesPage();
-
 
   @override
   void initState() {
