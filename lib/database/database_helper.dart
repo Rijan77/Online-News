@@ -35,7 +35,7 @@ class DatabaseHelper{
     return await db.insert('user_favorite', userFavorite.toMap());
   }
 
-  Future<List<Map<String, dynamic>>> queryAllUsers() async {
+  Future<List<Map<String, dynamic>>> queryAllFavorite() async {
     Database db = await instance.db;
     return await db.query('user_favorite');
   }
