@@ -40,4 +40,9 @@ class DatabaseHelper{
     return await db.query('user_favorite');
   }
 
+  Future<int> deleteUser(int id) async {
+    Database db = await instance.db;
+    return await db.delete('user_favorite', where: 'id = ?', whereArgs: [id]);
+  }
+
 }
