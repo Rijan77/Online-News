@@ -6,12 +6,15 @@ import 'package:news_app/features/presentation/views/favorites_page.dart';
 import 'package:news_app/features/presentation/views/home.dart';
 import 'package:news_app/features/presentation/views/login.dart';
 import 'package:news_app/features/presentation/views/registration.dart';
+import 'database/database_helper.dart';
 import 'features/presentation/bloc/fetch_cubit.dart';
 import 'features/presentation/bloc/login_cubit.dart';
 // Make sure this exists or remove
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await DatabaseHelper.instance.initDb();
+  // await DatabaseHelper.instance.queryAllFavorite();
   await Firebase.initializeApp();
   runApp(const MyApp());
 }
