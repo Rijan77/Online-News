@@ -1,6 +1,4 @@
 import 'dart:developer';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,6 +47,10 @@ class _HomeState extends State<Home> {
   final List<ValueNotifier<bool>> favoriteStatusList = [];
   User? _currentUser;
 
+  final DatabaseHelper _dbHelper = DatabaseHelper.instance;
+
+  FavoritesPage favoritesPage = new FavoritesPage();
+
 
   @override
   void initState() {
@@ -74,7 +76,8 @@ class _HomeState extends State<Home> {
     for (int i = 0; i < news.length; i++) {
       final articleId = news[i].articleId;
       if (articleId != null) {
-        final isFavorite = await DatabaseHelper.instance.isFavorite(articleId, _currentUser!.email!);
+        final isFavorite = await DatabaseHelper.instance.isFavorite(
+            articleId, _currentUser!.email!);
         if (i < favoriteStatusList.length) {
           favoriteStatusList[i].value = isFavorite;
         }
@@ -82,11 +85,15 @@ class _HomeState extends State<Home> {
     }
   }
 
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<
+      RefreshIndicatorState>();
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
+    final screenHeight = MediaQuery
+        .of(context)
+        .size
+        .height;
 
     return Scaffold(
       appBar: AppBar(
@@ -151,35 +158,42 @@ class _HomeState extends State<Home> {
                   final item = news[index];
 
                   return Container(
-                    margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 16),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20),
                       boxShadow: const [
-                        BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2)),
+                        BoxShadow(color: Colors.black12,
+                            blurRadius: 4,
+                            offset: Offset(0, 2)),
                       ],
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ClipRRect(
-                          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+                          borderRadius: const BorderRadius.vertical(
+                              top: Radius.circular(20)),
                           child: item.imageUrl != null
                               ? Image.network(
                             item.imageUrl!,
                             fit: BoxFit.cover,
                             width: double.infinity,
                             height: screenHeight * 0.25,
-                            errorBuilder: (context, error, stackTrace) => Container(
-                              height: screenHeight * 0.25,
-                              color: Colors.grey[200],
-                              child: const Icon(Icons.broken_image, size: 50),
-                            ),
+                            errorBuilder: (context, error, stackTrace) =>
+                                Container(
+                                  height: screenHeight * 0.25,
+                                  color: Colors.grey[200],
+                                  child: const Icon(
+                                      Icons.broken_image, size: 50),
+                                ),
                           )
                               : Container(
                             height: screenHeight * 0.25,
                             color: Colors.grey[200],
-                            child: const Center(child: Text("No Image Available")),
+                            child: const Center(
+                                child: Text("No Image Available")),
                           ),
                         ),
                         Padding(
@@ -189,30 +203,41 @@ class _HomeState extends State<Home> {
                             children: [
                               Text(
                                 item.title ?? "No title available",
-                                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                style: const TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
                               ),
                               const SizedBox(height: 8),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment
+                                    .spaceBetween,
                                 children: [
                                   Text(
                                     item.pubDate != null
-                                        ? timeago.format(DateTime.parse(item.pubDate!), allowFromNow: true)
+                                        ? timeago.format(
+                                        DateTime.parse(item.pubDate!),
+                                        allowFromNow: true)
                                         : "Date not available",
-                                    style: const TextStyle(color: Colors.blueGrey, fontSize: 15),
+                                    style: const TextStyle(
+                                        color: Colors.blueGrey, fontSize: 15),
                                   ),
                                   ValueListenableBuilder<bool>(
                                     valueListenable: favoriteStatusList[index],
                                     builder: (context, isFavorite, _) {
                                       return IconButton(
                                         icon: Icon(
-                                          isFavorite ? Icons.favorite : Icons.favorite_border,
-                                          color: isFavorite ? Colors.red : Colors.grey,
+                                          isFavorite ? Icons.favorite : Icons
+                                              .favorite_border,
+                                          color: isFavorite
+                                              ? Colors.red
+                                              : Colors.grey,
                                         ),
                                         onPressed: () async {
                                           try {
-                                            await toggleFavorite(item, isFavorite, context);
-                                            if( favoriteStatusList[index].value = !isFavorite){
+                                            await toggleFavorite(
+                                                item, isFavorite, context);
+                                            if (
+                                            favoriteStatusList[index].value =
+                                            !isFavorite) {
                                               showTopSnackBar(
                                                 Overlay.of(context),
                                                 CustomSnackBar.info(
@@ -222,12 +247,10 @@ class _HomeState extends State<Home> {
                                                       : Colors.blueGrey,
                                                 ),
                                               );
-                                            }else{
+                                            } else {
 
 
                                             }
-
-
                                           } catch (e) {
                                             showTopSnackBar(
                                               Overlay.of(context),
@@ -257,4 +280,5 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+
 }
