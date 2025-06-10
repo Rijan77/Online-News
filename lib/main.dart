@@ -8,6 +8,7 @@ import 'package:news_app/features/presentation/views/registration.dart';
 import 'database/database_helper.dart';
 import 'features/presentation/bloc/fetch_cubit.dart';
 import 'features/presentation/bloc/login_cubit.dart';
+import 'features/presentation/views/login.dart';
 // Make sure this exists or remove
 
 Future<void> main() async {
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         initialRoute: '/',
         routes: {
-          '/': (contex) => const Home(),
+          '/': (contex) =>  Login(),
           '/second': (context)=> const Registration(),
           '/third': (context)=>const Home(),
           '/fourth': (context)=>const FavoritesPage(),
