@@ -15,6 +15,7 @@ class FetchNewsCubit extends Cubit<FetchNews> {
 
   List<String> favoriteArticleIds = [];
 
+
   FetchNewsCubit(this.newsApi) : super(InitialFetchNews()){
     fetchNews();
   }
