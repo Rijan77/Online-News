@@ -21,7 +21,6 @@ class NewsFetchCubit extends Cubit<NewsFetchState>{
     }
   }
 
-
   Future<void> toggleFavorite(String articleId) async{
       if(!state.articleId.contains(articleId)){
         emit(state.copyWith(articleId: [articleId,...state.articleId]));
