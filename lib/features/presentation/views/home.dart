@@ -12,15 +12,16 @@ import '../bloc/fetch_cubit.dart';
 import '../bloc/fetch_state.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-
-Future<void> toggleFavorite(NewsData news, bool isCurrentlyFavorite, BuildContext context) async {
+Future<void> toggleFavorite(
+    NewsData news, bool isCurrentlyFavorite, BuildContext context) async {
   final currentUser = FirebaseAuth.instance.currentUser;
   if (currentUser?.email == null) return;
 
   try {
     if (isCurrentlyFavorite) {
       // Remove from favorites
-      await DatabaseHelper.instance.deleteFavorite(news.articleId!, currentUser!.email!);
+      await DatabaseHelper.instance
+          .deleteFavorite(news.articleId!, currentUser!.email!);
     } else {
       // Add to favorites
       if (news.articleId != null) {
@@ -33,8 +34,6 @@ Future<void> toggleFavorite(NewsData news, bool isCurrentlyFavorite, BuildContex
   }
 }
 
-
-
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -43,23 +42,24 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final List<ValueNotifier<bool>> favoriteStatusList = [];
+  final favoriteStatusList = <String>[];
   User? _currentUser;
 
   @override
   void initState() {
     super.initState();
     _currentUser = FirebaseAuth.instance.currentUser;
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final cubit = context.read<FetchNewsCubit>();
-      cubit.fetchNews();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await context.read<FetchNewsCubit>().fetchNews();
+
+      print('abc::${favoriteStatusList.length}');
     });
   }
 
   @override
   void dispose() {
     for (var notifier in favoriteStatusList) {
-      notifier.dispose();
+      // notifier.dispose();
     }
     super.dispose();
   }
@@ -67,27 +67,24 @@ class _HomeState extends State<Home> {
   Future<void> _checkFavoriteStatuses(List<NewsData> news) async {
     if (_currentUser?.email == null) return;
 
-    for (int i = 0; i < news.length; i++) {
-      final articleId = news[i].articleId;
-      if (articleId != null) {
-        final isFavorite = await DatabaseHelper.instance.isFavorite(
-            articleId, _currentUser!.email!);
-        if (i < favoriteStatusList.length) {
-          favoriteStatusList[i].value = isFavorite;
-        }
-      }
-    }
+    // for (int i = 0; i < news.length; i++) {
+    //   final articleId = news[i].articleId;
+    //   if (articleId != null) {
+    //          final isFavorite = await DatabaseHelper.instance.isFavorite(
+    //         articleId, _currentUser!.email!);
+    //     if (i < favoriteStatusList.length) {
+    //       favoriteStatusList[i].value = isFavorite;
+    //     }
+    //   }
+    // }
   }
 
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<
-      RefreshIndicatorState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery
-        .of(context)
-        .size
-        .height;
+    final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       appBar: AppBar(
@@ -108,8 +105,12 @@ class _HomeState extends State<Home> {
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
             child: IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/fourth');
+              onPressed: () async {
+                await Navigator.pushNamed(context, '/fourth');
+                // Refresh both news and favorites when returning
+                final cubit = context.read<FetchNewsCubit>();
+                await cubit.refreshFavorites();
+                await cubit.fetchNews();
               },
               icon: const Icon(Icons.favorite, size: 35),
             ),
@@ -123,33 +124,19 @@ class _HomeState extends State<Home> {
               child: CircularProgressIndicator(color: Colors.blueGrey),
             );
           } else if (state is ErrorFetchNews) {
-            return Center(
-              child: Text(state.message),
-            );
+            return Center(child: Text(state.message));
           } else if (state is SuccessFetchNews) {
             final news = state.newModel;
-
-            // Initialize favorite status list
-            if (favoriteStatusList.length != news.length) {
-              favoriteStatusList.clear();
-              favoriteStatusList.addAll(
-                List.generate(news.length, (_) => ValueNotifier<bool>(false)),
-              );
-              _checkFavoriteStatuses(news);
-            }
+            final cubit = context.read<FetchNewsCubit>();
 
             return RefreshIndicator(
-              key: _refreshIndicatorKey,
-              color: Colors.white,
-              backgroundColor: Colors.blueGrey,
-              strokeWidth: 3.0,
-              onRefresh: () async {
-                await context.read<FetchNewsCubit>().fetchNews();
-              },
+              onRefresh: () => cubit.fetchNews(),
               child: ListView.builder(
                 itemCount: news.length,
-                itemBuilder: (BuildContext context, int index) {
+                itemBuilder: (context, index) {
                   final item = news[index];
+                  final isFavorite =
+                      cubit.favoriteArticleIds.contains(item.articleId);
 
                   return Container(
                     margin: const EdgeInsets.symmetric(
@@ -158,7 +145,8 @@ class _HomeState extends State<Home> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20),
                       boxShadow: const [
-                        BoxShadow(color: Colors.black12,
+                        BoxShadow(
+                            color: Colors.black12,
                             blurRadius: 4,
                             offset: Offset(0, 2)),
                       ],
@@ -170,87 +158,62 @@ class _HomeState extends State<Home> {
                           borderRadius: const BorderRadius.vertical(
                               top: Radius.circular(20)),
                           child: item.imageUrl != null
-                              ? Image.network(
-                            item.imageUrl!,
-                            fit: BoxFit.cover,
-                            width: double.infinity,
-                            height: screenHeight * 0.25,
-                            errorBuilder: (context, error, stackTrace) =>
-                                Container(
+                              ? Image.network(item.imageUrl!,
+                                  fit: BoxFit.cover,
+                                  width: double.infinity,
+                                  height: screenHeight * 0.25,
+                                  errorBuilder: (context, error, stackTrace) {
+                                  return Container(
+                                    height: screenHeight * 0.25,
+                                    color: Colors.red[200],
+                                    child: const Icon(
+                                        Icons
+                                            .sentiment_very_dissatisfied_outlined,
+                                        size: 50),
+                                  );
+                                })
+                              : Container(
                                   height: screenHeight * 0.25,
                                   color: Colors.grey[200],
-                                  child: const Icon(
-                                      Icons.broken_image, size: 50),
+                                  child: const Center(
+                                      child: Text("No Image Available")),
                                 ),
-                          )
-                              : Container(
-                            height: screenHeight * 0.25,
-                            color: Colors.grey[200],
-                            child: const Center(
-                                child: Text("No Image Available")),
-                          ),
                         ),
+
+                        // Your image widget here
                         Padding(
                           padding: const EdgeInsets.all(12.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                item.title ?? "No title available",
-                                style: const TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
-                              ),
+                              Text(item.title ?? "No title available",
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold)),
                               const SizedBox(height: 8),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment
-                                    .spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     item.pubDate != null
                                         ? timeago.format(
-                                        DateTime.parse(item.pubDate!),
-                                        allowFromNow: true)
+                                            DateTime.parse(item.pubDate!),
+                                            allowFromNow: true)
                                         : "Date not available",
                                     style: const TextStyle(
                                         color: Colors.blueGrey, fontSize: 15),
                                   ),
-                                  ValueListenableBuilder<bool>(
-                                    valueListenable: favoriteStatusList[index],
-                                    builder: (context, isFavorite, _) {
-                                      return IconButton(
-                                        icon: Icon(
-                                          isFavorite ? Icons.favorite : Icons
-                                              .favorite_border,
-                                          color: isFavorite
-                                              ? Colors.red
-                                              : Colors.grey,
-                                        ),
-                                        onPressed: () async {
-                                          try {
-                                            await toggleFavorite(item, isFavorite, context);
-                                            favoriteStatusList[index].value = !isFavorite;
-
-                                            showTopSnackBar(
-                                              Overlay.of(context),
-                                              CustomSnackBar.info(
-                                                message: isFavorite
-                                                    ? "Removed from favorites"
-                                                    : "Added to favorites",
-                                                backgroundColor:
-                                                isFavorite ? Colors.redAccent : Colors.blueGrey,
-                                              ),
-                                            );
-                                          } catch (e) {
-                                            showTopSnackBar(
-                                              Overlay.of(context),
-                                              const CustomSnackBar.error(
-                                                message: "Failed to update favorites",
-                                              ),
-                                            );
-                                          }
-                                        },
-                                      );
-                                    },
+                                  IconButton(
+                                    icon: Icon(
+                                      isFavorite
+                                          ? Icons.favorite
+                                          : Icons.favorite_border,
+                                      color:
+                                          isFavorite ? Colors.red : Colors.grey,
+                                    ),
+                                    onPressed: () =>
+                                        cubit.toggleFavorite(item, context),
                                   ),
                                 ],
                               ),
@@ -269,5 +232,4 @@ class _HomeState extends State<Home> {
       ),
     );
   }
-
 }

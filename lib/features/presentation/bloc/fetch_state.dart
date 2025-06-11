@@ -16,3 +16,9 @@ class ErrorFetchNews extends FetchNews {
   final String message;
   ErrorFetchNews(this.message);
 }
+
+class LoadData extends FetchNews{
+  final List<int> articalId;
+
+  LoadData(this.articalId);
+}

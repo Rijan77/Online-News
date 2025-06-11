@@ -1,16 +1,18 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../features/data/api/model_api.dart';
 
-class DatabaseHelper {
+
+class DatabaseHelper{
   static final DatabaseHelper instance = DatabaseHelper._instance();
   static Database? _database;
 
   DatabaseHelper._instance();
 
-  Future<Database> get db async {
-    _database ??= await initDb();
+  Future<Database> get db async{
+    _database??=await initDb();
     return _database!;
   }
 
@@ -65,12 +67,12 @@ class DatabaseHelper {
     );
   }
 
-  Future<List<NewsData>> getFavorites(String email) async {
+  Future<List<NewsData>> getFavorites() async {
     Database db = await instance.db;
     final List<Map<String, dynamic>> maps = await db.query(
       'user_favorite',
       where: 'email = ?',
-      whereArgs: [email],
+      whereArgs: [FirebaseAuth.instance.currentUser?.email],
     );
 
     return List.generate(maps.length, (i) {
@@ -98,7 +100,7 @@ class DatabaseHelper {
     Database db = await instance.db;
     final List<Map<String, dynamic>> result = await db.query(
       'user_favorite',
-      where: 'article_id = ? AND email = ?',
+      where: 'article_id = ? AND  email = ?',
       whereArgs: [articleId, email],
       limit: 1,
     );

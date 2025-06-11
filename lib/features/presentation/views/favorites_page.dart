@@ -28,7 +28,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
 
   void _loadFavorites() {
     if (_currentUser?.email != null) {
-      _favoritesFuture = _dbHelper.getFavorites(_currentUser!.email!);
+      _favoritesFuture = _dbHelper.getFavorites();
     } else {
       _favoritesFuture = Future.value([]);
     }
