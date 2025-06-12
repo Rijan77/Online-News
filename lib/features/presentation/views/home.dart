@@ -2,9 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/features/presentation/views/widgets/home_layouts.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
-import '../../data/api/model_api.dart';
 import '../bloc/fetch_cubit.dart';
 import '../bloc/fetch_state.dart';
 

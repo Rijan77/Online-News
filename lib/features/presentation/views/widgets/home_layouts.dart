@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/features/data/api/model_api.dart';
-import 'package:path/path.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import '../../bloc/fetch_cubit.dart';
