@@ -14,8 +14,6 @@ class FavoritesPage extends StatefulWidget {
 
   @override
   State<FavoritesPage> createState() => _FavoritesPageState();
-
-
 }
 
 class _FavoritesPageState extends State<FavoritesPage> {
@@ -72,20 +70,19 @@ class _FavoritesPageState extends State<FavoritesPage> {
 
   @override
   Widget build(BuildContext context) {
-    final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    final isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: isPortrait? kToolbarHeight : kToolbarHeight * 0.4,
+        toolbarHeight: isPortrait ? kToolbarHeight : kToolbarHeight * 0.4,
         leading: InkWell(
           onTap: () {
             Navigator.pop(context);
           },
-          child:  Icon(Icons.arrow_back,
-              size: isPortrait? 35: 25
-          ),
+          child: Icon(Icons.arrow_back, size: isPortrait ? 35 : 25),
         ),
         title: Padding(
-          padding: EdgeInsets.only(left: isPortrait? 45 : 230),
+          padding: EdgeInsets.only(left: isPortrait ? 45 : 230),
           child: const Text(
             "Favorites News",
             style: TextStyle(fontWeight: FontWeight.w700),
@@ -98,7 +95,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
   }
 
   Widget _buildContent() {
-    final isPortrait = MediaQuery.of(context).orientation==Orientation.portrait;
+    final isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
     if (_currentUser == null) {
       return const Center(child: Text('Please login to view favorites'));
     }
@@ -136,10 +134,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
             loadFavorites();
             return _favoritesFuture;
           },
-
           child: GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: isPortrait? 1:2,
+              crossAxisCount: isPortrait ? 1 : 2,
               crossAxisSpacing: 10,
               mainAxisSpacing: 10,
               childAspectRatio: 1.2,
@@ -155,21 +152,19 @@ class _FavoritesPageState extends State<FavoritesPage> {
 
   Widget _buildFavoriteItem(NewsData item) {
     final screenHeight = MediaQuery.of(context).size.height;
-    final isPortrait = MediaQuery.of(context).orientation==Orientation.portrait;
+    final isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
 
-    return
-      Container(
-      margin:  EdgeInsets.symmetric(vertical: isPortrait? 1: 9, horizontal: 16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(15),
-          boxShadow: const [
-            BoxShadow(
-                color: Colors.black12,
-                blurRadius: 4,
-                offset: Offset(0, 2)),
-          ],
-        ),
+    return Container(
+      margin:
+          EdgeInsets.symmetric(vertical: isPortrait ? 1 : 9, horizontal: 16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: const [
+          BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2)),
+        ],
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -180,7 +175,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
                     item.imageUrl!,
                     fit: BoxFit.cover,
                     width: double.infinity,
-                    height: isPortrait? screenHeight * 0.235: screenHeight * 0.45,
+                    height:
+                        isPortrait ? screenHeight * 0.235 : screenHeight * 0.45,
 
                     // height: screenHeight * 0.2,
                     errorBuilder: (_, __, ___) =>
@@ -196,12 +192,13 @@ class _FavoritesPageState extends State<FavoritesPage> {
                 Text(
                   item.title ?? "No title available",
                   style: const TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
                   ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
-                 SizedBox(height: 6 ),
+                SizedBox(height: 6),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -211,13 +208,17 @@ class _FavoritesPageState extends State<FavoritesPage> {
                             ? timeago.format(DateTime.parse(item.pubDate!),
                                 allowFromNow: true)
                             : "Date not available",
-                        style:
-                            const TextStyle(color: Colors.blueGrey, fontSize: 12),
+                        style: const TextStyle(
+                            color: Colors.blueGrey, fontSize: 12),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     IconButton(
-                      icon: const Icon(Icons.favorite_sharp, color: Colors.red, size: 20,),
+                      icon: const Icon(
+                        Icons.favorite_sharp,
+                        color: Colors.red,
+                        size: 20,
+                      ),
                       onPressed: () => removeFavorite(item),
                     ),
                   ],

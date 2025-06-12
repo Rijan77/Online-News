@@ -13,8 +13,6 @@ class Home extends StatefulWidget {
 
   @override
   State<Home> createState() => _HomeState();
-
-
 }
 
 class _HomeState extends State<Home> {
@@ -32,37 +30,30 @@ class _HomeState extends State<Home> {
     });
   }
 
-
-
-
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    final isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
 
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: isPortrait
-            ? kToolbarHeight
-            : kToolbarHeight * 0.5,
+        toolbarHeight: isPortrait ? kToolbarHeight : kToolbarHeight * 0.5,
         backgroundColor: Colors.blueGrey.shade200,
-
         leading: InkWell(
           onTap: () {
             Navigator.pop(context);
           },
-          child:  Icon(Icons.arrow_back,
-            size: isPortrait? 35: 25
-          ),
+          child: Icon(Icons.arrow_back, size: isPortrait ? 35 : 25),
         ),
         title: Center(
           child: Expanded(
             child: Text(
               "Online News",
-              style: TextStyle(fontWeight: isPortrait? FontWeight.w700: FontWeight.bold,
-                fontSize: isPortrait? 20: 20,
+              style: TextStyle(
+                fontWeight: isPortrait ? FontWeight.w700 : FontWeight.bold,
+                fontSize: isPortrait ? 20 : 20,
               ),
-
             ),
           ),
         ),
@@ -79,17 +70,18 @@ class _HomeState extends State<Home> {
                       await cubit.refreshFavorites();
                       await cubit.fetchNews();
                     },
-                    icon: Icon(Icons.favorite, size: isPortrait? 30: 20),
+                    icon: Icon(Icons.favorite, size: isPortrait ? 30 : 20),
                   ),
                   if (cubit.favoriteCount > 0)
                     Positioned(
-                      right: isPortrait? 2: 1,
-                      top: isPortrait? 2: 0,
+                      right: isPortrait ? 2 : 1,
+                      top: isPortrait ? 2 : 0,
                       child: Container(
-                        padding: EdgeInsets.all(isPortrait? 2: 0),
+                        padding: EdgeInsets.all(isPortrait ? 2 : 0),
                         decoration: BoxDecoration(
                           color: Colors.red,
-                          borderRadius: BorderRadius.circular(isPortrait? 30: 80),
+                          borderRadius:
+                              BorderRadius.circular(isPortrait ? 30 : 80),
                         ),
                         constraints: BoxConstraints(
                           minHeight: isPortrait ? 20 : 15,
@@ -100,7 +92,7 @@ class _HomeState extends State<Home> {
                             cubit.favoriteCount.toString(),
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: isPortrait? 12: 8,
+                              fontSize: isPortrait ? 12 : 8,
                             ),
                             textAlign: TextAlign.center,
                           ),
