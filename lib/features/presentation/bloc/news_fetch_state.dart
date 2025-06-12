@@ -5,16 +5,17 @@ import '../../data/api/model_api.dart';
 
 class NewsFetchState extends Equatable {
   final ResponseEnum? newsFetchStatus;
- final ResponseEnum? favoriteFetchStatus;
- final NewsModel? newsModel;
- final String error;
- final List<String> articleId;
+  final ResponseEnum? favoriteFetchStatus;
+  final NewsModel? newsModel;
+  final String error;
+  final List<String> articleId;
 
-
-  const NewsFetchState({
-    this.newsFetchStatus, this.favoriteFetchStatus, this.newsModel, this.articleId = const [], this.error= " "
-  });
-
+  const NewsFetchState(
+      {this.newsFetchStatus,
+      this.favoriteFetchStatus,
+      this.newsModel,
+      this.articleId = const [],
+      this.error = " "});
 
   NewsFetchState copyWith({
     ResponseEnum? newsFetchStatus,
@@ -24,20 +25,14 @@ class NewsFetchState extends Equatable {
     List<String>? articleId,
   }) {
     return NewsFetchState(
-      newsFetchStatus: newsFetchStatus ?? this.newsFetchStatus,
-      favoriteFetchStatus: favoriteFetchStatus ?? this.favoriteFetchStatus,
-      newsModel: newsModel ?? this.newsModel,
-      articleId: articleId ?? this.articleId,
-      error: error ?? this.error
-    );
+        newsFetchStatus: newsFetchStatus ?? this.newsFetchStatus,
+        favoriteFetchStatus: favoriteFetchStatus ?? this.favoriteFetchStatus,
+        newsModel: newsModel ?? this.newsModel,
+        articleId: articleId ?? this.articleId,
+        error: error ?? this.error);
   }
 
   @override
-  List<Object?> get props => [
-    newsFetchStatus,
-    favoriteFetchStatus,
-    newsModel,
-    articleId,
-    error
-  ];
+  List<Object?> get props =>
+      [newsFetchStatus, favoriteFetchStatus, newsModel, articleId, error];
 }

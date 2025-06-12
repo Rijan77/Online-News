@@ -1,7 +1,2 @@
 
-enum ResponseEnum{
-  initial,
-  loading,
-  success,
-  failure
-}
+enum ResponseEnum { initial, loading, success, failure }

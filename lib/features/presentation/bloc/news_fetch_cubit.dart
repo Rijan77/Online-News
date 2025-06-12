@@ -8,12 +8,10 @@ import 'package:news_app/features/presentation/bloc/news_fetch_state.dart';
 import '../../../database/database_helper.dart';
 import '../../data/api/model_api.dart';
 
-
 class NewsFetchCubit extends Cubit<NewsFetchState> {
   final NewsApi newsApi;
 
   NewsFetchCubit(this.newsApi) : super(NewsFetchState());
-
 
   Future<void> newsFetch() async {
     emit(state.copyWith(newsFetchStatus: ResponseEnum.loading));
@@ -31,16 +29,16 @@ class NewsFetchCubit extends Cubit<NewsFetchState> {
     try {
       final favorite = await DatabaseHelper.instance.getFavorites();
 
-      final favoriteIds = favorite.map((f) => f.articleId ?? ' ').where((
-          id) => id.isNotEmpty).toList();
+      final favoriteIds = favorite
+          .map((f) => f.articleId ?? ' ')
+          .where((id) => id.isNotEmpty)
+          .toList();
 
       emit(state.copyWith(
           favoriteFetchStatus: ResponseEnum.success, articleId: favoriteIds));
-    }
-    catch (e) {
+    } catch (e) {
       emit(state.copyWith(favoriteFetchStatus: ResponseEnum.failure));
     }
-
 
     // final currentUser = FirebaseAuth.instance.currentUser;
     // if (currentUser?.email == null) return;
@@ -64,7 +62,6 @@ class NewsFetchCubit extends Cubit<NewsFetchState> {
     // }
   }
 
-
   Future<void> toggleFavorite(NewsData news, String articleId) async {
     final currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null || currentUser.email == null) return;
@@ -76,8 +73,8 @@ class NewsFetchCubit extends Cubit<NewsFetchState> {
 
       if (currentFavorites.contains(articleId)) {
         // Remove from favorites
-        await DatabaseHelper.instance.deleteFavorite(
-            articleId, currentUser.email!);
+        await DatabaseHelper.instance
+            .deleteFavorite(articleId, currentUser.email!);
         currentFavorites.remove(articleId);
       } else {
         // Add to favorites
@@ -94,11 +91,9 @@ class NewsFetchCubit extends Cubit<NewsFetchState> {
     }
   }
 
-
 // if(!state.articleId.contains(articleId)){
 //   emit(state.copyWith(articleId: [articleId,...state.articleId]));
 // }else{
 //   emit(state.copyWith(articleId: state.articleId.where((e)=> e != articleId).toList()));
 // }
-
 }

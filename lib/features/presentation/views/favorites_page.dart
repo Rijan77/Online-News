@@ -125,7 +125,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
           },
           child: ListView.builder(
             itemCount: favorites.length,
-            itemBuilder: (context, index) => _buildFavoriteItem(favorites[index]),
+            itemBuilder: (context, index) =>
+                _buildFavoriteItem(favorites[index]),
           ),
         );
       },
@@ -151,12 +152,13 @@ class _FavoritesPageState extends State<FavoritesPage> {
             borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
             child: item.imageUrl != null
                 ? Image.network(
-              item.imageUrl!,
-              fit: BoxFit.cover,
-              width: double.infinity,
-              height: screenHeight * 0.25,
-              errorBuilder: (_, __, ___) => _buildPlaceholderImage(screenHeight),
-            )
+                    item.imageUrl!,
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    height: screenHeight * 0.25,
+                    errorBuilder: (_, __, ___) =>
+                        _buildPlaceholderImage(screenHeight),
+                  )
                 : _buildPlaceholderImage(screenHeight),
           ),
           Padding(
@@ -166,7 +168,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
               children: [
                 Text(
                   item.title ?? "No title available",
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 8),
                 Row(
@@ -174,9 +177,11 @@ class _FavoritesPageState extends State<FavoritesPage> {
                   children: [
                     Text(
                       item.pubDate != null
-                          ? timeago.format(DateTime.parse(item.pubDate!), allowFromNow: true)
+                          ? timeago.format(DateTime.parse(item.pubDate!),
+                              allowFromNow: true)
                           : "Date not available",
-                      style: const TextStyle(color: Colors.blueGrey, fontSize: 15),
+                      style:
+                          const TextStyle(color: Colors.blueGrey, fontSize: 15),
                     ),
                     IconButton(
                       icon: const Icon(Icons.favorite_sharp, color: Colors.red),
