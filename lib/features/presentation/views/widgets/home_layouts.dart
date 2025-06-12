@@ -20,7 +20,7 @@ Widget buildLandscapeGridView(List<NewsData> news, FetchNewsCubit cubit,
           mainAxisSpacing: 10,
           childAspectRatio: 1.2,
         ),
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(15),
         itemCount: news.length,
         itemBuilder: (context, index) {
           final item = news[index];
@@ -87,7 +87,7 @@ Widget buildLandscapeGridView(List<NewsData> news, FetchNewsCubit cubit,
                                       allowFromNow: true)
                                   : "Date not available",
                               style: const TextStyle(
-                                  color: Colors.blueGrey, fontSize: 12),
+                                  color: Colors.blueGrey, fontSize: 15),
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
