@@ -21,7 +21,7 @@ class _RegistrationState extends State<Registration> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(
+              SizedBox(
               height: screenHeight * 0.02,
             ),
 
