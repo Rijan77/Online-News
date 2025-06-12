@@ -4,22 +4,20 @@ import 'package:sqflite/sqflite.dart';
 
 import '../features/data/api/model_api.dart';
 
-
-class DatabaseHelper{
+class DatabaseHelper {
   static final DatabaseHelper instance = DatabaseHelper._instance();
   static Database? _database;
 
   DatabaseHelper._instance();
 
-  Future<Database> get db async{
-    _database??=await initDb();
+  Future<Database> get db async {
+    _database ??= await initDb();
     return _database!;
   }
 
   Future<Database> initDb() async {
     String databasePath = await getDatabasesPath();
-    String path =
-    join(databasePath, 'online_news.db');
+    String path = join(databasePath, 'online_news.db');
 
     return await openDatabase(
       path,
@@ -117,5 +115,4 @@ class DatabaseHelper{
     );
     return count ?? 0;
   }
-
 }
