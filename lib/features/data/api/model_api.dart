@@ -53,12 +53,10 @@ class NewsData {
       articleId: json['article_id'],
       title: json['title'],
       link: json['link'],
-      keywords: json['keywords'] != null
-          ? List<String>.from(json['keywords'])
-          : null,
-      creator: json['creator'] != null
-          ? List<String>.from(json['creator'])
-          : null,
+      keywords:
+          json['keywords'] != null ? List<String>.from(json['keywords']) : null,
+      creator:
+          json['creator'] != null ? List<String>.from(json['creator']) : null,
       description: json['description'],
       content: json['content'],
       pubDate: json['pubDate'],
