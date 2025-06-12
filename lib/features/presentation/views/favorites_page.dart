@@ -14,6 +14,8 @@ class FavoritesPage extends StatefulWidget {
 
   @override
   State<FavoritesPage> createState() => _FavoritesPageState();
+
+
 }
 
 class _FavoritesPageState extends State<FavoritesPage> {
@@ -25,10 +27,10 @@ class _FavoritesPageState extends State<FavoritesPage> {
   void initState() {
     super.initState();
     _currentUser = FirebaseAuth.instance.currentUser;
-    _loadFavorites();
+    loadFavorites();
   }
 
-  void _loadFavorites() {
+  void loadFavorites() {
     if (_currentUser?.email != null) {
       _favoritesFuture = _dbHelper.getFavorites();
     } else {
@@ -50,7 +52,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
             backgroundColor: Colors.redAccent,
           ),
         );
-        _loadFavorites();
+        loadFavorites();
 
         // Update the favorite count in the home screen
         context.read<FetchNewsCubit>().updateFavoriteCount();
@@ -70,11 +72,21 @@ class _FavoritesPageState extends State<FavoritesPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
     return Scaffold(
       appBar: AppBar(
-        title: const Padding(
-          padding: EdgeInsets.only(left: 45),
-          child: Text(
+        toolbarHeight: isPortrait? kToolbarHeight : kToolbarHeight * 0.4,
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child:  Icon(Icons.arrow_back,
+              size: isPortrait? 35: 25
+          ),
+        ),
+        title: Padding(
+          padding: EdgeInsets.only(left: isPortrait? 45 : 230),
+          child: const Text(
             "Favorites News",
             style: TextStyle(fontWeight: FontWeight.w700),
           ),
@@ -86,6 +98,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
   }
 
   Widget _buildContent() {
+    final isPortrait = MediaQuery.of(context).orientation==Orientation.portrait;
     if (_currentUser == null) {
       return const Center(child: Text('Please login to view favorites'));
     }
@@ -105,7 +118,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                 const Text('Failed to load favorites'),
                 const SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: _loadFavorites,
+                  onPressed: loadFavorites,
                   child: const Text('Retry'),
                 ),
               ],
@@ -120,10 +133,17 @@ class _FavoritesPageState extends State<FavoritesPage> {
 
         return RefreshIndicator(
           onRefresh: () {
-            _loadFavorites();
+            loadFavorites();
             return _favoritesFuture;
           },
-          child: ListView.builder(
+
+          child: GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: isPortrait? 1:2,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+              childAspectRatio: 1.2,
+            ),
             itemCount: favorites.length,
             itemBuilder: (context, index) =>
                 _buildFavoriteItem(favorites[index]),
@@ -135,27 +155,34 @@ class _FavoritesPageState extends State<FavoritesPage> {
 
   Widget _buildFavoriteItem(NewsData item) {
     final screenHeight = MediaQuery.of(context).size.height;
+    final isPortrait = MediaQuery.of(context).orientation==Orientation.portrait;
 
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: const [
-          BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2)),
-        ],
-      ),
+    return
+      Container(
+      margin:  EdgeInsets.symmetric(vertical: isPortrait? 1: 9, horizontal: 16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: const [
+            BoxShadow(
+                color: Colors.black12,
+                blurRadius: 4,
+                offset: Offset(0, 2)),
+          ],
+        ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
             child: item.imageUrl != null
                 ? Image.network(
                     item.imageUrl!,
                     fit: BoxFit.cover,
                     width: double.infinity,
-                    height: screenHeight * 0.25,
+                    height: isPortrait? screenHeight * 0.235: screenHeight * 0.45,
+
+                    // height: screenHeight * 0.2,
                     errorBuilder: (_, __, ___) =>
                         _buildPlaceholderImage(screenHeight),
                   )
@@ -169,22 +196,28 @@ class _FavoritesPageState extends State<FavoritesPage> {
                 Text(
                   item.title ?? "No title available",
                   style: const TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.bold),
+                      fontSize: 18, fontWeight: FontWeight.bold,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(height: 8),
+                 SizedBox(height: 6 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      item.pubDate != null
-                          ? timeago.format(DateTime.parse(item.pubDate!),
-                              allowFromNow: true)
-                          : "Date not available",
-                      style:
-                          const TextStyle(color: Colors.blueGrey, fontSize: 15),
+                    Expanded(
+                      child: Text(
+                        item.pubDate != null
+                            ? timeago.format(DateTime.parse(item.pubDate!),
+                                allowFromNow: true)
+                            : "Date not available",
+                        style:
+                            const TextStyle(color: Colors.blueGrey, fontSize: 12),
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                     IconButton(
-                      icon: const Icon(Icons.favorite_sharp, color: Colors.red),
+                      icon: const Icon(Icons.favorite_sharp, color: Colors.red, size: 20,),
                       onPressed: () => removeFavorite(item),
                     ),
                   ],

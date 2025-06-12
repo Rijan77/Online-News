@@ -7,6 +7,8 @@ import 'package:timeago/timeago.dart' as timeago;
 import '../../bloc/fetch_cubit.dart';
 
 
+
+
 Widget buildLandscapeGridView(List<NewsData> news, FetchNewsCubit cubit, double screenHeight,  BuildContext context) {
   final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
   return  RefreshIndicator(
