@@ -1,13 +1,8 @@
-import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timeago/timeago.dart' as timeago;
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
-import '../../../database/database_helper.dart';
-import '../../data/api/model_api.dart';
 import '../bloc/fetch_cubit.dart';
 import '../bloc/fetch_state.dart';
 
@@ -147,7 +142,7 @@ class _HomeState extends State<Home> {
                                   height: screenHeight * 0.25,
                                   errorBuilder: (context, error, stackTrace) {
                                   return Center(
-                                    child: Container(
+                                    child: SizedBox(
                                       height: screenHeight * 0.25,
                                       // color: Colors.red[200],
                                       child: Center(
