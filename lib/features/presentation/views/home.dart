@@ -47,13 +47,11 @@ class _HomeState extends State<Home> {
           child: Icon(Icons.arrow_back, size: isPortrait ? 35 : 25),
         ),
         title: Center(
-          child: Expanded(
-            child: Text(
-              "Online News",
-              style: TextStyle(
-                fontWeight: isPortrait ? FontWeight.w700 : FontWeight.bold,
-                fontSize: isPortrait ? 20 : 20,
-              ),
+          child: Text(
+            "Online News",
+            style: TextStyle(
+              fontWeight: isPortrait ? FontWeight.w700 : FontWeight.bold,
+              fontSize: isPortrait ? 20 : 20,
             ),
           ),
         ),
