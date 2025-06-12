@@ -52,7 +52,8 @@ class _LoginState extends State<Login> {
                 Padding(
                   padding: EdgeInsets.only(top: screenHeight * 0.14),
                   child: const Center(
-                    child: Icon(Icons.newspaper_outlined, size: 130, color: Colors.blueGrey),
+                    child: Icon(Icons.newspaper_outlined,
+                        size: 130, color: Colors.blueGrey),
                   ),
                 ),
                 const Text(
@@ -73,7 +74,8 @@ class _LoginState extends State<Login> {
                   editingController: passwordController,
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: screenWidth * 0.4, top: screenHeight * 0.01),
+                  padding: EdgeInsets.only(
+                      left: screenWidth * 0.4, top: screenHeight * 0.01),
                   child: const Text(
                     "Forgot Password?",
                     style: TextStyle(
@@ -89,7 +91,8 @@ class _LoginState extends State<Login> {
                 // Login Button with Cubit State
                 ButtonWidget(
                   buttonText: "Login",
-                  styleText: const TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
+                  styleText: const TextStyle(
+                      fontSize: 25, fontWeight: FontWeight.w600),
                   isLoading: isLoading,
                   onTap: () {
                     final email = emailController.text.trim();
@@ -99,17 +102,21 @@ class _LoginState extends State<Login> {
                 ),
 
                 SizedBox(height: screenHeight * 0.01),
-                const Text("OR", style: TextStyle(color: Colors.black54, fontWeight: FontWeight.w600)),
+                const Text("OR",
+                    style: TextStyle(
+                        color: Colors.black54, fontWeight: FontWeight.w600)),
                 SizedBox(height: screenHeight * 0.01),
 
                 // Google Sign-In Button
                 ButtonWidget(
                   buttonText: "Continue with Google",
-                  styleText: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                  styleText: const TextStyle(
+                      fontSize: 17, fontWeight: FontWeight.bold),
                   imagePath: "Assets/googlelogo.png",
                   onTap: () {
                     GoogleSignIn().loginWithGoogle(context);
-                  }, isLoading: false,
+                  },
+                  isLoading: false,
                 ),
 
                 SizedBox(height: screenHeight * 0.03),
@@ -118,7 +125,8 @@ class _LoginState extends State<Login> {
                   children: [
                     const Text(
                       "Not Register Yet?",
-                      style: TextStyle(color: Colors.black54, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                          color: Colors.black54, fontWeight: FontWeight.w600),
                     ),
                     TextButton(
                       onPressed: () {
@@ -127,7 +135,8 @@ class _LoginState extends State<Login> {
                       },
                       child: const Text(
                         "Sign Up",
-                        style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ],
