@@ -7,11 +7,12 @@ class NewsFetchState extends Equatable {
   final ResponseEnum? newsFetchStatus;
  final ResponseEnum? favoriteFetchStatus;
  final NewsModel? newsModel;
+ final String error;
  final List<String> articleId;
 
 
   const NewsFetchState({
-    this.newsFetchStatus, this.favoriteFetchStatus, this.newsModel, this.articleId = const []
+    this.newsFetchStatus, this.favoriteFetchStatus, this.newsModel, this.articleId = const [], this.error= " "
   });
 
 
@@ -19,6 +20,7 @@ class NewsFetchState extends Equatable {
     ResponseEnum? newsFetchStatus,
     ResponseEnum? favoriteFetchStatus,
     NewsModel? newsModel,
+    String? error,
     List<String>? articleId,
   }) {
     return NewsFetchState(
@@ -26,6 +28,7 @@ class NewsFetchState extends Equatable {
       favoriteFetchStatus: favoriteFetchStatus ?? this.favoriteFetchStatus,
       newsModel: newsModel ?? this.newsModel,
       articleId: articleId ?? this.articleId,
+      error: error ?? this.error
     );
   }
 
@@ -35,5 +38,6 @@ class NewsFetchState extends Equatable {
     favoriteFetchStatus,
     newsModel,
     articleId,
+    error
   ];
 }

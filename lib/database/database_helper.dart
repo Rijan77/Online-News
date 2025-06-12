@@ -106,4 +106,16 @@ class DatabaseHelper{
     );
     return result.isNotEmpty;
   }
+
+  Future<int> countFavorites(String email) async {
+    Database db = await instance.db;
+    final count = Sqflite.firstIntValue(
+      await db.rawQuery(
+        'SELECT COUNT(*) FROM user_favorite WHERE email = ?',
+        [email],
+      ),
+    );
+    return count ?? 0;
+  }
+
 }

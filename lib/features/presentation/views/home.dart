@@ -2,35 +2,14 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:timeago/timeago.dart' as timeago;
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../database/database_helper.dart';
 import '../../data/api/model_api.dart';
 import '../bloc/fetch_cubit.dart';
 import '../bloc/fetch_state.dart';
-import 'package:timeago/timeago.dart' as timeago;
-
-Future<void> toggleFavorite(
-    NewsData news, bool isCurrentlyFavorite, BuildContext context) async {
-  final currentUser = FirebaseAuth.instance.currentUser;
-  if (currentUser?.email == null) return;
-
-  try {
-    if (isCurrentlyFavorite) {
-      // Remove from favorites
-      await DatabaseHelper.instance
-          .deleteFavorite(news.articleId!, currentUser!.email!);
-    } else {
-      // Add to favorites
-      if (news.articleId != null) {
-        await DatabaseHelper.instance.insertFavorite(news, currentUser!.email!);
-      }
-    }
-  } catch (e) {
-    log("Error toggling favorite: $e");
-    rethrow;
-  }
-}
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -48,37 +27,11 @@ class _HomeState extends State<Home> {
     super.initState();
     _currentUser = FirebaseAuth.instance.currentUser;
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await context.read<FetchNewsCubit>().fetchNews();
-
-      print('abc::${favoriteStatusList.length}');
+      final cubit = context.read<FetchNewsCubit>();
+      await cubit.fetchNews();
+      await cubit.updateFavoriteCount();
     });
   }
-
-  @override
-  void dispose() {
-    for (var notifier in favoriteStatusList) {
-      // notifier.dispose();
-    }
-    super.dispose();
-  }
-
-  Future<void> _checkFavoriteStatuses(List<NewsData> news) async {
-    if (_currentUser?.email == null) return;
-
-    // for (int i = 0; i < news.length; i++) {
-    //   final articleId = news[i].articleId;
-    //   if (articleId != null) {
-    //          final isFavorite = await DatabaseHelper.instance.isFavorite(
-    //         articleId, _currentUser!.email!);
-    //     if (i < favoriteStatusList.length) {
-    //       favoriteStatusList[i].value = isFavorite;
-    //     }
-    //   }
-    // }
-  }
-
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      GlobalKey<RefreshIndicatorState>();
 
   @override
   Widget build(BuildContext context) {
@@ -100,18 +53,47 @@ class _HomeState extends State<Home> {
           ),
         ),
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: IconButton(
-              onPressed: () async {
-                await Navigator.pushNamed(context, '/fourth');
-                // Refresh both news and favorites when returning
-                final cubit = context.read<FetchNewsCubit>();
-                await cubit.refreshFavorites();
-                await cubit.fetchNews();
-              },
-              icon: const Icon(Icons.favorite, size: 35),
-            ),
+          BlocBuilder<FetchNewsCubit, FetchNews>(
+            builder: (context, state) {
+              final cubit = context.read<FetchNewsCubit>();
+              return Stack(
+                alignment: Alignment.center,
+                children: [
+                  IconButton(
+                    onPressed: () async {
+                      await Navigator.pushNamed(context, '/fourth');
+                      await cubit.refreshFavorites();
+                      await cubit.fetchNews();
+                    },
+                    icon: const Icon(Icons.favorite, size: 35),
+                  ),
+                  if (cubit.favoriteCount > 0)
+                    Positioned(
+                      right: 2,
+                      top: 2,
+                      child: Container(
+                        padding: const EdgeInsets.all(2),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        constraints: const BoxConstraints(
+                          minWidth: 20,
+                          minHeight: 20,
+                        ),
+                        child: Text(
+                          cubit.favoriteCount.toString(),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                ],
+              );
+            },
           ),
         ],
       ),
@@ -128,7 +110,10 @@ class _HomeState extends State<Home> {
             final cubit = context.read<FetchNewsCubit>();
 
             return RefreshIndicator(
-              onRefresh: () => cubit.fetchNews(),
+              onRefresh: () async {
+                await cubit.fetchNews();
+                await cubit.updateFavoriteCount();
+              },
               child: ListView.builder(
                 itemCount: news.length,
                 itemBuilder: (context, index) {
@@ -161,13 +146,17 @@ class _HomeState extends State<Home> {
                                   width: double.infinity,
                                   height: screenHeight * 0.25,
                                   errorBuilder: (context, error, stackTrace) {
-                                  return Container(
-                                    height: screenHeight * 0.25,
-                                    color: Colors.red[200],
-                                    child: const Icon(
-                                        Icons
-                                            .sentiment_very_dissatisfied_outlined,
-                                        size: 50),
+                                  return Center(
+                                    child: Container(
+                                      height: screenHeight * 0.25,
+                                      // color: Colors.red[200],
+                                      child: Center(
+                                        child: const Icon(
+                                            Icons.image_aspect_ratio_outlined,
+                                            color: Colors.black45,
+                                            size: 50),
+                                      ),
+                                    ),
                                   );
                                 })
                               : Container(
@@ -177,8 +166,6 @@ class _HomeState extends State<Home> {
                                       child: Text("No Image Available")),
                                 ),
                         ),
-
-                        // Your image widget here
                         Padding(
                           padding: const EdgeInsets.all(12.0),
                           child: Column(

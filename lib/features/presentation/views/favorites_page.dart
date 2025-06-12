@@ -3,12 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../database/database_helper.dart';
 import '../../data/api/model_api.dart';
+import '../bloc/fetch_cubit.dart';
 
 class FavoritesPage extends StatefulWidget {
-  const FavoritesPage( {super.key});
+  const FavoritesPage({super.key});
 
   @override
   State<FavoritesPage> createState() => _FavoritesPageState();
@@ -35,31 +37,32 @@ class _FavoritesPageState extends State<FavoritesPage> {
     if (mounted) setState(() {});
   }
 
-  Future<void>  removeFavorite(NewsData item)  async {
+  Future<void> removeFavorite(NewsData item) async {
     if (_currentUser?.email == null) return;
 
     try {
       await _dbHelper.deleteFavorite(item.articleId!, _currentUser!.email!);
       if (mounted) {
-
         showTopSnackBar(
           Overlay.of(context),
           CustomSnackBar.info(
             message: "Removed from favorites",
-            backgroundColor: Colors.redAccent
-
+            backgroundColor: Colors.redAccent,
           ),
-        );_loadFavorites();
+        );
+        _loadFavorites();
 
+        // Update the favorite count in the home screen
+        context.read<FetchNewsCubit>().updateFavoriteCount();
       }
     } catch (e) {
       if (mounted) {
         showTopSnackBar(
-            Overlay.of(context),
-            CustomSnackBar.info(
-            message: "Unable to Removed from favorites",
-            backgroundColor: Colors.redAccent
-            )
+          Overlay.of(context),
+          CustomSnackBar.info(
+            message: "Unable to Remove from favorites",
+            backgroundColor: Colors.redAccent,
+          ),
         );
       }
     }
@@ -176,7 +179,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                       style: const TextStyle(color: Colors.blueGrey, fontSize: 15),
                     ),
                     IconButton(
-                      icon: const Icon(Icons.favorite_sharp , color: Colors.red),
+                      icon: const Icon(Icons.favorite_sharp, color: Colors.red),
                       onPressed: () => removeFavorite(item),
                     ),
                   ],
