@@ -15,21 +15,21 @@ class _RegistrationState extends State<Registration> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
 
-    final isPortrait = MediaQuery.of(context).orientation==Orientation.portrait;
+    final isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
 
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
-              SizedBox(
-              height:isPortrait? screenHeight * 0.02: screenHeight * 0.01,
+            SizedBox(
+              height: isPortrait ? screenHeight * 0.02 : screenHeight * 0.01,
             ),
 
             Image.asset(
               "Assets/registrationlogo.png",
-              height: isPortrait? 250: 150,
+              height: isPortrait ? 250 : 150,
             ),
 
             SizedBox(
