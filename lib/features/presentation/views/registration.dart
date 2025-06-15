@@ -17,17 +17,19 @@ class _RegistrationState extends State<Registration> {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
+    final isPortrait = MediaQuery.of(context).orientation==Orientation.portrait;
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
               SizedBox(
-              height: screenHeight * 0.02,
+              height:isPortrait? screenHeight * 0.02: screenHeight * 0.01,
             ),
 
             Image.asset(
               "Assets/registrationlogo.png",
-              height: 250,
+              height: isPortrait? 250: 150,
             ),
 
             SizedBox(
