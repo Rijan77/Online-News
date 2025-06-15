@@ -38,7 +38,6 @@ class _FavoritesPageState extends State<FavoritesPage> {
     }
   }
 
-
   Future<void> removeFavorite(NewsData item) async {
     if (_currentUser?.email == null) return;
 
@@ -98,9 +97,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
 
   Widget _buildContent() {
     final isPortrait =
-        MediaQuery
-            .of(context)
-            .orientation == Orientation.portrait;
+        MediaQuery.of(context).orientation == Orientation.portrait;
     if (_currentUser == null) {
       return const Center(child: Text('Please login to view favorites'));
     }
