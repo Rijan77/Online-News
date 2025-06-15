@@ -29,6 +29,8 @@ class _LoginState extends State<Login> {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
+    final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
+
     return Scaffold(
       body: BlocConsumer<LoginCubit, LoginState>(
         listener: (context, state) {
@@ -50,15 +52,15 @@ class _LoginState extends State<Login> {
             child: Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(top: screenHeight * 0.14),
-                  child: const Center(
+                  padding: EdgeInsets.only(top: isPortrait? screenHeight * 0.14: 0.02),
+                  child: Center(
                     child: Icon(Icons.newspaper_outlined,
-                        size: 130, color: Colors.blueGrey),
+                        size: isPortrait? 130: 80, color: Colors.blueGrey),
                   ),
                 ),
-                const Text(
+                 Text(
                   "Online News",
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+                  style: TextStyle(fontSize:isPortrait? 30:20, fontWeight: FontWeight.w600),
                 ),
                 SizedBox(height: screenHeight * 0.1),
                 TextFieldWidget(

@@ -21,11 +21,16 @@ class ButtonWidget extends StatelessWidget {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
+    final isPortrait = MediaQuery.of(context).orientation==Orientation.portrait;
+
     return InkWell(
       onTap: isLoading ? null : onTap, // disable when loading
       child: Container(
-        height: screenHeight * 0.066,
-        width: screenWidth * 0.7,
+        // height: screenHeight * 0.066,
+        // width: screenWidth * 0.7,
+
+        height: isPortrait? screenHeight* 0.066: screenHeight * 0.14,
+        width: isPortrait? screenWidth * 0.7 : screenWidth * 0.4,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.blueGrey.shade300,

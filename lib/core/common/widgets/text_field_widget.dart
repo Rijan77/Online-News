@@ -11,12 +11,11 @@ class TextFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
+    final isPortrait = MediaQuery.of(context).orientation==Orientation.portrait;
 
     return Padding(
-      padding:  EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
+      padding:  EdgeInsets.symmetric(horizontal: isPortrait? screenWidth * 0.04: screenWidth * 0.15),
       child: TextField(
         controller: editingController,
         decoration: InputDecoration(
