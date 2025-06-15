@@ -6,7 +6,6 @@ import 'package:news_app/features/data/auth/signin_google.dart';
 import 'package:news_app/features/presentation/bloc/login_cubit.dart';
 import 'package:news_app/features/presentation/bloc/login_state.dart';
 
-
 class Login extends StatefulWidget {
   const Login({super.key});
 

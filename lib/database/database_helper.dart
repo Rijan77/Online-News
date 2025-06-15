@@ -122,7 +122,8 @@ class DatabaseHelper {
 
     try {
       // Get all tables in the database
-      List<Map> tables = await db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'");
+      List<Map> tables = await db
+          .rawQuery("SELECT name FROM sqlite_master WHERE type='table'");
 
       print('\n===== DATABASE CONTENTS =====');
       for (var table in tables) {
@@ -130,11 +131,13 @@ class DatabaseHelper {
         print('\nTable: $tableName');
 
         // Skip system tables
-        if (tableName == 'android_metadata' || tableName == 'sqlite_sequence') continue;
+        if (tableName == 'android_metadata' || tableName == 'sqlite_sequence')
+          continue;
 
         // Print table structure
         List<Map> columns = await db.rawQuery("PRAGMA table_info($tableName)");
-        print('Columns: ${columns.map((c) => '${c['name']} (${c['type']})').toList()}');
+        print(
+            'Columns: ${columns.map((c) => '${c['name']} (${c['type']})').toList()}');
 
         // Print table contents (with email filter for user_favorite)
         String whereClause = '';
@@ -165,6 +168,4 @@ class DatabaseHelper {
       print('Error reading database: $e');
     }
   }
-
-
 }
