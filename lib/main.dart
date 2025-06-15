@@ -30,9 +30,11 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => FetchNewsCubit(NewsApi())),
       ],
       child: MaterialApp(
+        // Call it wherever you need to debug your database
+
         initialRoute: '/',
         routes: {
-          '/': (contex) => Login(),
+          '/': (contex) => Home(),
           '/second': (context) => const Registration(),
           '/third': (context) => const Home(),
           '/fourth': (context) => const FavoritesPage(),

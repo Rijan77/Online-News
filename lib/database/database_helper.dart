@@ -17,6 +17,7 @@ class DatabaseHelper {
 
   Future<Database> initDb() async {
     String databasePath = await getDatabasesPath();
+    print('DB Path: $databasePath');
     String path = join(databasePath, 'online_news.db');
 
     return await openDatabase(
@@ -115,4 +116,55 @@ class DatabaseHelper {
     );
     return count ?? 0;
   }
+
+  Future<void> printDatabaseContents() async {
+    final db = await instance.db;
+
+    try {
+      // Get all tables in the database
+      List<Map> tables = await db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'");
+
+      print('\n===== DATABASE CONTENTS =====');
+      for (var table in tables) {
+        String tableName = table['name'];
+        print('\nTable: $tableName');
+
+        // Skip system tables
+        if (tableName == 'android_metadata' || tableName == 'sqlite_sequence') continue;
+
+        // Print table structure
+        List<Map> columns = await db.rawQuery("PRAGMA table_info($tableName)");
+        print('Columns: ${columns.map((c) => '${c['name']} (${c['type']})').toList()}');
+
+        // Print table contents (with email filter for user_favorite)
+        String whereClause = '';
+        List<dynamic> whereArgs = [];
+
+        if (tableName == 'user_favorite') {
+          final userEmail = FirebaseAuth.instance.currentUser?.email;
+          if (userEmail != null) {
+            whereClause = 'email = ?';
+            whereArgs = [userEmail];
+          }
+        }
+
+        List<Map> contents = await db.query(
+          tableName,
+          where: whereClause.isNotEmpty ? whereClause : null,
+          whereArgs: whereArgs.isNotEmpty ? whereArgs : null,
+          limit: 20,
+        );
+
+        print('Rows (${contents.length}):');
+        for (var row in contents) {
+          print(row);
+        }
+      }
+      print('\n===== END OF DATABASE CONTENTS =====');
+    } catch (e) {
+      print('Error reading database: $e');
+    }
+  }
+
+
 }

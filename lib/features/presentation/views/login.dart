@@ -6,6 +6,8 @@ import 'package:news_app/features/data/auth/signin_google.dart';
 import 'package:news_app/features/presentation/bloc/login_cubit.dart';
 import 'package:news_app/features/presentation/bloc/login_state.dart';
 
+import '../../../database/database_helper.dart';
+
 class Login extends StatefulWidget {
   const Login({super.key});
 
@@ -16,6 +18,12 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+  @override
+  void initState() async{
+    super.initState();
+    await DatabaseHelper.instance.printDatabaseContents();
+  }
 
   @override
   void dispose() {
