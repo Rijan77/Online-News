@@ -32,12 +32,11 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         initialRoute: '/',
         routes: {
-          '/': (contex) =>  Login(),
-          '/second': (context)=> const Registration(),
-          '/third': (context)=>const Home(),
-          '/fourth': (context)=>const FavoritesPage(),
+          '/': (contex) => Login(),
+          '/second': (context) => const Registration(),
+          '/third': (context) => const Home(),
+          '/fourth': (context) => const FavoritesPage(),
           // '/fifth': (context)=>
-
         },
         debugShowCheckedModeBanner: false,
         // home: const Home(), // or Home(), based on auth state
