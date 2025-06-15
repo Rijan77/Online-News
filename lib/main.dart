@@ -16,10 +16,12 @@ Future<void> main() async {
   await DatabaseHelper.instance.initDb();
   // await DatabaseHelper.instance.queryAllFavorite();
   await Firebase.initializeApp();
+  await DatabaseHelper.instance.printDatabaseContents();
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+
   const MyApp({super.key});
 
   @override

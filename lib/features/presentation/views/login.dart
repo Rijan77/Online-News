@@ -20,12 +20,6 @@ class _LoginState extends State<Login> {
   final TextEditingController passwordController = TextEditingController();
 
   @override
-  void initState() async{
-    super.initState();
-    await DatabaseHelper.instance.printDatabaseContents();
-  }
-
-  @override
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
