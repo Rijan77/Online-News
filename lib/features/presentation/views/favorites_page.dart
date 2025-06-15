@@ -18,7 +18,8 @@ class FavoritesPage extends StatefulWidget {
 
 class _FavoritesPageState extends State<FavoritesPage> {
   final DatabaseHelper _dbHelper = DatabaseHelper.instance;
-  late Future<List<NewsData>> _favoritesFuture;
+  final ValueNotifier<List<NewsData>> _favoritesNotifier = ValueNotifier([]);
+
   User? _currentUser;
 
   @override
@@ -28,14 +29,15 @@ class _FavoritesPageState extends State<FavoritesPage> {
     loadFavorites();
   }
 
-  void loadFavorites() {
+  void loadFavorites() async {
     if (_currentUser?.email != null) {
-      _favoritesFuture = _dbHelper.getFavorites();
+      final favorites = await _dbHelper.getFavorites();
+      _favoritesNotifier.value = favorites;
     } else {
-      _favoritesFuture = Future.value([]);
+      _favoritesNotifier.value = [];
     }
-    if (mounted) setState(() {});
   }
+
 
   Future<void> removeFavorite(NewsData item) async {
     if (_currentUser?.email == null) return;
@@ -96,43 +98,23 @@ class _FavoritesPageState extends State<FavoritesPage> {
 
   Widget _buildContent() {
     final isPortrait =
-        MediaQuery.of(context).orientation == Orientation.portrait;
+        MediaQuery
+            .of(context)
+            .orientation == Orientation.portrait;
     if (_currentUser == null) {
       return const Center(child: Text('Please login to view favorites'));
     }
 
-    return FutureBuilder<List<NewsData>>(
-      future: _favoritesFuture,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        }
-
-        if (snapshot.hasError) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('Failed to load favorites'),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: loadFavorites,
-                  child: const Text('Retry'),
-                ),
-              ],
-            ),
-          );
-        }
-
-        final favorites = snapshot.data ?? [];
+    return ValueListenableBuilder<List<NewsData>>(
+      valueListenable: _favoritesNotifier,
+      builder: (context, favorites, _) {
         if (favorites.isEmpty) {
           return const Center(child: Text('No favorites yet'));
         }
 
         return RefreshIndicator(
-          onRefresh: () {
+          onRefresh: () async {
             loadFavorites();
-            return _favoritesFuture;
           },
           child: GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
