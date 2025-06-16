@@ -53,9 +53,9 @@ class _HomeState extends State<Home> {
                       await Navigator.pushNamed(context, '/fourth');
                       context.read<NewsFetchCubit>().refreshData();
                     },
-                    icon: Icon(Icons.favorite, size: isPortrait ? 30 : 20),
+                    icon: Icon(Icons.settings, size: isPortrait ? 30 : 20),
                   ),
-                  if (state.articleId.isNotEmpty)
+                  if (state.articleIds.isNotEmpty)
                     Positioned(
                       right: isPortrait ? 2 : 1,
                       top: isPortrait ? 2 : 0,
@@ -71,7 +71,7 @@ class _HomeState extends State<Home> {
                         ),
                         child: Center(
                           child: Text(
-                            state.articleId.length.toString(),
+                            state.articleIds.length.toString(),
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: isPortrait ? 12 : 8,

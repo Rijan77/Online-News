@@ -63,7 +63,7 @@ class NewsFetchCubit extends Cubit<NewsFetchState> {
 
     emit(state.copyWith(favoriteFetchStatus: ResponseEnum.loading));
     try {
-      final currentFavorites = List<String>.from(state.articleId);
+      final currentFavorites = List<String>.from(state.articleIds);
       final isFavorite = currentFavorites.contains(news.articleId);
 
       if (isFavorite) {

@@ -11,6 +11,8 @@ import 'package:news_app/features/presentation/views/home.dart';
 import 'package:news_app/features/presentation/views/login.dart';
 import 'package:news_app/features/presentation/views/registration.dart';
 
+import 'features/presentation/views/settings_pages.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -40,12 +42,16 @@ class MyApp extends StatelessWidget {
         ],
         child: MaterialApp(
           initialRoute: '/',
+
           routes: {
-            '/': (context) => const Login(),
+            '/': (context) => const Home(),
             '/second': (context) => const Registration(),
             '/third': (context) => const Home(),
-            '/fourth': (context) => const FavoritesPage(),
+            '/fourth': (context) => const SettingsPages(),
+            '/fifth': (context) => const FavoritesPage(),
           },
+          darkTheme: ThemeData.dark(),
+          themeMode: ThemeMode.system,
           debugShowCheckedModeBanner: false,
         ),
       ),

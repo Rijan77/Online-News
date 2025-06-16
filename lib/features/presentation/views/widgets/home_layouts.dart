@@ -31,7 +31,7 @@ Widget buildLandscapeGridView(
           itemCount: news.length,
           itemBuilder: (context, index) {
             final item = news[index];
-            final isFavorite = state.articleId.contains(item.articleId);
+            final isFavorite = state.articleIds.contains(item.articleId);
 
             return Container(
               decoration: BoxDecoration(
