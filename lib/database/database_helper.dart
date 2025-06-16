@@ -169,4 +169,20 @@ class DatabaseHelper {
       print('Error reading database: $e');
     }
   }
+
+  Future<void> saveTheme(bool isDark) async{
+    final db = await instance.db;
+    await db.delete("ThemSettings");
+    await db.insert("ThemSettings", {'isDark': isDark ? 1 : 0} );
+  }
+
+  Future<bool> getSavedTheme() async {
+    final db = await instance.db;
+    final result = await db.query('ThemeSettings');
+    if (result.isNotEmpty) {
+      return result.first['isDark'] == 1;
+    }
+    return false; // default light
+  }
+
 }
