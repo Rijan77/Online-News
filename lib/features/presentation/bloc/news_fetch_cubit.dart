@@ -6,6 +6,8 @@ import 'package:news_app/database/database_helper.dart';
 import 'package:news_app/features/data/api/model_api.dart';
 import 'package:news_app/features/data/api/static_api.dart';
 import 'package:news_app/features/presentation/bloc/news_fetch_state.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class NewsFetchCubit extends Cubit<NewsFetchState> {
   final NewsApi newsApi;
@@ -48,7 +50,8 @@ class NewsFetchCubit extends Cubit<NewsFetchState> {
       emit(state.copyWith(
         favoriteFetchStatus: ResponseEnum.success,
         articleId: favoriteIds,
-      ));
+      )
+      );
 
     } catch (e) {
       emit(state.copyWith(
@@ -82,6 +85,13 @@ class NewsFetchCubit extends Cubit<NewsFetchState> {
         favoriteFetchStatus: ResponseEnum.success,
         articleId: currentFavorites,
       ));
+      showTopSnackBar(
+        Overlay.of(context),
+        CustomSnackBar.info(
+          message: isFavorite ? "Remove from favorites" : "Added to favorites",
+          backgroundColor: isFavorite ? Colors.redAccent : Colors.blueGrey,
+        ),
+      );
     } catch (e) {
       emit(state.copyWith(
         favoriteFetchStatus: ResponseEnum.failure,
