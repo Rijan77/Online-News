@@ -6,9 +6,6 @@ import 'package:news_app/database/database_helper.dart';
 import 'package:news_app/features/data/api/model_api.dart';
 import 'package:news_app/features/data/api/static_api.dart';
 import 'package:news_app/features/presentation/bloc/news_fetch_state.dart';
-import 'package:path/path.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class NewsFetchCubit extends Cubit<NewsFetchState> {
   final NewsApi newsApi;

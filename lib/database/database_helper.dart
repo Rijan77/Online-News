@@ -131,8 +131,9 @@ class DatabaseHelper {
         print('\nTable: $tableName');
 
         // Skip system tables
-        if (tableName == 'android_metadata' || tableName == 'sqlite_sequence')
+        if (tableName == 'android_metadata' || tableName == 'sqlite_sequence') {
           continue;
+        }
 
         // Print table structure
         List<Map> columns = await db.rawQuery("PRAGMA table_info($tableName)");

@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,7 +7,6 @@ import 'package:news_app/features/presentation/bloc/login_cubit.dart';
 import 'package:news_app/features/presentation/bloc/news_fetch_cubit.dart';
 import 'package:news_app/features/presentation/views/favorites_page.dart';
 import 'package:news_app/features/presentation/views/home.dart';
-import 'package:news_app/features/presentation/views/login.dart';
 import 'package:news_app/features/presentation/views/registration.dart';
 
 import 'features/presentation/views/settings_pages.dart';

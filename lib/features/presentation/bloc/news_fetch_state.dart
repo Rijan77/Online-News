@@ -28,7 +28,7 @@ class NewsFetchState extends Equatable {
       newsFetchStatus: newsFetchStatus ?? this.newsFetchStatus,
       favoriteFetchStatus: favoriteFetchStatus ?? this.favoriteFetchStatus,
       newsModel: newsModel ?? this.newsModel,
-      articleIds: articleId ?? this.articleIds,
+      articleIds: articleId ?? articleIds,
       error: error ?? this.error,
     );
   }
