@@ -1,10 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/features/presentation/bloc/news_fetch_cubit.dart';
 import 'package:news_app/features/presentation/views/widgets/home_layouts.dart';
 
-import '../bloc/fetch_cubit.dart';
-import '../bloc/fetch_state.dart';
+import '../../../core/utils/response_enum.dart';
+import '../bloc/news_fetch_state.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -14,35 +14,24 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final favoriteStatusList = <String>[];
-  User? _currentUser;
-
   @override
   void initState() {
     super.initState();
-    _currentUser = FirebaseAuth.instance.currentUser;
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      final cubit = context.read<FetchNewsCubit>();
-      await cubit.fetchNews();
-      await cubit.updateFavoriteCount();
-    });
+    context.read<NewsFetchCubit>().newsFetch();
   }
 
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    final isPortrait =
-        MediaQuery.of(context).orientation == Orientation.portrait;
+    final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
 
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: isPortrait ? kToolbarHeight : kToolbarHeight * 0.5,
         backgroundColor: Colors.blueGrey.shade200,
-        leading: InkWell(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Icon(Icons.arrow_back, size: isPortrait ? 35 : 25),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, size: isPortrait ? 35 : 25),
+          onPressed: () => Navigator.pop(context),
         ),
         title: Center(
           child: Text(
@@ -54,21 +43,19 @@ class _HomeState extends State<Home> {
           ),
         ),
         actions: [
-          BlocBuilder<FetchNewsCubit, FetchNews>(
+          BlocBuilder<NewsFetchCubit, NewsFetchState>(
             builder: (context, state) {
-              final cubit = context.read<FetchNewsCubit>();
               return Stack(
                 alignment: Alignment.center,
                 children: [
                   IconButton(
                     onPressed: () async {
                       await Navigator.pushNamed(context, '/fourth');
-                      await cubit.refreshFavorites();
-                      await cubit.fetchNews();
+                      context.read<NewsFetchCubit>().refreshData();
                     },
                     icon: Icon(Icons.favorite, size: isPortrait ? 30 : 20),
                   ),
-                  if (cubit.favoriteCount > 0)
+                  if (state.articleId.isNotEmpty)
                     Positioned(
                       right: isPortrait ? 2 : 1,
                       top: isPortrait ? 2 : 0,
@@ -76,8 +63,7 @@ class _HomeState extends State<Home> {
                         padding: EdgeInsets.all(isPortrait ? 2 : 0),
                         decoration: BoxDecoration(
                           color: Colors.red,
-                          borderRadius:
-                              BorderRadius.circular(isPortrait ? 30 : 80),
+                          borderRadius: BorderRadius.circular(isPortrait ? 30 : 80),
                         ),
                         constraints: BoxConstraints(
                           minHeight: isPortrait ? 20 : 15,
@@ -85,12 +71,11 @@ class _HomeState extends State<Home> {
                         ),
                         child: Center(
                           child: Text(
-                            cubit.favoriteCount.toString(),
+                            state.articleId.length.toString(),
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: isPortrait ? 12 : 8,
                             ),
-                            textAlign: TextAlign.center,
                           ),
                         ),
                       ),
@@ -101,19 +86,23 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-      body: BlocBuilder<FetchNewsCubit, FetchNews>(
+      body: BlocBuilder<NewsFetchCubit, NewsFetchState>(
         builder: (context, state) {
-          if (state is InitialFetchNews || state is LoadingFetchNews) {
+          if (state.newsFetchStatus == ResponseEnum.initial ||
+              state.newsFetchStatus == ResponseEnum.loading) {
             return const Center(
               child: CircularProgressIndicator(color: Colors.blueGrey),
             );
-          } else if (state is ErrorFetchNews) {
-            return Center(child: Text(state.message));
-          } else if (state is SuccessFetchNews) {
-            final news = state.newModel;
-            final cubit = context.read<FetchNewsCubit>();
-
-            return buildLandscapeGridView(news, cubit, screenHeight, context);
+          } else if (state.newsFetchStatus == ResponseEnum.failure) {
+            return Center(child: Text(state.error));
+          } else if (state.newsFetchStatus == ResponseEnum.success &&
+              state.newsModel != null) {
+            return buildLandscapeGridView(
+              state.newsModel!.results,
+              context.read<NewsFetchCubit>(),
+              screenHeight,
+              context,
+            );
           }
           return const SizedBox.shrink();
         },

@@ -1,22 +1,20 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/database/database_helper.dart';
 import 'package:news_app/features/data/api/static_api.dart';
+import 'package:news_app/features/presentation/bloc/login_cubit.dart';
+import 'package:news_app/features/presentation/bloc/news_fetch_cubit.dart';
 import 'package:news_app/features/presentation/views/favorites_page.dart';
 import 'package:news_app/features/presentation/views/home.dart';
+import 'package:news_app/features/presentation/views/login.dart';
 import 'package:news_app/features/presentation/views/registration.dart';
-import 'database/database_helper.dart';
-import 'features/presentation/bloc/fetch_cubit.dart';
-import 'features/presentation/bloc/login_cubit.dart';
-import 'features/presentation/views/login.dart';
-// Make sure this exists or remove
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await DatabaseHelper.instance.initDb();
-  // await DatabaseHelper.instance.queryAllFavorite();
   await Firebase.initializeApp();
-  await DatabaseHelper.instance.printDatabaseContents();
+  await DatabaseHelper.instance.initDb();
   runApp(const MyApp());
 }
 
@@ -25,24 +23,31 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
+    return MultiRepositoryProvider(
       providers: [
-        BlocProvider(create: (_) => LoginCubit()),
-        BlocProvider(create: (_) => FetchNewsCubit(NewsApi())),
+        RepositoryProvider(create: (_) => NewsApi()),
+        RepositoryProvider(create: (_) => DatabaseHelper.instance),
       ],
-      child: MaterialApp(
-        // Call it wherever you need to debug your database
-
-        initialRoute: '/',
-        routes: {
-          '/': (contex) => Login(),
-          '/second': (context) => const Registration(),
-          '/third': (context) => const Home(),
-          '/fourth': (context) => const FavoritesPage(),
-          // '/fifth': (context)=>
-        },
-        debugShowCheckedModeBanner: false,
-        // home: const Home(), // or Home(), based on auth state
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (_) => LoginCubit()),
+          BlocProvider(
+            create: (context) => NewsFetchCubit(
+              newsApi: context.read<NewsApi>(),
+              databaseHelper: context.read<DatabaseHelper>(),
+            )..newsFetch(),
+          ),
+        ],
+        child: MaterialApp(
+          initialRoute: '/',
+          routes: {
+            '/': (context) => const Login(),
+            '/second': (context) => const Registration(),
+            '/third': (context) => const Home(),
+            '/fourth': (context) => const FavoritesPage(),
+          },
+          debugShowCheckedModeBanner: false,
+        ),
       ),
     );
   }

@@ -1,13 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:timeago/timeago.dart' as timeago;
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../database/database_helper.dart';
-import '../../data/api/model_api.dart';
-import '../bloc/fetch_cubit.dart';
+import 'package:news_app/database/database_helper.dart';
+import 'package:news_app/features/data/api/model_api.dart';
+import 'package:news_app/features/presentation/bloc/news_fetch_cubit.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({super.key});
@@ -17,77 +14,52 @@ class FavoritesPage extends StatefulWidget {
 }
 
 class _FavoritesPageState extends State<FavoritesPage> {
-  final DatabaseHelper _dbHelper = DatabaseHelper.instance;
   final ValueNotifier<List<NewsData>> _favoritesNotifier = ValueNotifier([]);
-
-  User? _currentUser;
 
   @override
   void initState() {
     super.initState();
-    _currentUser = FirebaseAuth.instance.currentUser;
-    loadFavorites();
+    _loadFavorites();
   }
 
-  void loadFavorites() async {
-    if (_currentUser?.email != null) {
-      final favorites = await _dbHelper.getFavorites();
+  Future<void> _loadFavorites() async {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser?.email != null) {
+      final favorites = await DatabaseHelper.instance.getFavorites();
       _favoritesNotifier.value = favorites;
-    } else {
-      _favoritesNotifier.value = [];
     }
   }
 
-  Future<void> removeFavorite(NewsData item) async {
-    if (_currentUser?.email == null) return;
+  Future<void> _removeFavorite(NewsData item) async {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser?.email == null) return;
 
     try {
-      await _dbHelper.deleteFavorite(item.articleId!, _currentUser!.email!);
-      if (mounted) {
-        showTopSnackBar(
-          Overlay.of(context),
-          CustomSnackBar.info(
-            message: "Removed from favorites",
-            backgroundColor: Colors.redAccent,
-          ),
-        );
-        loadFavorites();
-
-        // Update the favorite count in the home screen
-        context.read<FetchNewsCubit>().updateFavoriteCount();
-      }
+      await DatabaseHelper.instance.deleteFavorite(
+          item.articleId!, currentUser!.email!);
+      await _loadFavorites();
+      context.read<NewsFetchCubit>().refreshData();
     } catch (e) {
-      if (mounted) {
-        showTopSnackBar(
-          Overlay.of(context),
-          CustomSnackBar.info(
-            message: "Unable to Remove from favorites",
-            backgroundColor: Colors.redAccent,
-          ),
-        );
-      }
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to remove favorite: ${e.toString()}'))
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final isPortrait =
-        MediaQuery.of(context).orientation == Orientation.portrait;
+    final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: isPortrait ? kToolbarHeight : kToolbarHeight * 0.4,
-        leading: InkWell(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Icon(Icons.arrow_back, size: isPortrait ? 35 : 25),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, size: isPortrait ? 35 : 25),
+          onPressed: () => Navigator.pop(context),
         ),
         title: Padding(
           padding: EdgeInsets.only(left: isPortrait ? 45 : 230),
-          child: const Text(
-            "Favorites News",
-            style: TextStyle(fontWeight: FontWeight.w700),
-          ),
+          child: const Text("Favorites News"),
         ),
         backgroundColor: Colors.blueGrey.shade200,
       ),
@@ -96,9 +68,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
   }
 
   Widget _buildContent() {
-    final isPortrait =
-        MediaQuery.of(context).orientation == Orientation.portrait;
-    if (_currentUser == null) {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser == null) {
       return const Center(child: Text('Please login to view favorites'));
     }
 
@@ -110,19 +81,14 @@ class _FavoritesPageState extends State<FavoritesPage> {
         }
 
         return RefreshIndicator(
-          onRefresh: () async {
-            loadFavorites();
-          },
+          onRefresh: _loadFavorites,
           child: GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: isPortrait ? 1 : 2,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
+              crossAxisCount: MediaQuery.of(context).orientation == Orientation.portrait ? 1 : 2,
               childAspectRatio: 1.2,
             ),
             itemCount: favorites.length,
-            itemBuilder: (context, index) =>
-                _buildFavoriteItem(favorites[index]),
+            itemBuilder: (context, index) => _buildFavoriteItem(favorites[index]),
           ),
         );
       },
@@ -131,41 +97,39 @@ class _FavoritesPageState extends State<FavoritesPage> {
 
   Widget _buildFavoriteItem(NewsData item) {
     final screenHeight = MediaQuery.of(context).size.height;
-    final isPortrait =
-        MediaQuery.of(context).orientation == Orientation.portrait;
+    final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
 
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: Container(
-        margin:
-            EdgeInsets.symmetric(vertical: isPortrait ? 1 : 8, horizontal: 16),
+        margin: EdgeInsets.symmetric(
+            vertical: isPortrait ? 1 : 8,
+            horizontal: 16
+        ),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),
           boxShadow: const [
             BoxShadow(
-                color: Colors.black12, blurRadius: 4, offset: Offset(0, 2)),
+                color: Colors.black12,
+                blurRadius: 4,
+                offset: Offset(0, 2)
+            )
           ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
-              borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(15)),
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
               child: item.imageUrl != null
                   ? Image.network(
-                      item.imageUrl!,
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                      height: isPortrait
-                          ? screenHeight * 0.222
-                          : screenHeight * 0.4,
-
-                      // height: screenHeight * 0.2,
-                      errorBuilder: (_, __, ___) =>
-                          _buildPlaceholderImage(screenHeight),
-                    )
+                item.imageUrl!,
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: isPortrait ? screenHeight * 0.222 : screenHeight * 0.4,
+                errorBuilder: (_, __, ___) => _buildPlaceholderImage(screenHeight),
+              )
                   : _buildPlaceholderImage(screenHeight),
             ),
             Padding(
@@ -189,12 +153,12 @@ class _FavoritesPageState extends State<FavoritesPage> {
                       Expanded(
                         child: Text(
                           item.pubDate != null
-                              ? timeago.format(DateTime.parse(item.pubDate!),
-                                  allowFromNow: true)
+                              ? timeago.format(DateTime.parse(item.pubDate!))
                               : "Date not available",
                           style: const TextStyle(
-                              color: Colors.blueGrey, fontSize: 15),
-                          // overflow: TextOverflow.ellipsis,
+                              color: Colors.blueGrey,
+                              fontSize: 15
+                          ),
                         ),
                       ),
                       IconButton(
@@ -203,7 +167,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                           color: Colors.red,
                           size: 20,
                         ),
-                        onPressed: () => removeFavorite(item),
+                        onPressed: () => _removeFavorite(item),
                       ),
                     ],
                   ),
