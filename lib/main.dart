@@ -34,10 +34,12 @@ class MyApp extends StatelessWidget {
         providers: [
           BlocProvider(create: (_) => LoginCubit()),
           BlocProvider(
-            create: (context) => NewsFetchCubit(
+            create: (context) =>
+            NewsFetchCubit(
               newsApi: context.read<NewsApi>(),
               databaseHelper: context.read<DatabaseHelper>(),
-            )..newsFetch(),
+            )
+              ..newsFetch(),
           ),
         ],
         child: MaterialApp(
@@ -50,9 +52,6 @@ class MyApp extends StatelessWidget {
             '/fourth': (context) => const SettingsPages(),
             '/fifth': (context) => const FavoritesPage(),
           },
-          darkTheme: ThemeData.dark(),
-          themeMode: ThemeMode.system,
-          debugShowCheckedModeBanner: false,
         ),
       ),
     );

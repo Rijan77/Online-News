@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/features/presentation/views/favorites_page.dart';
 import 'package:settings_ui/settings_ui.dart';
 
+import '../../../main.dart';
 import '../bloc/news_fetch_cubit.dart';
 import '../bloc/news_fetch_state.dart';
 
@@ -49,6 +50,7 @@ class _SettingsPagesState extends State<SettingsPages> {
     );
   }
 
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -56,6 +58,8 @@ class _SettingsPagesState extends State<SettingsPages> {
         MediaQuery.of(context).orientation == Orientation.portrait;
     String emailAddress = currentUser?.email ?? "No User Found";
     final splitted = emailAddress.split('@');
+
+
 
     return Scaffold(
         appBar: AppBar(
