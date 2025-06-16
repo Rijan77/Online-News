@@ -170,10 +170,10 @@ class DatabaseHelper {
     }
   }
 
-  Future<void> saveTheme(bool isDark) async{
+  Future<void> saveTheme(bool isDark) async {
     final db = await instance.db;
     await db.delete("ThemSettings");
-    await db.insert("ThemSettings", {'isDark': isDark ? 1 : 0} );
+    await db.insert("ThemSettings", {'isDark': isDark ? 1 : 0});
   }
 
   Future<bool> getSavedTheme() async {
@@ -184,5 +184,4 @@ class DatabaseHelper {
     }
     return false; // default light
   }
-
 }

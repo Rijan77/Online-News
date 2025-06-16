@@ -10,7 +10,7 @@ class NewsApi {
 
   Future<NewsModel> getNews() async {
     // final url = Uri.parse("http://10.13.172.119:8081/news");
-    
+
     final url = Uri.parse("$_baseUrl?apikey=$_apiKey&q=Hot%20news");
     log("Fetching news from: $url");
 
