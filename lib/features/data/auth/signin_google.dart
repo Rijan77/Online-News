@@ -6,9 +6,7 @@ import 'google_auth.dart';
 class GoogleSignIn {
   final GoogleAuth googleAuth = GoogleAuth();
 
-
   Future<void> loginWithGoogle(BuildContext context) async {
-
     try {
       final user = await googleAuth.loginWithGoogle();
 
@@ -17,21 +15,21 @@ class GoogleSignIn {
           context: context,
           title: "Welcome Back!",
           message: "You have successfully signed in with Google.",
-
           onConfirm: () {
-            print("User: ${user.user?.displayName}, Email: ${user.user?.email}");
+            print(
+                "User: ${user.user?.displayName}, Email: ${user.user?.email}");
             // Navigator.pushReplacement(
             //   context,
             //   MaterialPageRoute(builder: (context) => const Home()),
 
             Navigator.pushNamed(context, "/third");
-
           },
         );
       } else {
         CustomDialog.showSnackBar(
           context: context,
-          message: "Login was unsuccessful. Please check your credentials and try again.",
+          message:
+              "Login was unsuccessful. Please check your credentials and try again.",
         );
       }
     } catch (e) {
@@ -40,6 +38,5 @@ class GoogleSignIn {
         message: "Google Login failed. Please try again later.",
       );
     }
-
   }
 }

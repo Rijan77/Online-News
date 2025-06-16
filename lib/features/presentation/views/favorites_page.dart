@@ -211,12 +211,10 @@ class _FavoritesPageState extends State<FavoritesPage> {
               ),
             ),
           ],
-
         ),
       ),
     );
   }
-
 
   Widget _buildPlaceholderImage(double height) {
     return Container(
