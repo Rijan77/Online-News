@@ -5,12 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:news_app/features/presentation/views/favorites_page.dart';
 import 'package:news_app/features/presentation/views/settings_pages.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:settings_ui/settings_ui.dart';
 
 import 'home.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();

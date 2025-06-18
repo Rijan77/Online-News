@@ -10,7 +10,6 @@ import 'package:news_app/features/presentation/views/home.dart';
 import 'package:news_app/features/presentation/views/registration.dart';
 
 import 'core/common/widgets/bottom_nav.dart';
-import 'features/presentation/views/news_detail_page.dart';
 import 'features/presentation/views/settings_pages.dart';
 
 Future<void> main() async {
