@@ -33,18 +33,15 @@ class MyApp extends StatelessWidget {
         providers: [
           BlocProvider(create: (_) => LoginCubit()),
           BlocProvider(
-            create: (context) =>
-            NewsFetchCubit(
+            create: (context) => NewsFetchCubit(
               newsApi: context.read<NewsApi>(),
               databaseHelper: context.read<DatabaseHelper>(),
-            )
-              ..newsFetch(),
+            )..newsFetch(),
           ),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           initialRoute: '/',
-
           routes: {
             '/': (context) => BottomNav(),
             '/second': (context) => const Registration(),

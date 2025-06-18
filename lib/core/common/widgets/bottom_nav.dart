@@ -69,7 +69,7 @@ class _BottomNavState extends State<BottomNav> {
               textAlign: TextAlign.center,
               itemLabelStyle: const TextStyle(fontSize: 10, height: 1.5),
               elevation: 1,
-              bottomBarItems:  [
+              bottomBarItems: [
                 BottomBarItem(
                   inActiveItem: Icon(
                     Icons.home_filled,
@@ -87,7 +87,6 @@ class _BottomNavState extends State<BottomNav> {
                   itemLabel: 'Home',
                 ),
                 BottomBarItem(
-
                   inActiveItem: Icon(
                     Icons.favorite,
                     color: Colors.blueGrey,

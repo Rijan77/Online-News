@@ -11,6 +11,7 @@ import '../bloc/news_fetch_state.dart';
 
 class Home extends StatefulWidget {
   final NotchBottomBarController? controller;
+
   const Home({super.key, this.controller});
 
   @override
@@ -27,7 +28,8 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    final isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
 
     return Scaffold(
       appBar: AppBar(
@@ -58,7 +60,10 @@ class _HomeState extends State<Home> {
                       context.read<NewsFetchCubit>().refreshData();
                     },
                     // icon: Icon(Icons.notifications_on_rounded, size: isPortrait ? 30 : 20),
-                    icon: FaIcon(FontAwesomeIcons.bell, size: isPortrait? 30: 20,),
+                    icon: FaIcon(
+                      FontAwesomeIcons.bell,
+                      size: isPortrait ? 30 : 20,
+                    ),
                   ),
                   if (state.articleIds.isNotEmpty)
                     Positioned(
@@ -68,7 +73,8 @@ class _HomeState extends State<Home> {
                         padding: EdgeInsets.all(isPortrait ? 2 : 0),
                         decoration: BoxDecoration(
                           color: Colors.red,
-                          borderRadius: BorderRadius.circular(isPortrait ? 30 : 80),
+                          borderRadius:
+                              BorderRadius.circular(isPortrait ? 30 : 80),
                         ),
                         constraints: BoxConstraints(
                           minHeight: isPortrait ? 20 : 15,
@@ -112,7 +118,6 @@ class _HomeState extends State<Home> {
           return const SizedBox.shrink();
         },
       ),
-
     );
   }
 }
