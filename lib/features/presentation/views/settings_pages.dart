@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/features/presentation/views/favorites_page.dart';
 import 'package:settings_ui/settings_ui.dart';
 
+import '../../../core/common/widgets/bottom_nav.dart';
 import '../bloc/news_fetch_cubit.dart';
 import '../bloc/news_fetch_state.dart';
 
@@ -199,6 +200,8 @@ class _SettingsPagesState extends State<SettingsPages> {
               }),
             ),
           ],
-        ));
+        ),
+
+    );
   }
 }

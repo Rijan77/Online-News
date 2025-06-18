@@ -153,7 +153,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                       Expanded(
                         child: Text(
                           item.pubDate != null
-                              ? timeago.format(DateTime.parse(item.pubDate))
+                              ? timeago.format(DateTime.parse(item.pubDate),)
                               : "Date not available",
                           style: const TextStyle(
                               color: Colors.blueGrey,

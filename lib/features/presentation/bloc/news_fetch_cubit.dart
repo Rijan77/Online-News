@@ -8,6 +8,7 @@ import 'package:news_app/features/data/api/static_api.dart';
 import 'package:news_app/features/presentation/bloc/news_fetch_state.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:http/http.dart' as http;
 
 class NewsFetchCubit extends Cubit<NewsFetchState> {
   final NewsApi newsApi;
@@ -99,6 +100,9 @@ class NewsFetchCubit extends Cubit<NewsFetchState> {
   }
 
   Future<void> refreshData() async {
+    final url = Uri.parse("http://10.13.172.119:8080/newsapi-web/webresources/newsdata/refresh");
+
+    await http.get(url);
     await newsFetch();
     await _loadFavorites();
   }

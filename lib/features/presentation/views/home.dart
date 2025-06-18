@@ -1,13 +1,17 @@
+import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:news_app/features/presentation/bloc/news_fetch_cubit.dart';
+
 import 'package:news_app/features/presentation/views/widgets/home_layouts.dart';
 
 import '../../../core/utils/response_enum.dart';
 import '../bloc/news_fetch_state.dart';
 
 class Home extends StatefulWidget {
-  const Home({super.key});
+  final NotchBottomBarController? controller;
+  const Home({super.key, this.controller});
 
   @override
   State<Home> createState() => _HomeState();
@@ -53,7 +57,8 @@ class _HomeState extends State<Home> {
                       await Navigator.pushNamed(context, '/fourth');
                       context.read<NewsFetchCubit>().refreshData();
                     },
-                    icon: Icon(Icons.settings, size: isPortrait ? 30 : 20),
+                    // icon: Icon(Icons.notifications_on_rounded, size: isPortrait ? 30 : 20),
+                    icon: FaIcon(FontAwesomeIcons.bell, size: isPortrait? 30: 20,),
                   ),
                   if (state.articleIds.isNotEmpty)
                     Positioned(
@@ -107,6 +112,7 @@ class _HomeState extends State<Home> {
           return const SizedBox.shrink();
         },
       ),
+
     );
   }
 }
