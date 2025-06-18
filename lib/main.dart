@@ -7,6 +7,7 @@ import 'package:news_app/features/presentation/bloc/login_cubit.dart';
 import 'package:news_app/features/presentation/bloc/news_fetch_cubit.dart';
 import 'package:news_app/features/presentation/views/favorites_page.dart';
 import 'package:news_app/features/presentation/views/home.dart';
+import 'package:news_app/features/presentation/views/login.dart';
 import 'package:news_app/features/presentation/views/registration.dart';
 
 import 'core/common/widgets/bottom_nav.dart';
@@ -43,11 +44,9 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           initialRoute: '/',
           routes: {
-            '/': (context) => BottomNav(),
+            '/': (context) => Login(),
             '/second': (context) => const Registration(),
-            '/third': (context) => const Home(),
-            '/fourth': (context) => const SettingsPages(),
-            '/fifth': (context) => const FavoritesPage(),
+            '/third': (context) => const BottomNav(),
           },
         ),
       ),
