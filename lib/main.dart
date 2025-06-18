@@ -5,13 +5,10 @@ import 'package:news_app/database/database_helper.dart';
 import 'package:news_app/features/data/api/static_api.dart';
 import 'package:news_app/features/presentation/bloc/login_cubit.dart';
 import 'package:news_app/features/presentation/bloc/news_fetch_cubit.dart';
-import 'package:news_app/features/presentation/views/favorites_page.dart';
-import 'package:news_app/features/presentation/views/home.dart';
 import 'package:news_app/features/presentation/views/login.dart';
 import 'package:news_app/features/presentation/views/registration.dart';
 
 import 'core/common/widgets/bottom_nav.dart';
-import 'features/presentation/views/settings_pages.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
