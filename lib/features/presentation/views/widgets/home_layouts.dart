@@ -49,7 +49,7 @@ Widget buildLandscapeGridView(
                       borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
                       child: item.imageUrl != null
                           ? Image.network(
-                          item.imageUrl!,
+                          item.imageUrl,
                           fit: BoxFit.cover,
                           width: double.infinity,
                           errorBuilder: (context, error, stackTrace) {
@@ -88,7 +88,7 @@ Widget buildLandscapeGridView(
                             Expanded(
                               child: Text(
                                 item.pubDate != null
-                                    ? timeago.format(DateTime.parse(item.pubDate!), allowFromNow: true)
+                                    ? timeago.format(DateTime.parse(item.pubDate), allowFromNow: true)
                                     : "Date not available",
                                 style: const TextStyle(color: Colors.blueGrey, fontSize: 15),
                                 overflow: TextOverflow.ellipsis,

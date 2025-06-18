@@ -36,7 +36,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
 
     try {
       await DatabaseHelper.instance.deleteFavorite(
-          item.articleId!, currentUser!.email!);
+          item.articleId, currentUser!.email!);
       await _loadFavorites();
       context.read<NewsFetchCubit>().refreshData();
     } catch (e) {
@@ -124,7 +124,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
               borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
               child: item.imageUrl != null
                   ? Image.network(
-                item.imageUrl!,
+                item.imageUrl,
                 fit: BoxFit.cover,
                 width: double.infinity,
                 height: isPortrait ? screenHeight * 0.222 : screenHeight * 0.4,
@@ -153,7 +153,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                       Expanded(
                         child: Text(
                           item.pubDate != null
-                              ? timeago.format(DateTime.parse(item.pubDate!))
+                              ? timeago.format(DateTime.parse(item.pubDate))
                               : "Date not available",
                           style: const TextStyle(
                               color: Colors.blueGrey,

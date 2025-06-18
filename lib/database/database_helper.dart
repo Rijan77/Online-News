@@ -50,8 +50,6 @@ class DatabaseHelper {
   }
 
   Future<int> insertFavorite(NewsData news, String email) async {
-    if (news.articleId == null) throw Exception('Article ID cannot be null');
-
     Database db = await instance.db;
     return await db.insert(
       'user_favorite',
@@ -182,6 +180,6 @@ class DatabaseHelper {
     if (result.isNotEmpty) {
       return result.first['isDark'] == 1;
     }
-    return false; // default light
+    return false; // default lightzz
   }
 }
