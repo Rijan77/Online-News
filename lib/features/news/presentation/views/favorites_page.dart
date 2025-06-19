@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/core/helpers/database_helper.dart';
-import 'package:news_app/features/news/data/models/news_model_api.dart';
-import 'package:news_app/features/news/presentation/blocs/news_fetch_cubit.dart';
-import 'package:timeago/timeago.dart' as timeago;
+
+import '../../../../core/helpers/database_helper.dart';
+import '../../../../core/helpers/datetime_helper.dart';
+import '../../data/models/news_model_api.dart';
+import '../blocs/news_fetch_cubit.dart';
+
 
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({super.key});
@@ -36,7 +38,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
 
     try {
       await DatabaseHelper.instance.deleteFavorite(
-          item.articleId, currentUser!.email!);
+          item.articleId!, currentUser!.email!);
       await _loadFavorites();
       context.read<NewsFetchCubit>().refreshData();
     } catch (e) {
@@ -124,7 +126,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
               borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
               child: item.imageUrl != null
                   ? Image.network(
-                item.imageUrl,
+                item.imageUrl!,
                 fit: BoxFit.cover,
                 width: double.infinity,
                 height: isPortrait ? screenHeight * 0.222 : screenHeight * 0.4,
@@ -153,7 +155,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                       Expanded(
                         child: Text(
                           item.pubDate != null
-                              ? timeago.format((item.pubDate),)
+                              ? DateTimeHelper.timeAgoSinceDate((item.pubDate),)
                               : "Date not available",
                           style: const TextStyle(
                               color: Colors.blueGrey,

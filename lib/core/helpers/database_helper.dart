@@ -5,6 +5,7 @@ import 'package:sqflite/sqflite.dart';
 import '../../features/news/data/models/news_model_api.dart';
 
 
+
 class DatabaseHelper {
   static final DatabaseHelper instance = DatabaseHelper._instance();
   static Database? _database;
@@ -58,7 +59,8 @@ class DatabaseHelper {
         'article_id': news.articleId,
         'title': news.title,
         'image_url': news.imageUrl,
-        'pub_date': news.pubDate,
+        'pub_date': news.pubDate.toIso8601String(),
+        // 'pub_date': news.pubDate,
         'email': email,
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
@@ -78,7 +80,9 @@ class DatabaseHelper {
         articleId: maps[i]['article_id'],
         title: maps[i]['title'],
         imageUrl: maps[i]['image_url'],
-        pubDate: maps[i]['pub_date'],
+        pubDate: maps[i]['pub_date'] != null
+            ? DateTime.parse(maps[i]['pub_date'])
+            : DateTime.now(),
       );
     });
   }

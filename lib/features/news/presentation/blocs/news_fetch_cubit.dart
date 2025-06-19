@@ -75,11 +75,11 @@ class NewsFetchCubit extends Cubit<NewsFetchState> {
 
       if (isFavorite) {
         await databaseHelper.deleteFavorite(
-            news.articleId, currentUser.email!);
+            news.articleId!, currentUser.email!);
         currentFavorites.remove(news.articleId);
       } else {
         await databaseHelper.insertFavorite(news, currentUser.email!);
-        currentFavorites.add(news.articleId);
+        currentFavorites.add(news.articleId!);
             }
 
       emit(state.copyWith(

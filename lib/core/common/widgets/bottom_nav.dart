@@ -112,6 +112,7 @@ class _BottomNavState extends State<BottomNav> {
                   ),
                   itemLabel: 'Profile',
                 ),
+                // BottomBarItem(inActiveItem: , activeItem: activeItem)
               ],
               onTap: (index) {
                 log('current selected index $index');

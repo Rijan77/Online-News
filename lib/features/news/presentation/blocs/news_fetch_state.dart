@@ -4,6 +4,7 @@ import '../../../../core/utils/response_enum.dart';
 import '../../data/models/news_model_api.dart';
 
 
+
 class NewsFetchState extends Equatable {
   final ResponseEnum newsFetchStatus;
   final ResponseEnum favoriteFetchStatus;
