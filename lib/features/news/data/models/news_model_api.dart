@@ -34,17 +34,17 @@ class NewsData {
     // this.link,
     // required this.keywords,
     // required this.creator,
-    // required this.description,
+    required this.description,
     // required this.content,
     required this.pubDate,
     // required this.pubDateTZ,
     required this.imageUrl,
     // this.videoUrl,
-    // required this.sourceId,
-    // required this.sourceName,
+    required this.sourceId,
+    required this.sourceName,
     // required this.sourcePriority,
-    // required this.sourceUrl,
-    // required this.sourceIcon,
+    required this.sourceUrl,
+    required this.sourceIcon,
     // required this.language,
     // required this.country,
     // required this.category,
@@ -60,17 +60,17 @@ class NewsData {
   // late final String? link;
   // late final List<Keywords> keywords;
   // late final List<Creator> creator;
-  // late final String description;
+  late final String description;
   // late final String? content;
   late final DateTime pubDate;
   // late final String pubDateTZ;
   late final String imageUrl;
   // late final Null videoUrl;
-  // late final String? sourceId;
-  // late final String sourceName;
+  late final String? sourceId;
+  late final String sourceName;
   // late final int sourcePriority;
-  // late final String sourceUrl;
-  // late final String sourceIcon;
+  late final String sourceUrl;
+  late final String sourceIcon;
   // late final String language;
   // late final List<Country> country;
   // late final List<Category> category;
@@ -87,17 +87,17 @@ class NewsData {
     // link = json['link'];
     // keywords = List.from(json['keywords']).map((e)=>Keywords.fromJson(e)).toList();
     // creator = List.from(json['creator']).map((e)=>Creator.fromJson(e)).toList();
-    // description = json['description'];
+    description = json['description'];
     // content = json['content'];
     pubDate = DateTime.tryParse(json['pubDate'])??DateTime.now() ;
     // pubDateTZ = json['pubDateTZ'];
     imageUrl = json['image_url'];
     // videoUrl = null;
-    // sourceId = json['source_id'];
-    // sourceName = json['source_name'];
+    sourceId = json['source_id'];
+    sourceName = json['source_name'];
     // sourcePriority = json['source_priority'];
-    // sourceUrl = json['source_url'];
-    // sourceIcon = json['source_icon'];
+    sourceUrl = json['source_url'];
+    sourceIcon = json['source_icon'];
     // language = json['language'];
     // country = List.from(json['country']).map((e)=>Country.fromJson(e)).toList();
     // category = List.from(json['category']).map((e)=>Category.fromJson(e)).toList();
@@ -116,17 +116,17 @@ class NewsData {
     // _data['link'] = link;
     // _data['keywords'] = keywords.map((e)=>e.toJson()).toList();
     // _data['creator'] = creator.map((e)=>e.toJson()).toList();
-    // _data['description'] = description;
+    data['description'] = description;
     // _data['content'] = content;
     data['pubDate'] = pubDate;
     // _data['pubDateTZ'] = pubDateTZ;
     data['image_url'] = imageUrl;
     // _data['video_url'] = videoUrl;
-    // _data['source_id'] = sourceId;
-    // _data['source_name'] = sourceName;
+    data['source_id'] = sourceId;
+    data['source_name'] = sourceName;
     // _data['source_priority'] = sourcePriority;
-    // _data['source_url'] = sourceUrl;
-    // _data['source_icon'] = sourceIcon;
+    data['source_url'] = sourceUrl;
+    data['source_icon'] = sourceIcon;
     // _data['language'] = language;
     // _data['country'] = country.map((e)=>e.toJson()).toList();
     // _data['category'] = category.map((e)=>e.toJson()).toList();

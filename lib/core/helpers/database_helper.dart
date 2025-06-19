@@ -83,6 +83,12 @@ class DatabaseHelper {
         pubDate: maps[i]['pub_date'] != null
             ? DateTime.parse(maps[i]['pub_date'])
             : DateTime.now(),
+        description: maps[i]['description'],
+        sourceName: maps[i]['sourceName'],
+        sourceId: maps[i]['sourceId'],
+        sourceUrl: maps[i]["sourceUrl"],
+        sourceIcon: maps[i]["sourceIcon"]
+
       );
     });
   }
