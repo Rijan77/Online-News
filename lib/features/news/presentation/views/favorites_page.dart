@@ -55,10 +55,10 @@ class _FavoritesPageState extends State<FavoritesPage> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: isPortrait ? kToolbarHeight : kToolbarHeight * 0.4,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, size: isPortrait ? 35 : 25),
-          onPressed: () => Navigator.pop(context),
-        ),
+        // leading: IconButton(
+        //   icon: Icon(Icons.arrow_back, size: isPortrait ? 35 : 25),
+        //   onPressed: () => Navigator.pop(context),
+        // ),
         title: Padding(
           padding: EdgeInsets.only(left: isPortrait ? 45 : 230),
           child: const Text("Favorites News"),

@@ -34,6 +34,7 @@ Widget buildLandscapeGridView(
             final item = news[index];
             final isFavorite = state.articleIds.contains(item.articleId);
 
+
             return Container(
               decoration: BoxDecoration(
                 color: Colors.white,
