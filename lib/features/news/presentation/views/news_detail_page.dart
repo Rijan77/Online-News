@@ -18,9 +18,21 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: const BackButton(),
-        title: const Text("Online News"),
-        elevation: 2,
+        backgroundColor: Colors.blueGrey.shade100,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, size:  35 ),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 60),
+          child: Text(
+            "Online News",
+            style: TextStyle(
+              fontWeight:  FontWeight.w700,
+              fontSize: 20,
+            ),
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
