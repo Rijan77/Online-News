@@ -135,13 +135,10 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                           style: const TextStyle(fontWeight: FontWeight.w500),
                         ),
                       ),
-                      if (news.sourceIcon != null)
-                        CircleAvatar(
-                          backgroundImage: NetworkImage(news.sourceIcon),
-                          radius: 20,
-                        )
-                      else
-                        const Icon(Icons.public_off, color: Colors.grey),
+                      CircleAvatar(
+                        backgroundImage: NetworkImage(news.sourceIcon),
+                        radius: 20,
+                      ),
                     ],
                   ),
                   const SizedBox(height: 10),
