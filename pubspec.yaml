@@ -49,7 +49,7 @@ dependencies:
   bottom_navbar_with_indicator:
   http: any
   cached_network_image:
-  timeago: ^3.6.0
+  timeago: ^3.7.1
   top_snackbar_flutter:
   sqflite:
   equatable: ^2.0.7

@@ -1,10 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/features/data/api/model_api.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
 import '../../bloc/news_fetch_cubit.dart';
 import '../../bloc/news_fetch_state.dart';
+
+String timeAgoSinceDate(String pubDate) {
+  final date = DateTime.parse(pubDate).toLocal();
+  final now = DateTime.now().toLocal();
+  final difference = now.difference(date);
+
+  if (difference.inSeconds < 5) {
+    return 'Just now';
+  } else if (difference.inSeconds <= 60) {
+    return '${difference.inSeconds} seconds ago';
+  } else if (difference.inMinutes == 1) {
+    return '1 minute ago';
+  } else if (difference.inMinutes < 60) {
+    return '${difference.inMinutes} minutes ago';
+  } else if (difference.inHours == 1) {
+    return '1 hour ago';
+  } else if (difference.inHours < 24) {
+    return '${difference.inHours} hours ago';
+  } else if (difference.inDays == 1) {
+    return 'Yesterday';
+  } else {
+    return '${difference.inDays} days ago';
+  }
+}
 
 
 
@@ -88,7 +111,7 @@ Widget buildLandscapeGridView(
                             Expanded(
                               child: Text(
                                 item.pubDate != null
-                                    ? timeago.format(DateTime.parse(item.pubDate), allowFromNow: true)
+                                    ? timeAgoSinceDate(item.pubDate)
                                     : "Date not available",
                                 style: const TextStyle(color: Colors.blueGrey, fontSize: 15),
                                 overflow: TextOverflow.ellipsis,
