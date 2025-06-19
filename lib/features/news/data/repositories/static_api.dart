@@ -10,7 +10,7 @@ class NewsApi {
   static const String _baseUrl = "https://newsdata.io/api/1/latest/";
 
   Future<NewsModelApi> getNews() async {
-    final url = Uri.parse("http://10.13.172.119:8080/newsapi-web/webresources/newsdata/20");
+    final url = Uri.parse("http://10.13.172.119:8080/newsapi-web/webresources/newsdata/50");
 
     // final url = Uri.parse("$_baseUrl?apikey=$_apiKey&q=Hot%20news");
     log("Fetching news from: $url");

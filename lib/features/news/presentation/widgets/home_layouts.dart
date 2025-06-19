@@ -94,6 +94,7 @@ Widget buildLandscapeGridView(
                             overflow: TextOverflow.ellipsis,
                           ),
                           const SizedBox(height: 6),
+
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [

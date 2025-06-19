@@ -99,6 +99,7 @@ class NewsData {
     description = json['description'];
     // content = json['content'];
     pubDate = DateTime.tryParse(json['pubDate']) ?? DateTime.now();
+
     // pubDateTZ = json['pubDateTZ'];
     imageUrl = json['image_url'];
     // videoUrl = null;
