@@ -22,7 +22,7 @@ class DatabaseHelper {
 
     return await openDatabase(
       path,
-      version: 2, // Incremented version number
+      version: 3, // Incremented version number
       onCreate: _onCreate,
       onUpgrade: _onUpgrade, // Added onUpgrade callback
     );
@@ -81,11 +81,11 @@ class DatabaseHelper {
           pubDate: maps[i]['pub_date'] != null
               ? DateTime.parse(maps[i]['pub_date'])
               : DateTime.now(),
-          description: maps[i]['description'],
-          sourceName: maps[i]['sourceName'],
-          sourceId: maps[i]['sourceId'],
-          sourceUrl: maps[i]["sourceUrl"],
-          sourceIcon: maps[i]["sourceIcon"]);
+          description: maps[i]['description']?? "",
+          sourceName: maps[i]['sourceName']?? "",
+          sourceId: maps[i]['sourceId']?? "",
+          sourceUrl: maps[i]["sourceUrl"]?? "",
+          sourceIcon: maps[i]["sourceIcon"]?? "");
     });
   }
 
