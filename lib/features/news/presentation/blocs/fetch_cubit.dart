@@ -1,12 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/features/data/api/model_api.dart';
+import 'package:news_app/features/news/data/models/news_model_api.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
-import '../../../database/database_helper.dart';
-import '../../data/api/static_api.dart';
+import '../../../../core/helpers/database_helper.dart';
+import '../../data/repositories/static_api.dart';
 import 'fetch_state.dart';
 
 class FetchNewsCubit extends Cubit<FetchNews> {

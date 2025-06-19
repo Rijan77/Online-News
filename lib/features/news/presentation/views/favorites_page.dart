@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/database/database_helper.dart';
-import 'package:news_app/features/data/api/model_api.dart';
-import 'package:news_app/features/presentation/bloc/news_fetch_cubit.dart';
+import 'package:news_app/core/helpers/database_helper.dart';
+import 'package:news_app/features/news/data/models/news_model_api.dart';
+import 'package:news_app/features/news/presentation/blocs/news_fetch_cubit.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class FavoritesPage extends StatefulWidget {
@@ -153,7 +153,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                       Expanded(
                         child: Text(
                           item.pubDate != null
-                              ? timeago.format(DateTime.parse(item.pubDate),)
+                              ? timeago.format((item.pubDate),)
                               : "Date not available",
                           style: const TextStyle(
                               color: Colors.blueGrey,

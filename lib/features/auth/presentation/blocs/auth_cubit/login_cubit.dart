@@ -1,6 +1,8 @@
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/features/presentation/bloc/login_state.dart';
+
+import 'login_state.dart';
+
 
 class LoginCubit extends Cubit<LoginState>{
   LoginCubit(): super(LoginInitial());

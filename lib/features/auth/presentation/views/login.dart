@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/core/common/widgets/button_widget.dart';
 import 'package:news_app/core/common/widgets/text_field_widget.dart';
-import 'package:news_app/features/data/auth/signin_google.dart';
-import 'package:news_app/features/presentation/bloc/login_cubit.dart';
-import 'package:news_app/features/presentation/bloc/login_state.dart';
+import 'package:news_app/features/auth/data/models/signin_google.dart';
+
+import '../blocs/auth_cubit/login_cubit.dart';
+import '../blocs/auth_cubit/login_state.dart';
+
 
 class Login extends StatefulWidget {
   const Login({super.key});

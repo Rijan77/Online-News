@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:news_app/core/common/widgets/button_widget.dart';
 import 'package:news_app/core/common/widgets/text_field_widget.dart';
 
-import '../../data/auth/signin_google.dart';
+import '../../data/models/signin_google.dart';
 
 class Registration extends StatefulWidget {
   const Registration({super.key});

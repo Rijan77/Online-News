@@ -1,5 +1,5 @@
-class NewsModel {
-  NewsModel({
+class NewsModelApi {
+  NewsModelApi({
     required this.status,
     required this.totalResults,
     required this.results,
@@ -10,7 +10,7 @@ class NewsModel {
   late final List<NewsData> results;
   late final String nextPage;
 
-  NewsModel.fromJson(Map<String, dynamic> json){
+  NewsModelApi.fromJson(Map<String, dynamic> json){
     status = json['status'];
     totalResults = json['totalResults'];
     results = List.from(json['results']).map((e)=>NewsData.fromJson(e)).toList();
@@ -62,7 +62,7 @@ class NewsData {
   // late final List<Creator> creator;
   // late final String description;
   // late final String? content;
-  late final String pubDate;
+  late final DateTime pubDate;
   // late final String pubDateTZ;
   late final String imageUrl;
   // late final Null videoUrl;
@@ -89,7 +89,7 @@ class NewsData {
     // creator = List.from(json['creator']).map((e)=>Creator.fromJson(e)).toList();
     // description = json['description'];
     // content = json['content'];
-    pubDate = json['pubDate'];
+    pubDate = DateTime.tryParse(json['pubDate'])??DateTime.now() ;
     // pubDateTZ = json['pubDateTZ'];
     imageUrl = json['image_url'];
     // videoUrl = null;

@@ -1,4 +1,5 @@
-import '../../data/api/model_api.dart';
+
+import '../../data/models/news_model_api.dart';
 
 abstract class FetchNews {}
 

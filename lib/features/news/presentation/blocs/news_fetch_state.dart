@@ -1,11 +1,13 @@
 import 'package:equatable/equatable.dart';
-import 'package:news_app/core/utils/response_enum.dart';
-import 'package:news_app/features/data/api/model_api.dart';
+
+import '../../../../core/utils/response_enum.dart';
+import '../../data/models/news_model_api.dart';
+
 
 class NewsFetchState extends Equatable {
   final ResponseEnum newsFetchStatus;
   final ResponseEnum favoriteFetchStatus;
-  final NewsModel? newsModel;
+  final NewsModelApi? newsModel;
   final List<String> articleIds;
   final String error;
 
@@ -20,7 +22,7 @@ class NewsFetchState extends Equatable {
   NewsFetchState copyWith({
     ResponseEnum? newsFetchStatus,
     ResponseEnum? favoriteFetchStatus,
-    NewsModel? newsModel,
+    NewsModelApi? newsModel,
     List<String>? articleId,
     String? error,
   }) {

@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/features/presentation/views/favorites_page.dart';
+import 'package:news_app/features/news/presentation/views/favorites_page.dart';
 import 'package:settings_ui/settings_ui.dart';
 
-import '../bloc/news_fetch_cubit.dart';
-import '../bloc/news_fetch_state.dart';
+import '../../../news/presentation/blocs/news_fetch_cubit.dart';
+import '../../../news/presentation/blocs/news_fetch_state.dart';
 
 class SettingsPages extends StatefulWidget {
   const SettingsPages({super.key});

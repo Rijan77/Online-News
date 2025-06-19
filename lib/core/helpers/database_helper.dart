@@ -2,7 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-import '../features/data/api/model_api.dart';
+import '../../features/news/data/models/news_model_api.dart';
+
 
 class DatabaseHelper {
   static final DatabaseHelper instance = DatabaseHelper._instance();

@@ -2,12 +2,11 @@ import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_not
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:news_app/features/presentation/bloc/news_fetch_cubit.dart';
+import '../../../../core/utils/response_enum.dart';
+import '../blocs/news_fetch_cubit.dart';
+import '../blocs/news_fetch_state.dart';
+import '../widgets/home_layouts.dart';
 
-import 'package:news_app/features/presentation/views/widgets/home_layouts.dart';
-
-import '../../../core/utils/response_enum.dart';
-import '../bloc/news_fetch_state.dart';
 
 class Home extends StatefulWidget {
   final NotchBottomBarController? controller;

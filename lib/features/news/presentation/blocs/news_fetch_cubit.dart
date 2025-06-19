@@ -1,14 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/core/utils/response_enum.dart';
-import 'package:news_app/database/database_helper.dart';
-import 'package:news_app/features/data/api/model_api.dart';
-import 'package:news_app/features/data/api/static_api.dart';
-import 'package:news_app/features/presentation/bloc/news_fetch_state.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:http/http.dart' as http;
+
+import '../../../../core/helpers/database_helper.dart';
+import '../../../../core/utils/response_enum.dart';
+import '../../data/models/news_model_api.dart';
+import '../../data/repositories/static_api.dart';
+import 'news_fetch_state.dart';
+
 
 class NewsFetchCubit extends Cubit<NewsFetchState> {
   final NewsApi newsApi;

@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:news_app/features/presentation/views/favorites_page.dart';
-import 'package:news_app/features/presentation/views/settings_pages.dart';
+import 'package:news_app/features/news/presentation/views/favorites_page.dart';
+import 'package:news_app/features/auth/presentation/views/settings_pages.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'home.dart';
