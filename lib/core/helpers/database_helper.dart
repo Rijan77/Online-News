@@ -4,8 +4,6 @@ import 'package:sqflite/sqflite.dart';
 
 import '../../features/news/data/models/news_model_api.dart';
 
-
-
 class DatabaseHelper {
   static final DatabaseHelper instance = DatabaseHelper._instance();
   static Database? _database;
@@ -77,19 +75,17 @@ class DatabaseHelper {
 
     return List.generate(maps.length, (i) {
       return NewsData(
-        articleId: maps[i]['article_id'],
-        title: maps[i]['title'],
-        imageUrl: maps[i]['image_url'],
-        pubDate: maps[i]['pub_date'] != null
-            ? DateTime.parse(maps[i]['pub_date'])
-            : DateTime.now(),
-        description: maps[i]['description'],
-        sourceName: maps[i]['sourceName'],
-        sourceId: maps[i]['sourceId'],
-        sourceUrl: maps[i]["sourceUrl"],
-        sourceIcon: maps[i]["sourceIcon"]
-
-      );
+          articleId: maps[i]['article_id'],
+          title: maps[i]['title'],
+          imageUrl: maps[i]['image_url'],
+          pubDate: maps[i]['pub_date'] != null
+              ? DateTime.parse(maps[i]['pub_date'])
+              : DateTime.now(),
+          description: maps[i]['description'],
+          sourceName: maps[i]['sourceName'],
+          sourceId: maps[i]['sourceId'],
+          sourceUrl: maps[i]["sourceUrl"],
+          sourceIcon: maps[i]["sourceIcon"]);
     });
   }
 

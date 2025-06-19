@@ -20,7 +20,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
       appBar: AppBar(
         backgroundColor: Colors.blueGrey.shade100,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, size:  35 ),
+          icon: Icon(Icons.arrow_back, size: 35),
           onPressed: () => Navigator.pop(context),
         ),
         title: Padding(
@@ -28,7 +28,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
           child: Text(
             "Online News",
             style: TextStyle(
-              fontWeight:  FontWeight.w700,
+              fontWeight: FontWeight.w700,
               fontSize: 20,
             ),
           ),
@@ -49,7 +49,8 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                   height: 240,
                   width: double.infinity,
                   fit: BoxFit.cover,
-                  errorBuilder: (_, __, ___) => const Icon(Icons.broken_image, size: 80),
+                  errorBuilder: (_, __, ___) =>
+                      const Icon(Icons.broken_image, size: 80),
                 ),
               ),
 
@@ -60,7 +61,8 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Card(
                 elevation: 2,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12)),
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
@@ -80,13 +82,15 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                       // Published date
                       Row(
                         children: [
-                          const Icon(Icons.access_time, size: 18, color: Colors.grey),
+                          const Icon(Icons.access_time,
+                              size: 18, color: Colors.grey),
                           const SizedBox(width: 6),
                           Text(
                             news.pubDate != null
                                 ? DateTimeHelper.timeAgoSinceDate(news.pubDate)
                                 : "Date not available",
-                            style: const TextStyle(fontSize: 14, color: Colors.grey),
+                            style: const TextStyle(
+                                fontSize: 14, color: Colors.grey),
                           ),
                         ],
                       ),

@@ -1,7 +1,4 @@
-
-
-class DateTimeHelper{
-
+class DateTimeHelper {
   static String timeAgoSinceDate(DateTime pubDate) {
     // final date =DateTime.parse(pubDate);
     final now = DateTime.now().toLocal();
@@ -25,6 +22,4 @@ class DateTimeHelper{
       return '${difference.inDays} days ago';
     }
   }
-
-
 }

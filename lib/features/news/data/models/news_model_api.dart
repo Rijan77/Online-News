@@ -5,15 +5,17 @@ class NewsModelApi {
     required this.results,
     required this.nextPage,
   });
+
   late final String status;
   late final int totalResults;
   late final List<NewsData> results;
   late final String nextPage;
 
-  NewsModelApi.fromJson(Map<String, dynamic> json){
+  NewsModelApi.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     totalResults = json['totalResults'];
-    results = List.from(json['results']).map((e)=>NewsData.fromJson(e)).toList();
+    results =
+        List.from(json['results']).map((e) => NewsData.fromJson(e)).toList();
     nextPage = json['nextPage'];
   }
 
@@ -21,7 +23,7 @@ class NewsModelApi {
     final data = <String, dynamic>{};
     data['status'] = status;
     data['totalResults'] = totalResults;
-    data['results'] = results.map((e)=>e.toJson()).toList();
+    data['results'] = results.map((e) => e.toJson()).toList();
     data['nextPage'] = nextPage;
     return data;
   }
@@ -55,22 +57,29 @@ class NewsData {
     // required this.aiOrg,
     // required this.duplicate,
   });
+
   late final String articleId;
   late final String title;
+
   // late final String? link;
   // late final List<Keywords> keywords;
   // late final List<Creator> creator;
   late final String description;
+
   // late final String? content;
   late final DateTime pubDate;
+
   // late final String pubDateTZ;
   late final String imageUrl;
+
   // late final Null videoUrl;
   late final String? sourceId;
   late final String sourceName;
+
   // late final int sourcePriority;
   late final String sourceUrl;
   late final String sourceIcon;
+
   // late final String language;
   // late final List<Country> country;
   // late final List<Category> category;
@@ -81,7 +90,7 @@ class NewsData {
   // late final String aiOrg;
   // late final bool duplicate;
 
-  NewsData.fromJson(Map<String, dynamic> json){
+  NewsData.fromJson(Map<String, dynamic> json) {
     articleId = json['article_id'];
     title = json['title'];
     // link = json['link'];
@@ -89,7 +98,7 @@ class NewsData {
     // creator = List.from(json['creator']).map((e)=>Creator.fromJson(e)).toList();
     description = json['description'];
     // content = json['content'];
-    pubDate = DateTime.tryParse(json['pubDate'])??DateTime.now() ;
+    pubDate = DateTime.tryParse(json['pubDate']) ?? DateTime.now();
     // pubDateTZ = json['pubDateTZ'];
     imageUrl = json['image_url'];
     // videoUrl = null;
@@ -145,10 +154,11 @@ class Keywords {
     required this.id,
     required this.keyword,
   });
+
   late final int id;
   late final String keyword;
 
-  Keywords.fromJson(Map<String, dynamic> json){
+  Keywords.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     keyword = json['keyword'];
   }
@@ -166,10 +176,11 @@ class Creator {
     required this.id,
     required this.name,
   });
+
   late final int id;
   late final String name;
 
-  Creator.fromJson(Map<String, dynamic> json){
+  Creator.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
   }
@@ -187,10 +198,11 @@ class Country {
     required this.id,
     required this.name,
   });
+
   late final int id;
   late final String name;
 
-  Country.fromJson(Map<String, dynamic> json){
+  Country.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
   }
@@ -208,10 +220,11 @@ class Category {
     required this.id,
     required this.name,
   });
+
   late final int id;
   late final String name;
 
-  Category.fromJson(Map<String, dynamic> json){
+  Category.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
   }
