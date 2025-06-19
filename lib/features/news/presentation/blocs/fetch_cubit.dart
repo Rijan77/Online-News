@@ -61,12 +61,12 @@ class FetchNewsCubit extends Cubit<FetchNews> {
       final isFavorite = favoriteArticleIds.contains(news.articleId);
       if (isFavorite) {
         await DatabaseHelper.instance
-            .deleteFavorite(news.articleId!, currentUser.email!);
+            .deleteFavorite(news.articleId, currentUser.email!);
         favoriteArticleIds.remove(news.articleId);
       } else {
         await DatabaseHelper.instance
             .insertFavorite(news, currentUser.email!);
-        favoriteArticleIds.add(news.articleId!);
+        favoriteArticleIds.add(news.articleId);
             }
 
       // Update the count after toggling

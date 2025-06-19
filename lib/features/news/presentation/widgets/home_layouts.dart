@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -51,7 +50,7 @@ Widget buildLandscapeGridView(
                       borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
                       child: item.imageUrl != null
                           ? Image.network(
-                          item.imageUrl!,
+                          item.imageUrl,
                           fit: BoxFit.cover,
                           width: double.infinity,
                           errorBuilder: (context, error, stackTrace) {
