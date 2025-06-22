@@ -31,10 +31,8 @@ class _AddNotesState extends State<AddNotes> {
       setState(() {
         _selectedImage = File(image.path);
       });
-
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -85,14 +83,17 @@ class _AddNotesState extends State<AddNotes> {
                         decoration: const InputDecoration(
                           labelText: "Title",
                           enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(width: 2, color: Colors.black),
+                            borderSide:
+                                BorderSide(width: 2, color: Colors.black),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(width: 2, color: Colors.blueGrey),
+                            borderSide:
+                                BorderSide(width: 2, color: Colors.blueGrey),
                           ),
                         ),
-                        validator: (value) =>
-                        value == null || value.isEmpty ? 'Enter a title' : null,
+                        validator: (value) => value == null || value.isEmpty
+                            ? 'Enter a title'
+                            : null,
                       ),
                       const SizedBox(height: 15),
 
@@ -103,14 +104,17 @@ class _AddNotesState extends State<AddNotes> {
                         decoration: const InputDecoration(
                           labelText: "Description",
                           enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(width: 2, color: Colors.black),
+                            borderSide:
+                                BorderSide(width: 2, color: Colors.black),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(width: 2, color: Colors.blueGrey),
+                            borderSide:
+                                BorderSide(width: 2, color: Colors.blueGrey),
                           ),
                         ),
-                        validator: (value) =>
-                        value == null || value.isEmpty ? 'Enter description' : null,
+                        validator: (value) => value == null || value.isEmpty
+                            ? 'Enter description'
+                            : null,
                       ),
                       const SizedBox(height: 20),
 
@@ -150,7 +154,8 @@ class _AddNotesState extends State<AddNotes> {
                                 child: CircleAvatar(
                                   backgroundColor: Colors.black54,
                                   child: IconButton(
-                                    icon: const Icon(Icons.close, color: Colors.white, size: 18),
+                                    icon: const Icon(Icons.close,
+                                        color: Colors.white, size: 18),
                                     onPressed: () {
                                       setState(() {
                                         _selectedImage = null;
@@ -176,7 +181,7 @@ class _AddNotesState extends State<AddNotes> {
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
-                          onTap: (){},
+                          onTap: () {},
                         ),
                       )
                     ],

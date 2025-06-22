@@ -1,19 +1,18 @@
 import 'package:http/http.dart' as http;
 import 'dart:io';
 
-Future<void> uploadNote({
-  required String title,
-  required String description,
-  required File imageFile,
-  required time,
-  required creator
-}) async {
-
-  String apiUrl = " http://10.13.172.119:8080/newsapi-web/webresources/newsdata/getNotes";
-  final  request = http.MultipartRequest('Post', Uri.parse(apiUrl));
+Future<void> uploadNote(
+    {required String title,
+    required String description,
+    required File imageFile,
+    required time,
+    required creator}) async {
+  String apiUrl =
+      " http://10.13.172.119:8080/newsapi-web/webresources/newsdata/getNotes";
+  final request = http.MultipartRequest('Post', Uri.parse(apiUrl));
 
   request.fields['title'] = title;
-  request.fields['description'] =description;
+  request.fields['description'] = description;
   request.fields['time'] = time;
   request.fields['creator'] = creator;
 
@@ -27,4 +26,3 @@ Future<void> uploadNote({
     print('Failed to upload note. Status code: ${response.statusCode}');
   }
 }
-
