@@ -7,14 +7,18 @@ class ButtonWidget extends StatelessWidget {
     required this.styleText,
     this.imagePath,
     required this.onTap,
-    required this.isLoading,
+    this.isLoading,
+    this.backgroundColor
   });
 
   final String buttonText; // What the button should say
   final TextStyle styleText; // Custom text style
   final String? imagePath; // Optional image inside the button
-  final bool isLoading; // Are we loading? show spinner
+  final bool? isLoading; // Are we loading? show spinner
   final VoidCallback onTap; // What happens when user taps the button
+  final Color? backgroundColor;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +29,7 @@ class ButtonWidget extends StatelessWidget {
         MediaQuery.of(context).orientation == Orientation.portrait;
 
     return InkWell(
-      onTap: isLoading ? null : onTap, // disable when loading
+      onTap: isLoading == true? null : onTap, // disable when loading
       child: Container(
         // height: screenHeight * 0.066,
         // width: screenWidth * 0.7,
@@ -34,11 +38,11 @@ class ButtonWidget extends StatelessWidget {
         width: isPortrait ? screenWidth * 0.7 : screenWidth * 0.4,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: Colors.blueGrey.shade300,
+          color: backgroundColor ?? Colors.blueGrey.shade300,
         ),
         child: Center(
-          child: isLoading
-              ? const SizedBox(
+          child:(isLoading ?? false)?
+          SizedBox(
                   height: 24,
                   width: 24,
                   child: CircularProgressIndicator(

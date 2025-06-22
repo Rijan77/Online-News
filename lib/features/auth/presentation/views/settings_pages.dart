@@ -6,6 +6,7 @@ import 'package:settings_ui/settings_ui.dart';
 
 import '../../../news/presentation/blocs/news_fetch_cubit.dart';
 import '../../../news/presentation/blocs/news_fetch_state.dart';
+import 'edit_profile.dart';
 
 class SettingsPages extends StatefulWidget {
   const SettingsPages({super.key});
@@ -180,6 +181,9 @@ class _SettingsPagesState extends State<SettingsPages> {
                       SettingsTile.navigation(
                         title: Text("Edit Profile"),
                         leading: Icon(Icons.edit),
+                        onPressed: (context){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> EditProfile()));
+                        },
                       ),
                       SettingsTile.navigation(
                         leading: Icon(Icons.logout),
