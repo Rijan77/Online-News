@@ -19,7 +19,7 @@ class _AddNotesState extends State<AddNotes> {
 
   File? _selectedImage;
   final ImagePicker _picker = ImagePicker();
-  bool _isLoading = false;
+  final bool _isLoading = false;
 
   Future<void> _pickImage() async {
     // final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
@@ -27,12 +27,10 @@ class _AddNotesState extends State<AddNotes> {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
     File file = File(image!.path);
 
-    if (image != null) {
-      setState(() {
-        _selectedImage = File(image.path);
-      });
+    setState(() {
+      _selectedImage = File(image.path);
+    });
     }
-  }
 
   @override
   Widget build(BuildContext context) {
