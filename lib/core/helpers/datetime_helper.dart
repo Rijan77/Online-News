@@ -4,7 +4,9 @@ class DateTimeHelper{
 
   static String timeAgoSinceDate(DateTime pubDate) {
     // final date =DateTime.parse(pubDate);
+
     final now = DateTime.now().toLocal();
+
     final difference = now.difference(pubDate);
 
     if (difference.inSeconds < 5) {
