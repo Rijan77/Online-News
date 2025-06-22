@@ -6,11 +6,13 @@ class TextFieldWidget extends StatelessWidget {
       required this.editingController,
       required this.firstIcon,
       this.lastIcon,
+        this.hintText,
       required this.textLabel});
 
   final TextEditingController editingController;
   final Icon firstIcon;
   final Icon? lastIcon;
+  final String? hintText;
 
   final String textLabel;
 
@@ -40,6 +42,7 @@ class TextFieldWidget extends StatelessWidget {
             ),
             suffixIcon: lastIcon,
             labelText: textLabel,
+            hintText: hintText,
             enabledBorder: const OutlineInputBorder(),
             focusedBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.blueGrey, width: 2))),
