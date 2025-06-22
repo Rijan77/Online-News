@@ -1,12 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:news_app/features/news/presentation/views/add_news.dart';
 import 'package:news_app/features/news/presentation/views/favorites_page.dart';
 import 'package:settings_ui/settings_ui.dart';
 
-import '../../../news/presentation/blocs/news_fetch_cubit.dart';
-import '../../../news/presentation/blocs/news_fetch_state.dart';
-import 'edit_profile.dart';
+import '../blocs/news_fetch_cubit.dart';
+import '../blocs/news_fetch_state.dart';
+import '../../../auth/presentation/views/edit_profile.dart';
 
 class SettingsPages extends StatefulWidget {
   const SettingsPages({super.key});
@@ -77,9 +79,9 @@ class _SettingsPagesState extends State<SettingsPages> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 5),
+            padding: const EdgeInsets.only(top: 2),
             child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 26),
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
               decoration: BoxDecoration(
                   color: Colors.blueGrey.shade400,
                   borderRadius: BorderRadius.circular(20)),
@@ -93,11 +95,11 @@ class _SettingsPagesState extends State<SettingsPages> {
                       color: Colors.grey,
                     )),
                   ),
-                  SizedBox(width: 16),
+                  SizedBox(width: 18),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Hello, \n ${splitted[0]}",
+                      Text("Hello, \n${splitted[0]}",
                           style: TextStyle(color: Colors.white, fontSize: 20))
                     ],
                   )
@@ -106,7 +108,7 @@ class _SettingsPagesState extends State<SettingsPages> {
             ),
           ),
           SizedBox(
-            height: 20,
+            height: 5,
           ),
           Expanded(
             child: BlocBuilder<NewsFetchCubit, NewsFetchState>(builder: (
@@ -144,7 +146,8 @@ class _SettingsPagesState extends State<SettingsPages> {
                         onPressed: (context) {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                                builder: (context) => FavoritesPage()),
+                                builder: (context) => FavoritesPage()
+                            ),
                           );
                         },
                         trailing: Container(
@@ -169,8 +172,18 @@ class _SettingsPagesState extends State<SettingsPages> {
                           ),
                         ),
                       ),
+                      SettingsTile.navigation(
+                          title: Text("Add Own News"),
+                        leading: Icon(Icons.add_box_sharp),
+                        onPressed: (context){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=> AddNews()));
+                        },
+
+                      ),
+
                     ],
                   ),
+
                   SettingsSection(
                     title: Text(
                       "Account",
