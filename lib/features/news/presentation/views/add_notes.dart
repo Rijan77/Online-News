@@ -22,39 +22,19 @@ class _AddNotesState extends State<AddNotes> {
   bool _isLoading = false;
 
   Future<void> _pickImage() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    // final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
 
-    if (pickedFile != null) {
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    File file = File(image!.path);
+
+    if (image != null) {
       setState(() {
-        _selectedImage = File(pickedFile.path);
+        _selectedImage = File(image.path);
       });
+
     }
   }
 
-  Future<void> _submitNote() async {
-    if (_formKey.currentState!.validate() && _selectedImage != null) {
-      setState(() => _isLoading = true);
-
-      final DateTime currentDate = DateTime.now();
-
-      // Simulate save delay
-      await Future.delayed(const Duration(seconds: 2));
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Note submitted successfully!")),
-      );
-
-      _formKey.currentState!.reset();
-      setState(() {
-        _selectedImage = null;
-        _isLoading = false;
-      });
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Please fill all fields and upload an image.")),
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -196,7 +176,7 @@ class _AddNotesState extends State<AddNotes> {
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
-                          onTap: _submitNote,
+                          onTap: (){},
                         ),
                       )
                     ],
