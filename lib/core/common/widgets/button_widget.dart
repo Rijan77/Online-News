@@ -8,13 +8,15 @@ class ButtonWidget extends StatelessWidget {
     this.imagePath,
     required this.onTap,
     this.isLoading,
-    this.backgroundColor
+    this.backgroundColor,
+    this.icon
   });
 
   final String buttonText; // What the button should say
   final TextStyle styleText; // Custom text style
   final String? imagePath; // Optional image inside the button
-  final bool? isLoading; // Are we loading? show spinner
+  final bool? isLoading;
+  final Icon? icon; // Are we loading? show spinner
   final VoidCallback onTap; // What happens when user taps the button
   final Color? backgroundColor;
 
@@ -54,7 +56,11 @@ class ButtonWidget extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    if (imagePath != null) ...[
+                    if (icon != null) ...[
+                      icon!,
+                      const SizedBox(width: 8),
+                    ],
+                    if (imagePath != null && icon == null) ...[
                       Image.asset(
                         imagePath!,
                         height: screenHeight * 0.04,

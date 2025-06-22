@@ -8,6 +8,7 @@ import 'package:news_app/features/auth/presentation/views/registration.dart';
 
 import 'core/common/widgets/bottom_nav.dart';
 import 'features/auth/presentation/blocs/auth_cubit/login_cubit.dart';
+import 'features/auth/presentation/views/login.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           initialRoute: '/',
           routes: {
-            '/': (context) => BottomNav(),
+            '/': (context) => Login(),
             '/second': (context) => const Registration(),
             '/third': (context) => const BottomNav(),
           },

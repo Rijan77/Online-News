@@ -51,6 +51,7 @@ dependencies:
   cached_network_image:
   timeago: ^3.7.1
   url_launcher:
+  image_picker:
   top_snackbar_flutter:
   sqflite:
   equatable: ^2.0.7
