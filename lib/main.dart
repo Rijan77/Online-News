@@ -8,7 +8,6 @@ import 'package:news_app/features/auth/presentation/views/registration.dart';
 
 import 'core/common/widgets/bottom_nav.dart';
 import 'features/auth/presentation/blocs/auth_cubit/login_cubit.dart';
-import 'features/auth/presentation/views/login.dart';
 import 'features/news/presentation/views/add_notes.dart';
 
 Future<void> main() async {

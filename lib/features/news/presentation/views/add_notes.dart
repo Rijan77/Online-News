@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
-import 'package:http_parser/http_parser.dart';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -51,7 +50,7 @@ class _AddNotesState extends State<AddNotes> {
       showSpinner = true;
     });
 
-    var stream = new http.ByteStream(selectedImage!. openRead());
+    var stream = http.ByteStream(selectedImage!. openRead());
 
     stream.cast();
 
@@ -60,13 +59,13 @@ class _AddNotesState extends State<AddNotes> {
     var uri = Uri.parse("http://10.13.172.119:8080/newsapi-web/webresources/newsdata/addNote");
 
 
-    var request = new http.MultipartRequest('POST', uri);
+    var request = http.MultipartRequest('POST', uri);
 
     request.fields['title']= _titleController.text.trim();
     request.fields['description'] = _descriptionController.text.trim();
     request.fields ['creator'] = currentUserEmail!.email?? "Unknown  Creator";
 
-    var multiPort = new http.MultipartFile('file', stream, length);
+    var multiPort = http.MultipartFile('file', stream, length);
 
     request.files.add(multiPort);
 
