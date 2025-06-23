@@ -52,6 +52,7 @@ dependencies:
   timeago: ^3.7.1
   url_launcher:
   image_picker:
+  modal_progress_hud_nsn: ^0.5.1
   top_snackbar_flutter:
   sqflite:
   equatable: ^2.0.7

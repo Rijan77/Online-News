@@ -30,7 +30,11 @@ class _AddNotesState extends State<AddNotes> {
     setState(() {
       _selectedImage = File(image.path);
     });
-    }
+  }
+
+  Future<void> _uploadFile() async{
+
+  }
 
   @override
   Widget build(BuildContext context) {
