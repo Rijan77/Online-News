@@ -37,7 +37,6 @@ class _TryState extends State<Try> {
                 ),
               ],
             ),
-
           ),
           // Top section with profile info
           SliverToBoxAdapter(
@@ -47,25 +46,31 @@ class _TryState extends State<Try> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 30),
                     child: Row(
-                      children: [
-
-                      ],
+                      children: [],
                     ),
                   ),
                   Row(
                     children: [
-                      CircleAvatar(radius: 40, backgroundImage: NetworkImage("https://i.pinimg.com/736x/84/a0/6b/84a06bfa43baddf9108b9a80a3a3f05d.jpg")),
+                      CircleAvatar(
+                          radius: 40,
+                          backgroundImage: NetworkImage(
+                              "https://i.pinimg.com/736x/84/a0/6b/84a06bfa43baddf9108b9a80a3a3f05d.jpg")),
                     ],
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text("Rijan Acharya", style: TextStyle(color: Colors.white),),
+                    child: Text(
+                      "Rijan Acharya",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
-
-                  Text("hjajkldjlkamndlkjflkdjj"*10, style: TextStyle(color: Colors.white),)
+                  Text(
+                    "hjajkldjlkamndlkjflkdjj" * 10,
+                    style: TextStyle(color: Colors.white),
+                  )
                 ],
               ),
             ),
@@ -114,7 +119,7 @@ Widget _buildContainer() {
   return Column(
     children: List.generate(
       5,
-          (index) => Padding(
+      (index) => Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(
           height: 400,
