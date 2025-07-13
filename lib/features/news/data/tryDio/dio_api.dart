@@ -7,47 +7,42 @@ class DioApi {
   final Dio dio = Dio();
 
   DioApi() {
-    dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
-      final token = AuthTokenStorage.getToken();
+    dio.interceptors.add(
+      InterceptorsWrapper(onRequest: (options, handler) {
+        final token = AuthTokenStorage.getToken();
 
-      if (token != null) {
-        options.headers["Authorization"] = "Bearer $token";
-        print("Token attached: $token");
-      } else {
-        print("No Token Found!");
-      }
-      return handler.next(options);
-    }, onResponse: (response, handler) {
-      print("Response Recived: ${response.statusCode}");
-      return handler.next(response);
-    }, onError: (DioException error, handler) {
-      if (error.response?.statusCode == 401) {
-        print("Unauthorized! Token Might be expired.");
-      }
-      return handler.next(error);
-    }),
-
+        if (token != null) {
+          options.headers["Authorization"] = "Bearer $token";
+          print("Token attached: $token");
+        } else {
+          print("No Token Found!");
+        }
+        return handler.next(options);
+      }, onResponse: (response, handler) {
+        print("Response Recived: ${response.statusCode}");
+        return handler.next(response);
+      }, onError: (DioException error, handler) {
+        if (error.response?.statusCode == 401) {
+          print("Unauthorized! Token Might be expired.");
+        }
+        return handler.next(error);
+      }),
     );
 
-    dio.interceptors.add(
-        PrettyDioLogger(
-            requestHeader: true,
-            requestBody: true,
-            responseBody: true,
-            responseHeader: false,
-            error: true,
-            compact: true,
-            maxWidth: 120
-        )
-    )  ;
+    dio.interceptors.add(PrettyDioLogger(
+        requestHeader: true,
+        requestBody: true,
+        responseBody: true,
+        responseHeader: false,
+        error: true,
+        compact: true,
+        maxWidth: 120));
   }
 
   Future<Response> get(String path) async => await dio.get(path);
 
-  Future <Response> post(String path, {Map<String, dynamic>? data}) async =>
+  Future<Response> post(String path, {Map<String, dynamic>? data}) async =>
       await dio.post(path, data: data);
-
-
 
   Future<List<DioModel>> fetchData() async {
     print("⏳ Calling API...");
