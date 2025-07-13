@@ -59,6 +59,7 @@ class _ShowUiState extends State<ShowUi> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Text("${index +1}"),
                           Text(post.title.toUpperCase(), overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),),
                           SizedBox(height: 10,),
                           Text(post.body)
