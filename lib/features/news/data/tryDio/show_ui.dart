@@ -15,6 +15,7 @@ class _ShowUiState extends State<ShowUi> {
 
   @override
   void initState() {
+    super.initState();
     // TODO: implement initState
     _dioModel = _dioApi.fetchData();
   }

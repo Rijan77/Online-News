@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:news_app/features/news/data/tryDio/auth_token_storage.dart';
 import 'package:news_app/features/news/data/tryDio/dio_model.dart';
 
 class DioApi {
@@ -7,23 +8,32 @@ class DioApi {
 
   DioApi() {
     dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
-      print("Send request  to: ${options.uri}");
+      final token = AuthTokenStorage.getToken();
 
-      options.headers["Authorization"] = "Bearer dummy_token";
+      if(token !=null){
+        options.headers["Authorization"] = "Bearer $token";
+        print("Token attached: $token");
+      } else {
+        print("No Token Found!");
+      }
       return handler.next(options);
     }, onResponse: (response, handler) {
       print("Response Recived: ${response.statusCode}");
       return handler.next(response);
-    }, onError: (error, handler) {
-      print("Error: ${error.message}");
-      return handler.next(error);
+
+    }, onError: (DioError e, handler) {
+      print("Error Occurred: ${e.message}");
+      return handler.next(e);
     }));
   }
 
   Future<List<DioModel>> fetchData() async {
+    print("⏳ Calling API...");
     try {
       final response =
           await dio.get("https://jsonplaceholder.typicode.com/posts");
+
+      print("✅ Data fetched!");
 
       List<DioModel> mapModel = (response.data as List)
           .map((json) => DioModel.fromJson(json))
