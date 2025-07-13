@@ -5,11 +5,11 @@ class AuthTokenStorage {
     return _token;
   }
 
-  static void setToken(String token) {
+  static  setToken(String token) {
     _token = token;
   }
 
-  static void clearToken() {
+  static  clearToken() {
     _token = null;
   }
 }
