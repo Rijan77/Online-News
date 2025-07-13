@@ -9,7 +9,6 @@ import 'package:news_app/features/auth/presentation/views/registration.dart';
 import 'core/common/widgets/bottom_nav.dart';
 import 'features/auth/presentation/blocs/auth_cubit/login_cubit.dart';
 import 'features/news/data/tryDio/show_ui.dart';
-import 'features/news/presentation/views/try.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

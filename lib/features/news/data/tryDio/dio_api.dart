@@ -1,6 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:news_app/features/news/data/tryDio/auth_token_storage.dart';
 import 'package:news_app/features/news/data/tryDio/dio_model.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
