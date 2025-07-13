@@ -115,8 +115,6 @@ class _TryState extends State<Try> {
   }
 }
 
-
-
 Widget _buildContainer() {
   return Column(
     children: List.generate(
