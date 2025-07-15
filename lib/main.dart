@@ -6,11 +6,9 @@ import 'package:news_app/features/auth/presentation/views/login.dart';
 import 'package:news_app/features/news/data/repositories/static_api.dart';
 import 'package:news_app/features/news/presentation/blocs/news_fetch_cubit.dart';
 import 'package:news_app/features/auth/presentation/views/registration.dart';
-import 'package:news_app/features/news/presentation/views/home.dart';
 
 import 'core/common/widgets/bottom_nav.dart';
 import 'features/auth/presentation/blocs/auth_cubit/login_cubit.dart';
-import 'features/news/data/tryDio/show_ui.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
